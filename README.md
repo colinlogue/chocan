@@ -9,6 +9,7 @@ This is a repository for the CS 300 group project.
   |-- tests
   |   | - ClassOneTest.java
   |   | - ClassTwoTest.java etc.
+  | - README.md
 ```
 The `src` directory is where all the `.java` files go. If it gets too
 cluttered we can add some subfolders.

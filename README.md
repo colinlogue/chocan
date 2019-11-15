@@ -62,15 +62,18 @@ something that already exists, or creating a new thing.
 ### Retrieving existing information
 ```java
 private void do_something(int thing_id) {
+    // 1) attempt to load data
     try {
-        // make sure to catch exception if retrieval fails
         ThingData thing = ThingData.retrieve(thing_id);
     }
     catch (DatabaseException e) {
        // handle case where loading fails
     }
+    
+    // 2) do something with that data
     String value = thing.value;    // data members are public
     do_the_thing(value);           // use the data for some purpose
+    
     // note that this pattern does NOT call write, so nothing in
     // the database is changed
 };
@@ -79,15 +82,19 @@ private void do_something(int thing_id) {
 ### Modifying existing information
 ```java
 private void update_record(int thing_id) {
+    // 1) attempt to load data
     try {
         ThingData thing = ThingData.retrieve(thing_id);
     }
     catch (DatabaseException e) {
         // handle case where loading fails
     }
-    thing.value = get_value();   // set data directly
+    
+    // 2) change some value in that data
+    thing.value = get_value();     // set data directly
+    
+    // 3) attempt to save the changes
     try {
-        // modifying data could throw an exception at either end
         thing.write();
     }
     catch (DatabaseException e) {
@@ -99,9 +106,14 @@ private void update_record(int thing_id) {
 ### Creating new information
 ```java
 private void create_new_thing() {
+    // 1) create a new instance of the data class
     ThingData thing = new ThingData();
+    
+    // 2) set the data member values directly
     thing.value = get_value();
     thing.another_value = get_another_value();
+    
+    // 3) attempy to save (creates new DB row)
     try {
         thing.write();
     }

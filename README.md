@@ -59,6 +59,13 @@ new data. There are three patterns for this: retrieving information
 about something that already exists, modifying information for
 something that already exists, or creating a new thing.
 
+**A note on exceptions:** These examples all have try/catch blocks
+whenever the database is accessed. You could also have the function
+you're writing re-throw the `DatabaseException` and catch it in an
+earlier frame, if that makes sense for your control flow. Just know
+that any time you are using the database, there is a change it will
+fail (e.g. if data is missing or doesn't match).
+
 ### Retrieving existing information
 ```java
 private void do_something(int thing_id) {

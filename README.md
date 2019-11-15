@@ -2,11 +2,19 @@ This is a repository for the CS 300 group project.
 
 ## Directory layout
 ```
-  chocan
-  |-- src
+  chocan/
+  |-- db/
+  |   | - chocan.sqlite3
+  |   | - schema.sql
+  |-- reports/
+  |   |-- member_reports/
+  |   |   | - <mem_id>_<timestamp>.txt
+  |   |-- provider_reports/
+  |   |   | - <prov_id>_<timestamp>.txt
+  |-- src/
   |   | - ClassOne.java
   |   | - ClassTwo.java etc.
-  |-- tests
+  |-- tests/
   |   | - ClassOneTests.java
   |   | - ClassTwoTests.java etc.
   | - README.md

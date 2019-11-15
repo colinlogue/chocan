@@ -52,3 +52,61 @@ with the `tests` folder as Test Sources Root.
   someone else needs to figure out what you've done.
 - Only push to the master branch pieces that you are satisfied are
   working correctly.
+
+## Accessing data from the database
+Most methods are going to require looking up stored data or storing
+new data. There are three patterns for this: retrieving information
+about something that already exists, modifying information for
+something that already exists, or creating a new thing.
+
+### Retrieving existing information
+```java
+private void do_something(int thing_id) {
+    try {
+        // make sure to catch exception if retrieval fails
+        ThingData thing = ThingData.retrieve(thing_id);
+    }
+    catch (DatabaseException e) {
+       // handle case where loading fails
+    }
+    String data = thing.data;    // data members are public
+    do_the_thing(data);          // use the data for some purpose
+    // note that this pattern does NOT call write, so nothing in
+    // the database is changed
+};
+```
+
+### Modifying existing information
+```java
+private void update_record(int thing_id) {
+    try {
+        ThingData thing = ThingData.retrieve(thing_id);
+    }
+    catch (DatabaseException e) {
+        // handle case where loading fails
+    }
+    thing.data = get_data_value();   // set data directly
+    try {
+        // modifying data could throw an exception at either end
+        thing.write();
+    }
+    catch (DatabaseException e) {
+        // handle case where saving fails
+    }
+};
+```
+
+### Creating new information
+```java
+private void create_new_thing() {
+    ThingData thing = new ThingData();
+    thing.data = get_data_value();
+    thing.more_data = get_more_data_value();
+    try {
+        thing.write();
+    }
+    catch (DatabaseException e) {
+        // handle case where saving fails
+    }
+}   
+```

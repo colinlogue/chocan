@@ -29,4 +29,4 @@ with the `tests` folder as Test Sources Root.
 
 Guidelines for Collaboration
 -git pull before you begin coding for a day to ensure you're seeing the current code
--other ideas to ensure smooth integration$$$$
+-other ideas to ensure smooth integration<3

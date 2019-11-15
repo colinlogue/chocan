@@ -45,5 +45,10 @@ with the `tests` folder as Test Sources Root.
 ## Guidelines for working on your sections
 - DON'T change the name or type signature (inputs/outputs) for any of
   the public functions.
-- If you do need to change that, make sure to tell everyone so we can
+- IF YOU DO NEED TO CHANGE IT, make sure to tell everyone so we can
   refactor any code portions that have been using them.
+- Do whatever the heck you want with the private methods in your class.
+- Do comment liberally, even in the private methods, just in case
+  someone else needs to figure out what you've done.
+- Only push to the master branch pieces that you are satisfied are
+  working correctly.

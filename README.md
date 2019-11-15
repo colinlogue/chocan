@@ -26,3 +26,7 @@ The `tests` directory should contain the unit tests for each class.
 If you're using IntelliJ, mark the `src` as Sources Root by right
 clicking and selecting Mark Directory As > Sources Root, and the same
 with the `tests` folder as Test Sources Root.
+
+Guidelines for Collaboration
+-git pull before you begin coding for a day to ensure you're seeing the current code
+-other ideas to ensure smooth integration$$$$

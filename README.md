@@ -30,3 +30,13 @@ with the `tests` folder as Test Sources Root.
 Guidelines for Collaboration
 -git pull before you begin coding for a day to ensure you're seeing the current code
 -other ideas to ensure smooth integration<3
+
+#Basic Steps for pull/pushing changes:
+1. pull from git
+2. make sure you are on your own branch
+3. merge changes from the master branch
+4. do code stuff on your local branch, commit it to your branch
+5. pull again after you commit
+6. switch to the master branch, merge your changes with master branch
+7. push
+8. success

@@ -7,8 +7,8 @@ This is a repository for the CS 300 group project.
   |   | - ClassOne.java
   |   | - ClassTwo.java etc.
   |-- tests
-  |   | - ClassOneTest.java
-  |   | - ClassTwoTest.java etc.
+  |   | - ClassOneTests.java
+  |   | - ClassTwoTests.java etc.
   | - README.md
 ```
 The `src` directory is where all the `.java` files go. If it gets too

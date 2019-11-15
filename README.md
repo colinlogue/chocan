@@ -69,8 +69,8 @@ private void do_something(int thing_id) {
     catch (DatabaseException e) {
        // handle case where loading fails
     }
-    String data = thing.data;    // data members are public
-    do_the_thing(data);          // use the data for some purpose
+    String value = thing.value;    // data members are public
+    do_the_thing(value);           // use the data for some purpose
     // note that this pattern does NOT call write, so nothing in
     // the database is changed
 };
@@ -85,7 +85,7 @@ private void update_record(int thing_id) {
     catch (DatabaseException e) {
         // handle case where loading fails
     }
-    thing.data = get_data_value();   // set data directly
+    thing.value = get_value();   // set data directly
     try {
         // modifying data could throw an exception at either end
         thing.write();
@@ -100,8 +100,8 @@ private void update_record(int thing_id) {
 ```java
 private void create_new_thing() {
     ThingData thing = new ThingData();
-    thing.data = get_data_value();
-    thing.more_data = get_more_data_value();
+    thing.value = get_value();
+    thing.another_value = get_another_value();
     try {
         thing.write();
     }

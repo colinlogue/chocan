@@ -27,11 +27,11 @@ If you're using IntelliJ, mark the `src` as Sources Root by right
 clicking and selecting Mark Directory As > Sources Root, and the same
 with the `tests` folder as Test Sources Root.
 
-Guidelines for Collaboration
--git pull before you begin coding for a day to ensure you're seeing the current code
--other ideas to ensure smooth integration<3
+## Guidelines for Collaboration
+- git pull before you begin coding for a day to ensure you're seeing the current code
+- other ideas to ensure smooth integration<3
 
-#Basic Steps for pull/pushing changes:
+## Basic Steps for pull/pushing changes:
 1. pull from git
 2. make sure you are on your own branch
 3. merge changes from the master branch
@@ -40,3 +40,10 @@ Guidelines for Collaboration
 6. switch to the master branch, merge your changes with master branch
 7. push
 8. success
+9. <3
+
+## Guidelines for working on your sections
+- DON'T change the name or type signature (inputs/outputs) for any of
+  the public functions.
+- If you do need to change that, make sure to tell everyone so we can
+  refactor any code portions that have been using them.

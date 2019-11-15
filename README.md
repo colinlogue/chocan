@@ -120,5 +120,5 @@ private void create_new_thing() {
     catch (DatabaseException e) {
         // handle case where saving fails
     }
-}   
+};
 ```

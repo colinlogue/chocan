@@ -63,7 +63,7 @@ something that already exists, or creating a new thing.
 whenever the database is accessed. You could also have the function
 you're writing re-throw the `DatabaseException` and catch it in an
 earlier frame, if that makes sense for your control flow. Just know
-that any time you are using the database, there is a change it will
+that any time you are using the database, there is a chance it will
 fail (e.g. if data is missing or doesn't match).
 
 ### Retrieving existing information

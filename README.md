@@ -6,6 +6,15 @@ This is a repository for the CS 300 group project.
   |-- db/
   |   | - chocan.sqlite3
   |   | - schema.sql
+  |-- out/
+  |   |-- production/
+  |   |   |-- chocan/
+  |   |   |   | - ClassOne.class
+  |   |   |   | - ClassTwo.class etc.
+  |   |-- test/
+  |   |   |-- chocan/
+  |   |   |   | - ClassOneTests.class
+  |   |   |   | - ClassTwoTests.class etc.
   |-- reports/
   |   |-- member_reports/
   |   |   | - <mem_id>_<timestamp>.txt

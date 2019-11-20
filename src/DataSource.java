@@ -2,4 +2,7 @@
 // and retrieve from the database.
 
 public class DataSource {
+
+    // all rows in all db tables can be identified by a unique int
+    protected int ident;
 }

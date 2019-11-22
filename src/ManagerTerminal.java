@@ -4,27 +4,37 @@ public class ManagerTerminal {
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
 
+        //Menu tree for manager terminal
         temp.main_menu();
     }
+
+    //Main Menu
+    //Start of menu tree for manager terminal
+    //Provides options to manage members, manage providers, or
+    //display reports.
     private void main_menu()
     {
         Scanner input = new Scanner(System.in);
         int option;
+
+        //Continue to display main menu until valid choice is made by user
         do
         {
+            //Displays main menu and receive user input
             display_main_menu();
             System.out.print("Enter Option: ");
             option = input.nextInt();
 
+            //Calls appropriate sub-menu based on valid input
             switch (option) {
                 case 1:
-                //Method directs to add, remove, update based on option value
+                //Method directs to manage member menu
                     manage_member();
 
                     //Add methods here
                     break;
                 case 2:
-                //Method directs to add, remove, update base on option value
+                //Method directs to manage provider menu
                     manage_provider();
 
                     //Add methods here
@@ -35,12 +45,15 @@ public class ManagerTerminal {
                     //Add methods here
                     break;
                 default:
+                    //If valid input is not received, message will display
                     System.out.print("\nINPUT ERROR: PLEASE ENTER A NUMBER FROM THE MENU\n");
                     break;
             }
+            //Input must be number from menu options to exit loop
         } while (option != 1 && option != 2 && option != 3);
     }
 
+    //Displays main menu for manager terminal
     private void display_main_menu()
     {
         System.out.println("\nMain Menu\n" +
@@ -77,16 +90,24 @@ public class ManagerTerminal {
         System.out.println("2. Provider");
     }
 
-    //
+    //Manage Member Menu
+    //Provides options to add, remove, or update members
     private void manage_member ()
     {
         Scanner input = new Scanner(System.in);
         int option;
+
+        //Continues to display manager member menu until valid user input reveived
         do {
+
+            //Prints manage member menu to terminal
             display_manage_menu("Member");
 
             System.out.print("Enter Option: ");
-            option = input.nextInt();
+            option = input.nextInt();   //holds user response
+
+            //Calls add, remove, or update for member based on
+            //valid user input
             switch (option) {
                 case 1:
                     //add member
@@ -101,22 +122,31 @@ public class ManagerTerminal {
                     System.out.print("Update Member Chosen");
                     break;
                 default:
+                    //Prints error message to screen if input is invalid
                     System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU\n");
                     break;
             }
+            //Input must be a number from menu to exit loop
         }while(option != 1 && option != 2 && option != 3);
     }
 
-    //
+    //Manage Provider Menu
+    //Provides options to add, remove, or update members
     private void manage_provider ()
     {
         Scanner input = new Scanner(System.in);
         int option;
-        do {
-            display_manage_menu("Provider");
-            System.out.println("Enter Option: ");
-            option = input.nextInt();
 
+        //Continues to display menu until valid input is received from user
+        do {
+
+            //Prints manage provider menu to screen
+            display_manage_menu("Provider");
+
+            System.out.println("Enter Option: ");
+            option = input.nextInt();  //holds user response
+
+            //Calls add, remove, or update based on valid user input
             switch (option) {
                 case 1:
                     //add provider
@@ -131,9 +161,11 @@ public class ManagerTerminal {
                     System.out.print("Update Provider Chosen");
                     break;
                 default:
+                    //Error message printed to terminal if input is not valid
                     System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU\n");
                     break;
             }
+            //Input must be a number from menu options to exit loop
         }while(option != 1 && option != 2 && option != 3);
     }
 }

@@ -131,6 +131,7 @@ public class ManagerTerminal {
                     System.out.print("Update Provider Chosen");
                     break;
                 default:
+                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU\n");
                     break;
             }
         }while(option != 1 && option != 2 && option != 3);

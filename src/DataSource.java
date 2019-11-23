@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataSource {
-
     private Connection conn;
     private static String url = "jdbc:sqlite:db/chocan.sqlite3";
 

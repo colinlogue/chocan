@@ -1,2 +1,2 @@
-public class ProviderTerminal extends Terminal {
+public class ProviderTerminal{
 }

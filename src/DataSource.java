@@ -2,7 +2,5 @@
 // and retrieve from the database.
 
 public class DataSource {
-	//test test -DEH
-
-    // all rows in all db tables can be identified by a unique in
+	//test test -DEH test4
 }

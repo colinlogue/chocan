@@ -16,6 +16,7 @@ public class SessionData extends DataSource {
     }
 
     public boolean write() throws SQLException {
+        //look into dealing with numerical values to/from table
         return true;
     }
 

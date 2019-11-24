@@ -6,6 +6,8 @@ This is a repository for the CS 300 group project.
   ├── db/
   │   ├ - chocan.sqlite3
   │   ├ - schema.sql
+  ├── lib/
+  │   ├ - dependecy.jar
   ├── out/
   │   ├── production/
   │   │   ├── chocan/

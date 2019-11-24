@@ -1,6 +1,8 @@
 // This is the base class for accessing the data for people, i.e.
 // members and providers.
 
+import java.sql.SQLException;
+
 public class PersonData extends DataSource {
     public enum status {
         INVALID,        // if id is not in db
@@ -22,7 +24,7 @@ public class PersonData extends DataSource {
     }
 
     // public methods
-    public boolean write() {
+    public boolean write() throws SQLException {
         // writes data to the db
         // TODO
         return true;

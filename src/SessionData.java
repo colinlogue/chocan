@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Date;
 
 public class SessionData extends DataSource {
@@ -12,6 +13,10 @@ public class SessionData extends DataSource {
     // db
     public static SessionData retrieve(int ident) {
         return new SessionData();
+    }
+
+    public boolean write() throws SQLException {
+        return true;
     }
 
     // note: service code is ident (from DataSource base class)

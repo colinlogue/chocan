@@ -59,6 +59,7 @@ public class MemberData extends PersonData {
         //add return false for failure
     }
 
+    //possibly add to base class PersonData **
     private int get_next_ident() throws SQLException {
         // finds the previous max ident string and increments by 1
         String sql = "select max(MemberID) from member";

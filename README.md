@@ -74,7 +74,7 @@ something that already exists, or creating a new thing.
 
 **A note on exceptions:** These examples all have try/catch blocks
 whenever the database is accessed. You could also have the function
-you're writing re-throw the `DatabaseException` and catch it in an
+you're writing re-throw the `SQLException` and catch it in an
 earlier frame, if that makes sense for your control flow. Just know
 that any time you are using the database, there is a chance it will
 fail (e.g. if data is missing or doesn't match).
@@ -86,7 +86,7 @@ private void do_something(int thing_id) {
     try {
         ThingData thing = ThingData.retrieve(thing_id);
     }
-    catch (DatabaseException e) {
+    catch (SQLException e) {
        // handle case where loading fails
     }
     
@@ -106,7 +106,7 @@ private void update_record(int thing_id) {
     try {
         ThingData thing = ThingData.retrieve(thing_id);
     }
-    catch (DatabaseException e) {
+    catch (SQLException e) {
         // handle case where loading fails
     }
     
@@ -117,7 +117,7 @@ private void update_record(int thing_id) {
     try {
         thing.write();
     }
-    catch (DatabaseException e) {
+    catch (SQLException e) {
         // handle case where saving fails
     }
 }
@@ -141,7 +141,7 @@ private int create_new_thing() {
     try {
         thing.write();
     }
-    catch (DatabaseException e) {
+    catch (SQLException e) {
         // handle case where saving fails
     }
     

@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 public class AddressData extends DataSource {
 
     // public data
@@ -12,8 +14,10 @@ public class AddressData extends DataSource {
     }
 
     // public methods
-    public boolean write() {
-        // TODO
+    public boolean write() throws SQLException {
+
+
+
         return true;
     }
 }

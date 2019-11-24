@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataSource {
+public abstract class DataSource {
     private static String url = "jdbc:sqlite:db/chocan.sqlite3";
 
     // all rows in all db tables can be identified by a unique int
@@ -15,18 +15,14 @@ public class DataSource {
         return DriverManager.getConnection(url);
     }
 
-    public static void main(String[] args) {
-        DataSource ds = new DataSource();
-        try {
-            ds.connect();
-            System.out.println("Connection established");
+    protected static String ident_to_string(int num, int ident_len) {
+        StringBuilder id_str = new StringBuilder(Integer.toString(num));
+        while (id_str.length() < ident_len) {
+            id_str.insert(0, '0');
         }
-        catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+        return id_str.toString();
     }
 
-    protected String ident_to_string(int num) {
-        return "000000";
-    }
+    // abstract public methods
+    public abstract void display();
 }

@@ -15,9 +15,10 @@ public class AddressData extends DataSource {
 
     // public methods
     public boolean write() throws SQLException {
-
-
-
         return true;
+    }
+
+    public void display() {
+
     }
 }

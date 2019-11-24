@@ -15,6 +15,7 @@ public class AddressData extends DataSource {
 
     // public methods
     public boolean write() throws SQLException {
+        ident = 2;
         return true;
     }
 

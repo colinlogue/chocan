@@ -19,5 +19,10 @@ public class SessionData extends DataSource {
         return true;
     }
 
+    @Override
+    public void display() {
+
+    }
+
     // note: service code is ident (from DataSource base class)
 }

@@ -15,7 +15,7 @@ public class PersonData extends DataSource {
     public AddressData address;
 
     // private data
-    private int ident_len;
+    private static int ident_len;
 
     // static methods
     public static status validate(int ident) {
@@ -35,7 +35,7 @@ public class PersonData extends DataSource {
         // TODO
     }
 
-    private String ident_to_string(int num) {
+    protected static String ident_to_string(int num) {
         return DataSource.ident_to_string(num, ident_len);
     }
 }

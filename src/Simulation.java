@@ -5,6 +5,6 @@
 public class Simulation {
 
     public static void main(String[] args) {
-        // TODO
+        System.out.println("This is the simulation main function. Nothing to see here at the moment.");
     }
 }

@@ -62,7 +62,6 @@ public abstract class DataSource {
         }
     }
 
-
     // abstract public methods
     public abstract void display();
 }

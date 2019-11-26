@@ -171,5 +171,5 @@ The command for running `<classname>` from the root (chocan)
 directory is:
 
 ```bash
-$ java -cp ./out/production:./lib/*.jar <classname>
+$ java -cp ./out/production:./lib/sqlite-jdbc-3.27.2.1.jar <classname>
 ```

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManagerTerminal {
@@ -21,9 +22,17 @@ public class ManagerTerminal {
         do
         {
             //Displays main menu and receive user input
-            display_main_menu();
-            System.out.print("Enter Option: ");
-            option = input.nextInt();
+            //Error displayed if input is not valid and
+            //user will be prompted for valid input
+            try
+            {
+                display_main_menu();
+                System.out.print("Enter Option: ");
+                option = input.nextInt();
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                option = -1;
+            }
 
             //Calls appropriate sub-menu based on valid input
             switch (option) {
@@ -40,17 +49,21 @@ public class ManagerTerminal {
                     //Add methods here
                     break;
                 case 3:
+
                     display_report_menu();
 
                     //Add methods here
                     break;
+                case 4:
+                    //Log the manager out of manager terminal
+                    System.out.println("\n LOGGED OUT\n");
                 default:
                     //If valid input is not received, message will display
                     System.out.print("\nINPUT ERROR: PLEASE ENTER A NUMBER FROM THE MENU\n");
                     break;
             }
             //Input must be number from menu options to exit loop
-        } while (option != 1 && option != 2 && option != 3);
+        } while (option < 1 || option > 4);
     }
 
     //Displays main menu for manager terminal
@@ -62,6 +75,7 @@ public class ManagerTerminal {
         System.out.println("1. Manage Members");
         System.out.println("2. Manage Providers");
         System.out.println("3. Print Reports");
+        System.out.println("4. Logout");
     }
 
     //Used for both Manage Members and Manage Providers Option
@@ -74,13 +88,18 @@ public class ManagerTerminal {
         System.out.println("1. Add " + person);
         System.out.println("2. Remove " + person);
         System.out.println("3. Update " + person);
+        System.out.println("4. Return to Main Menu");
     }
 
     private void display_report_menu()
     {
+        System.out.println("\nReport Menu\n" +
+                           "-----------\n" +
+                           "PLEASE CHOOSE FROM THE OPTIONS BELOW");
         System.out.println("1. Display Individual Report");
         System.out.println("2. Display Weekly Report");
         System.out.println("3. Display Account Payable");
+        System.out.println("4. Return to Main Menu");
     }
 
     //Sub-menu for report menu
@@ -88,6 +107,7 @@ public class ManagerTerminal {
     {
         System.out.println("1. Member");
         System.out.println("2. Provider");
+        System.out.println("3. Return to Main Menu");
     }
 
     //Manage Member Menu
@@ -99,35 +119,44 @@ public class ManagerTerminal {
 
         //Continues to display manager member menu until valid user input reveived
         do {
-
-            //Prints manage member menu to terminal
-            display_manage_menu("Member");
-
-            System.out.print("Enter Option: ");
-            option = input.nextInt();   //holds user response
+            try
+            {
+                display_manage_menu("Member");
+                System.out.print("Enter Option: ");
+                option = input.nextInt();
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                option = -1;
+            }
 
             //Calls add, remove, or update for member based on
             //valid user input
             switch (option) {
                 case 1:
                     //add member
-                    System.out.print("Add Member Chosen");
+                    System.out.print("\nADD MEMBER\n" +
+                                     "-----------\n");
                     break;
                 case 2:
                     //remove member
-                    System.out.print("Remove Member Chosen");
+                    System.out.print("\nREMOVE MEMBER\n" +
+                                     "--------------\n");
                     break;
                 case 3:
                     //update member
-                    System.out.print("Update Member Chosen");
+                    System.out.print("\nUPDATE MEMBER\n" +
+                                     "-------------\n");
                     break;
+                case 4:
+                    //Return to Main Menu
+                    main_menu();
                 default:
                     //Prints error message to screen if input is invalid
-                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU\n");
+                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
                     break;
             }
             //Input must be a number from menu to exit loop
-        }while(option != 1 && option != 2 && option != 3);
+        }while(option < 1 || option > 4);
     }
 
     //Manage Provider Menu
@@ -140,32 +169,43 @@ public class ManagerTerminal {
         //Continues to display menu until valid input is received from user
         do {
 
-            //Prints manage provider menu to screen
-            display_manage_menu("Provider");
-
-            System.out.println("Enter Option: ");
-            option = input.nextInt();  //holds user response
+            try
+            {
+                display_manage_menu("Provider");
+                System.out.print("Enter Option: ");
+                option = input.nextInt();
+            } catch (InputMismatchException e)
+            {
+                input.nextLine();
+                option = -1;
+            }
 
             //Calls add, remove, or update based on valid user input
             switch (option) {
                 case 1:
                     //add provider
-                    System.out.print("Add Provider Chosen");
+                    System.out.print("ADD PROVIDER" +
+                                     "-------------\n");
                     break;
                 case 2:
                     //remove provider
-                    System.out.print("Remove Provider Chosen");
+                    System.out.print("REMOVE PROVIDER" +
+                                     "----------------\n");
                     break;
                 case 3:
                     //update provider
-                    System.out.print("Update Provider Chosen");
+                    System.out.print("UPDATE PROVIDER" +
+                                     "----------------\n");
                     break;
+                case 4:
+                    //Return user to Main Menu
+                    main_menu();
                 default:
                     //Error message printed to terminal if input is not valid
-                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU\n");
+                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
                     break;
             }
             //Input must be a number from menu options to exit loop
-        }while(option != 1 && option != 2 && option != 3);
+        }while(option < 1 || option > 4);
     }
 }

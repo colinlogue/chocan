@@ -59,6 +59,10 @@ public class MemberData extends PersonData {
         //add return false for failure
     }
 
+    public static void delete(int ident) throws SQLException {
+        // drop row matching ident from member table
+    }
+
     //possibly add to base class PersonData **
     private int get_next_ident() throws SQLException {
         // finds the previous max ident string and increments by 1

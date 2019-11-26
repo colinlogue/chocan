@@ -153,3 +153,23 @@ private int create_new_thing() {
     return thing.ident;
 }
 ```
+
+## Dependencies
+The project relies on one external library to provide the
+driver for the database. It is located in the `lib` directory.
+In order to compile, the archive that holds the driver must
+be added to the classpath. For command line compilation,
+calling `make run` from the root directory will automatically
+compile and run the `Simulation` class with the appropriate
+classpath set.
+
+For those using IntelliJ, you can right click the `.jar` file
+in the `lib` directory and add it as a library. It will be
+included when you build after that.
+
+The command for running `<classname>` from the root (chocan)
+directory is:
+
+```bash
+$ java -cp ./out/production:./lib/sqlite-jdbc-3.27.2.1.jar <classname>
+```

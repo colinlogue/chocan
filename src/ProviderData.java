@@ -42,6 +42,20 @@ public class ProviderData extends PersonData {
 
     public static void delete(int ident) throws SQLException {
         // drop row matching ident from provider table
+        String pro_id = ident_to_string(ident);
+        String sql = "DELETE FROM provider WHERE ProviderID = " + pro_id;
+
+        try (Connection conn = connect(); //check this **
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the corresponding param
+            pstmt.setInt(1, ident);
+            // execute the delete statement
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void display() {

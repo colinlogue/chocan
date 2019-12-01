@@ -1,12 +1,43 @@
+import java.sql.*;
+/*
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+*/
 public class ProviderData extends PersonData {
 
-    public static ProviderData retrieve(int ident) {
-        return new ProviderData();
+    private static String tabel = "provider";
+    private static String[] columns = {
+        "ProviderID",
+        "Name",
+        "AddressID"
+    };
+
+    //public boolean is_active;   //lift from MemberData?
+
+    public static ProviderData retrieve(int ident) throws SQLException {
+        //convert int to String
+        String pro_id = ident_to_string(ident);
+        //select all columns from provider row that match id
+        String sql = "SELECT * FROM provider WHERE ProviderID = ?";
+        //established Connection
+        Connection conn = connect();
+        //creates obj
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        //replaces ? in string with pro_id, creating valid sql Statement
+        stmt.setString(1, pro_id);
+        //queries appropriate table for Statement
+        ResultSet results = stmt.executeQuery();
+        //creates ProviderData obj
+        ProviderData pro = new ProviderData();
+        //populate data members of new object
+        int address_id = results.getInt("ProviderID");
+        pro.address = AddressData.retrieve(address_id);
+        pro.ident = Integer.parseInt(pro_id);
+        //pro.is_active = results.getBoolean("IsActive");
+        conn.close();
+        return pro;
     }
 
     public static void delete(int ident) throws SQLException {

@@ -7,7 +7,7 @@ import java.sql.Statement;
 */
 public class ProviderData extends PersonData {
 
-    private static String tabel = "provider";
+    private static String table = "provider";
     private static String[] columns = {
         "ProviderID",
         "Name",
@@ -77,7 +77,31 @@ public class ProviderData extends PersonData {
     }
 
     public boolean write() throws SQLException {
+        //write address first
+        address.write();
+        //if no id, insert new rows
+        if (ident == 0){
+          ident = get_next_ident();
+          String[] vals = new String[]{
+                  ident_to_string(ident),
+                  name,
+                //  Boolean.toString(is_active),
+                  Integer.toString(address.ident)
+          };
+          insert(table, columns, vals);
+        }
         return true;
+    }
+
+    private int get_next_ident() throws SQLException {
+        // finds the previous max ident string and increments by 1
+        String sql = "select max(ProviderID) from provider";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);)
+        {
+            return Integer.parseInt(results.getString(1)) + 1;
+        }
     }
 
     // test

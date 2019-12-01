@@ -12,13 +12,13 @@ public class MemberData extends PersonData {
 
     public boolean is_active;
 
-    public static status validate(int ident, String table, String id_col) {
+    public static status validate(int ident) throws SQLException {
         String sql = "select * from member where MemberID = " + ident_to_string(ident);
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);) {
-            if (results.first()) {
-                if (results.getBoolean("is_active")) {
+            if (results.next()) {
+                if (results.getBoolean("IsActive")) {
                     // ID exists and is active
                     return status.VALID;
                 }
@@ -30,7 +30,7 @@ public class MemberData extends PersonData {
             // ID does not exist
             else return status.INVALID;
         } catch (SQLException e) {
-            return status.INVALID;
+            throw e;
         }
     }
 
@@ -100,13 +100,20 @@ public class MemberData extends PersonData {
     // test
     public static void main(String[] args) {
         try {
-            MemberData mem = new MemberData();
-            mem.name = "Cahoots McDoinkel";
-            mem.address = new AddressData();
-            mem.is_active = true;
-            mem.write();
+            PersonData.status valid = MemberData.validate(100002);
+            String status = "";
+            if (valid == PersonData.status.VALID) {
+                status += "valid";
+            } else if (valid == PersonData.status.INVALID) {
+                status += "invalid";
+            } else if (valid == PersonData.status.SUSPENDED) {
+                status += "suspended";
+            } else {
+                status += "whoopsie";
+            }
+            System.out.println(status);
         }
-        catch (SQLException e) {
+        catch (SQLException e){
             System.out.println(e.getMessage());
         }
     }

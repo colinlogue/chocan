@@ -20,7 +20,7 @@ public class PersonData extends DataSource {
     private static int ident_len;
 
     // static methods
-    public static status validate(int ident, String table, String id_col) {
+    public static PersonData.status validate(int ident, String table, String id_col) {
         String sql = "select * from " + table + " where " + id_col + " = " + ident_to_string(ident);
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();

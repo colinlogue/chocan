@@ -1,14 +1,11 @@
 // This is the base class for all classes that directly insert into
 // and retrieve from the database.
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class DataSource {
     private static String url = "jdbc:sqlite:db/chocan.sqlite3";
-
+    
     // all rows in all db tables can be identified by a unique int
     protected int ident;
 
@@ -64,4 +61,15 @@ public abstract class DataSource {
 
     // abstract public methods
     public abstract void display();
+
+    protected abstract void print_row();
+
+    // utility functions
+    public static String pad_to(String s, int n) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() < n) {
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
 }

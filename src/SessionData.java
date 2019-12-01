@@ -133,12 +133,35 @@ public class SessionData extends DataSource {
         System.out.println();
     }
 
+    public static void head() throws SQLException {
+        String sql = "SELECT * FROM session";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            System.out.println(" SessionID | MemberID   | ProviderID | ServiceCode | ServiceDate | Comments ");
+            int i = 0;
+            while (results.next() && i < 10) {
+                StringBuilder row = new StringBuilder(" ");
+                row.append(pad_to(results.getString("SessionID"), 12));
+                row.append(pad_to(results.getString("MemberID"), 13));
+                row.append(pad_to(results.getString("ProviderID"), 13));
+                row.append(pad_to(results.getString("ServiceCode"), 14));
+                row.append(pad_to(date_format.format(results.getDate("ServiceDate")), 14));
+                row.append(results.getString("Comments"));
+                System.out.println(row.toString());
+                ++i;
+            }
+        }
+        catch (SQLException e) { throw e; }
+    }
+
+    public static void tail() {
+
+    }
+
     public static void main(String[] args) {
         try {
-            Vector<SessionData> data = SessionData.retrieve_all();
-            for (SessionData sess: data) {
-                sess.display();
-            }
+            SessionData.head();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

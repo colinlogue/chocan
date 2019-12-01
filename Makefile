@@ -5,3 +5,6 @@ all: src/*.java
 
 run: all
 	java -cp $(CPATHS) Simulation
+
+csv:
+	cd db; python3 db.py

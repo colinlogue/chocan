@@ -1,4 +1,7 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ProviderData extends PersonData {
 
@@ -11,6 +14,21 @@ public class ProviderData extends PersonData {
     }
 
     public void display() {
+    }
+
+    public static status validate(int ident) {
+        String sql = "select * from provider where ProviderID = " + ident_to_string(ident);
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            if (results.first()) {
+                return status.VALID;
+            }
+            // ID does not exist
+            else return status.INVALID;
+        } catch (SQLException e) {
+            return status.INVALID;
+        }
     }
 
     public boolean write() throws SQLException {

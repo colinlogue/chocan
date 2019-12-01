@@ -12,6 +12,28 @@ public class MemberData extends PersonData {
 
     public boolean is_active;
 
+    public static status validate(int ident, String table, String id_col) {
+        String sql = "select * from member where MemberID = " + ident_to_string(ident);
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            if (results.first()) {
+                if (results.getBoolean("is_active")) {
+                    // ID exists and is active
+                    return status.VALID;
+                }
+                else {
+                    // ID exists and is inactive
+                    return status.SUSPENDED;
+                }
+            }
+            // ID does not exist
+            else return status.INVALID;
+        } catch (SQLException e) {
+            return status.INVALID;
+        }
+    }
+
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
         //convert int to string

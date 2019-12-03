@@ -4,7 +4,9 @@ public class ManagerTerminal extends ManagerTools{
 
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
+        ManagerTools man = new ManagerTools();
 
+        man.prompt_city();
         temp.add_staff("Provider");
         //Menu tree for manager terminal
         //temp.main_menu();
@@ -214,17 +216,15 @@ public class ManagerTerminal extends ManagerTools{
         do
         {
             ProviderData new_provider = new ProviderData();
-            System.out.print("Enter new " + staff_title + "'s name: ");
-            new_provider.name = input.nextLine();
+
+            new_provider.name = prompt_name("Provider");
 
             System.out.println("Enter new " + staff_title + "'s address.");
-            System.out.print("Street: ");
-            new_provider.address.street = input.nextLine();
-            System.out.print("City: ");
-            new_provider.address.city = input.nextLine();
-            System.out.print("State: ");
-            new_provider.address.state = input.nextLine();
+            new_provider.address.street = prompt_street();
+            new_provider.address.city = prompt_city();
+            new_provider.address.state = prompt_state();
             new_provider.address.ZIP = prompt_zip();
+
             //Add display() and confirm if the information is correct with the user.
             repeat = ask_to_repeat();
         }

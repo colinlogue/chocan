@@ -9,6 +9,86 @@ public class ManagerTools
         input = new Scanner(System.in);
     }
 
+    protected String prompt_name(String person)
+    {
+        boolean success = false;
+        String name;
+
+        do
+        {
+            System.out.print("Enter new " + person + "'s name: ");
+            name = input.nextLine();
+            if(isStringAlphabet(name))
+                success = true;
+            else
+                System.out.println("Invalid city name.");
+        }
+        while(!success);
+
+        return name;
+    }
+
+    //Prompt user for person (Manager or Provider) city name and return
+    //city as a string.
+    protected String prompt_street()
+    {
+        boolean success = false;
+        String street;
+
+        do
+        {
+            System.out.print("City: ");
+            street = input.nextLine();
+            if(isStringAlphanumeric(street))
+                success = true;
+            else
+                System.out.println("Invalid city name. Use only alphabets.");
+        }
+        while(!success);
+
+        return street;
+    }
+
+    //Prompt user for person (Manager or Provider) city name and return
+    //city as a string.
+    protected String prompt_city()
+    {
+        boolean success = false;
+        String city;
+
+        do
+        {
+            System.out.print("City: ");
+            city = input.nextLine();
+            if(isStringAlphabet(city))
+                success = true;
+            else
+                System.out.println("Invalid city name. Use only alphabets.");
+        }
+        while(!success);
+
+        return city;
+    }
+
+    protected String prompt_state()
+    {
+        boolean success = false;
+        String state;
+
+        do
+        {
+            System.out.print("State: ");
+            state = input.nextLine();
+            if(isStringOnlyCaps(state))
+                success = true;
+            else
+                System.out.println("Invalid state name. Use only capital letters.");
+        }
+        while(!success);
+
+        return state;
+    }
+
     //Prompt user for person (Manager or Provider) Zip Code and return
     //zip code as a String.
     protected String prompt_zip()
@@ -27,7 +107,7 @@ public class ManagerTools
             }
             catch (NumberFormatException e)
             {
-                System.out.println("Invalid ZIP Code");
+                System.out.println("Invalid ZIP Code. Use only numbers");
                 success = false;
             }
         }
@@ -51,5 +131,25 @@ public class ManagerTools
             return answer;
         else
             return -1;
+    }
+
+    //Checks if string contains only alphabets and whitespace
+    private static boolean isStringAlphabet(String str)
+    {
+       return ((!str.equals(""))) && (str.matches("^[a-zA-Z\\s]*$"));
+
+    }
+
+    //Checks if strings contains only capital letters. No whitespace.
+    private static boolean isStringOnlyCaps(String str)
+    {
+        return ((!str.equals(""))) && (str.matches("^[A-Z]*$"));
+    }
+
+    //Checks if string contains alphanumeric letters and whitespace.
+    private static boolean isStringAlphanumeric(String str)
+    {
+        return ((!str.equals(""))) && (str.matches("^[A-Z]*$"));
+
     }
 }

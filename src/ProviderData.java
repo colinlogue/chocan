@@ -1,16 +1,61 @@
+import java.sql.*;
+/*
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+*/
 public class ProviderData extends PersonData {
 
-    public static ProviderData retrieve(int ident) {
-        return new ProviderData();
+    private static String table = "provider";
+    private static String[] columns = {
+        "ProviderID",
+        "Name",
+        "AddressID"
+    };
+
+    //public boolean is_active;   //lift from MemberData?
+
+    public static ProviderData retrieve(int ident) throws SQLException {
+        //convert int to String
+        String pro_id = ident_to_string(ident);
+        //select all columns from provider row that match id
+        String sql = "SELECT * FROM provider WHERE ProviderID = ?";
+        //established Connection
+        Connection conn = connect();
+        //creates obj
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        //replaces ? in string with pro_id, creating valid sql Statement
+        stmt.setString(1, pro_id);
+        //queries appropriate table for Statement
+        ResultSet results = stmt.executeQuery();
+        //creates ProviderData obj
+        ProviderData pro = new ProviderData();
+        //populate data members of new object
+        int address_id = results.getInt("ProviderID");
+        pro.address = AddressData.retrieve(address_id);
+        pro.ident = Integer.parseInt(pro_id);
+        //pro.is_active = results.getBoolean("IsActive");
+        conn.close();
+        return pro;
     }
 
     public static void delete(int ident) throws SQLException {
         // drop row matching ident from provider table
+        String pro_id = ident_to_string(ident);
+        String sql = "DELETE FROM provider WHERE ProviderID = " + pro_id;
+
+        try (Connection conn = connect(); //check this **
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the corresponding param
+            pstmt.setInt(1, ident);
+            // execute the delete statement
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void display() {
@@ -32,7 +77,31 @@ public class ProviderData extends PersonData {
     }
 
     public boolean write() throws SQLException {
+        //write address first
+        address.write();
+        //if no id, insert new rows
+        if (ident == 0){
+          ident = get_next_ident();
+          String[] vals = new String[]{
+                  ident_to_string(ident),
+                  name,
+                //  Boolean.toString(is_active),
+                  Integer.toString(address.ident)
+          };
+          insert(table, columns, vals);
+        }
         return true;
+    }
+
+    private int get_next_ident() throws SQLException {
+        // finds the previous max ident string and increments by 1
+        String sql = "select max(ProviderID) from provider";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);)
+        {
+            return Integer.parseInt(results.getString(1)) + 1;
+        }
     }
 
     // test

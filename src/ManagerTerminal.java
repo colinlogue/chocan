@@ -1,12 +1,13 @@
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
-public class ManagerTerminal {
+public class ManagerTerminal extends ManagerTools{
+
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
 
+        temp.add_staff("Provider");
         //Menu tree for manager terminal
-        temp.main_menu();
+        //temp.main_menu();
     }
 
     //Main Menu
@@ -15,7 +16,6 @@ public class ManagerTerminal {
     //display reports.
     private void main_menu()
     {
-        Scanner input = new Scanner(System.in);
         int option;
 
         //Continue to display main menu until valid choice is made by user
@@ -114,7 +114,6 @@ public class ManagerTerminal {
     //Provides options to add, remove, or update members
     private void manage_member ()
     {
-        Scanner input = new Scanner(System.in);
         int option;
 
         //Continues to display manager member menu until valid user input reveived
@@ -163,12 +162,10 @@ public class ManagerTerminal {
     //Provides options to add, remove, or update members
     private void manage_provider ()
     {
-        Scanner input = new Scanner(System.in);
         int option;
 
         //Continues to display menu until valid input is received from user
         do {
-
             try
             {
                 display_manage_menu("Provider");
@@ -184,8 +181,8 @@ public class ManagerTerminal {
             switch (option) {
                 case 1:
                     //add provider
-                    System.out.print("ADD PROVIDER" +
-                                     "-------------\n");
+                    System.out.print("ADD PROVIDER" + "-------------\n");
+                    add_staff("Provider");
                     break;
                 case 2:
                     //remove provider
@@ -207,5 +204,33 @@ public class ManagerTerminal {
             }
             //Input must be a number from menu options to exit loop
         }while(option < 1 || option > 4);
+    }
+
+    //Prompts for new staff's (Manager or Provider) name and address information
+    private void add_staff(String staff_title)
+    {
+        int repeat;
+
+        do
+        {
+            ProviderData new_provider = new ProviderData();
+            System.out.print("Enter new " + staff_title + "'s name: ");
+            new_provider.name = input.nextLine();
+
+            System.out.println("Enter new " + staff_title + "'s address.");
+            System.out.print("Street: ");
+            new_provider.address.street = input.nextLine();
+            System.out.print("City: ");
+            new_provider.address.city = input.nextLine();
+            System.out.print("State: ");
+            new_provider.address.state = input.nextLine();
+            new_provider.address.ZIP = prompt_zip();
+            //Add display() and confirm if the information is correct with the user.
+            repeat = ask_to_repeat();
+        }
+        while(repeat == 1);
+
+        //Include call to write() here after everything is done.
+            //Do exception handeling and maybe change return type for this method.
     }
 }

@@ -16,6 +16,11 @@ public class PersonData extends DataSource {
     public String name;
     public AddressData address;
 
+    public PersonData(){
+        name = null;
+        address = new AddressData();
+    }
+
     // private data
     private static int ident_len;
 

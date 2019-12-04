@@ -67,6 +67,15 @@ public class AddressData extends DataSource {
     }
 
     public void display() {
+        System.out.println(street);
+    }
 
+    public static void main(String[] args) {
+        try {
+            AddressData address = AddressData.retrieve(1);
+            address.display();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

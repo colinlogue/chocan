@@ -22,7 +22,7 @@ public class PersonData extends DataSource {
     }
 
     // private data
-    private static int ident_len;
+    private static int ident_len = 9;
 
     // static methods
     public static PersonData.status validate(int ident, String table, String id_col) {

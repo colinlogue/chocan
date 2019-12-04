@@ -8,9 +8,7 @@ public class ManagerTerminal extends ManagerTools{
 
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
-        ManagerTools man = new ManagerTools();
 
-        man.prompt_city();
         temp.add_staff("Provider");
         //Menu tree for manager terminal
         //temp.main_menu();
@@ -249,7 +247,7 @@ public class ManagerTerminal extends ManagerTools{
             }
             catch (SQLException e){
                 //Just a place holder for now.
-                System.out.println("Error");
+                System.out.println("Failed to write to database");
             }
         }
         else {
@@ -259,10 +257,31 @@ public class ManagerTerminal extends ManagerTools{
             }
             catch (SQLException e){
                 //Just a place holder for now.
-                System.out.println("Error");
+                System.out.println("Failed to write to database");
             }
         }
     }
+
+    /*
+    private void remove_staff(String staff_title)
+    {
+        int ident;
+        PersonData staff;
+
+        if(staff_title.equals(provider))
+            staff = new ProviderData();
+        else
+            staff = new MemberData();
+
+        System.out.print("Enter Identification number of the " + staff_title);
+        ident = input.nextInt();
+
+        if(staff_title.equals(provider)){
+            ProviderData pData = (ProviderData) staff;
+        }
+    }
+
+     */
 
     /*
     private void update_staff(String staff_title)
@@ -275,9 +294,9 @@ public class ManagerTerminal extends ManagerTools{
 
 
         if(staff_title.equals(provider)){
-           ProviderData pData = new ProviderData();
+           ProviderData pData = ProviderData.retrieve(ident);
            try {
-               pData.retrieve(ident);
+               pdata.re
            }
            catch (SQLException e) {
                System.out.println(staff_title + " with ID:" + ident + " could not be found.");
@@ -287,5 +306,5 @@ public class ManagerTerminal extends ManagerTools{
 
         }
     }
-    */
+     */
 }

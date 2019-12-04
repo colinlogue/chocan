@@ -23,15 +23,15 @@ public class ManagerTools
             if(isStringAlphabet(name))
                 success = true;
             else
-                System.out.println("Invalid city name.");
+                System.out.println("Invalid name.");
         }
         while(!success);
 
         return name;
     }
 
-    //Prompt user for person (Manager or Provider) city name and return
-    //city as a string.
+    //Prompt user for person (Manager or Provider) street name and return
+    //street as a string.
     protected String prompt_street()
     {
         boolean success = false;
@@ -39,12 +39,12 @@ public class ManagerTools
 
         do
         {
-            System.out.print("City: ");
+            System.out.print("Street: ");
             street = input.nextLine();
             if(isStringAlphanumeric(street))
                 success = true;
             else
-                System.out.println("Invalid city name. Use only alphabets.");
+                System.out.println("Invalid street name. Use only alphabet, numbers , (.), or (').");
         }
         while(!success);
 
@@ -140,8 +140,8 @@ public class ManagerTools
     //Checks if string contains only alphabets and whitespace
     private static boolean isStringAlphabet(String str)
     {
-       return ((!str.equals(""))) && (str.matches("^[a-zA-Z\\s]*$"));
-
+       return ((!str.equals("")))
+               && (str.matches("^[a-zA-Z.'\\s]*$"));
     }
 
     //Checks if strings contains only capital letters. No whitespace.
@@ -153,7 +153,6 @@ public class ManagerTools
     //Checks if string contains alphanumeric letters and whitespace.
     private static boolean isStringAlphanumeric(String str)
     {
-        return ((!str.equals(""))) && (str.matches("^[A-Z]*$"));
-
+        return ((!str.equals(""))) && (str.matches("^[a-zA-Z0-9.'\\s]*$"));
     }
 }

@@ -9,7 +9,8 @@ public class ManagerTerminal extends ManagerTools{
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
 
-        temp.add_staff("Provider");
+        temp.remove_staff(provider);
+        temp.add_staff(provider);
         //Menu tree for manager terminal
         //temp.main_menu();
     }
@@ -262,7 +263,6 @@ public class ManagerTerminal extends ManagerTools{
         }
     }
 
-    /*
     private void remove_staff(String staff_title)
     {
         int ident;
@@ -273,15 +273,53 @@ public class ManagerTerminal extends ManagerTools{
         else
             staff = new MemberData();
 
-        System.out.print("Enter Identification number of the " + staff_title);
+        System.out.print("Enter Identification number of the " + staff_title + " to remove: ");
         ident = input.nextInt();
 
-        if(staff_title.equals(provider)){
-            ProviderData pData = (ProviderData) staff;
-        }
-    }
+        if(staff instanceof ProviderData)
+        {
+            try{
+                staff = ProviderData.retrieve(ident) ;
+            }
+            catch (SQLException e)
+            {
+                System.out.println(ident + " is an invalid ID number.");
+            }
 
-     */
+            ProviderData pData = (ProviderData) staff;
+
+            try{
+                pData.delete(ident);
+            }
+            catch (SQLException e){
+                System.out.println("Failed to remove" + staff_title +
+                        "(ID:" + ident + ").");
+            }
+        }
+        else
+        {
+            try{
+                staff = MemberData.retrieve(ident) ;
+            }
+            catch (SQLException e)
+            {
+                System.out.println(ident + " is an invalid ID number.");
+            }
+
+            MemberData pData = (MemberData) staff;
+
+            try{
+                pData.delete(ident);
+            }
+            catch (SQLException e){
+                System.out.println("Failed to remove" + staff_title +
+                        "(ID:" + ident + ").");
+            }
+        }
+
+        System.out.println(staff_title + "ID: " + ident
+                + " was removed successfully.");
+    }
 
     /*
     private void update_staff(String staff_title)

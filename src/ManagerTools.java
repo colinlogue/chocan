@@ -9,6 +9,8 @@ public class ManagerTools
         input = new Scanner(System.in);
     }
 
+    //Prompt user for person (Manager or Provider) name and return
+    //their name as a string.
     protected String prompt_name(String person)
     {
         boolean success = false;
@@ -70,6 +72,8 @@ public class ManagerTools
         return city;
     }
 
+    //Prompt user for person (Manager or Provider) state name and return
+    //state as a string.
     protected String prompt_state()
     {
         boolean success = false;

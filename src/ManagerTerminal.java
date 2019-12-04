@@ -1,6 +1,10 @@
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 
 public class ManagerTerminal extends ManagerTools{
+
+    public static String provider = "Provider";
+    public static String manager = "Manager";
 
     public static void main(String[] args) {
         ManagerTerminal temp = new ManagerTerminal();
@@ -184,7 +188,7 @@ public class ManagerTerminal extends ManagerTools{
                 case 1:
                     //add provider
                     System.out.print("ADD PROVIDER" + "-------------\n");
-                    add_staff("Provider");
+                    add_staff(provider);
                     break;
                 case 2:
                     //remove provider
@@ -209,28 +213,79 @@ public class ManagerTerminal extends ManagerTools{
     }
 
     //Prompts for new staff's (Manager or Provider) name and address information
+    //change return type to indicate success or failure
     private void add_staff(String staff_title)
     {
         int repeat;
+        PersonData new_staff;
+
+        if(staff_title.equals(provider))
+            new_staff = new ProviderData();
+        else
+            new_staff = new MemberData();
 
         do
         {
-            ProviderData new_provider = new ProviderData();
-
-            new_provider.name = prompt_name("Provider");
+            new_staff.name = prompt_name(staff_title);
 
             System.out.println("Enter new " + staff_title + "'s address.");
-            new_provider.address.street = prompt_street();
-            new_provider.address.city = prompt_city();
-            new_provider.address.state = prompt_state();
-            new_provider.address.ZIP = prompt_zip();
+            new_staff.address.street = prompt_street();
+            new_staff.address.city = prompt_city();
+            new_staff.address.state = prompt_state();
+            new_staff.address.ZIP = prompt_zip();
 
             //Add display() and confirm if the information is correct with the user.
             repeat = ask_to_repeat();
         }
         while(repeat == 1);
 
-        //Include call to write() here after everything is done.
-            //Do exception handeling and maybe change return type for this method.
+        //Include call to person.write() here after everything is done.
+            //Do exception handling and maybe change return type for this method.
+        if(new_staff instanceof ProviderData)
+        {
+            try{
+                ProviderData providerData = (ProviderData) new_staff;
+                providerData.write();
+            }
+            catch (SQLException e){
+                //Just a place holder for now.
+                System.out.println("Error");
+            }
+        }
+        else {
+            try {
+                MemberData memberData = (MemberData) new_staff;
+                memberData.write();
+            }
+            catch (SQLException e){
+                //Just a place holder for now.
+                System.out.println("Error");
+            }
+        }
     }
+
+    /*
+    private void update_staff(String staff_title)
+    {
+        int ident;
+        PersonData
+
+        System.out.print("Enter Identification number of the " + staff_title);
+        ident = input.nextInt();
+
+
+        if(staff_title.equals(provider)){
+           ProviderData pData = new ProviderData();
+           try {
+               pData.retrieve(ident);
+           }
+           catch (SQLException e) {
+               System.out.println(staff_title + " with ID:" + ident + " could not be found.");
+           }
+        }
+        else{
+
+        }
+    }
+    */
 }

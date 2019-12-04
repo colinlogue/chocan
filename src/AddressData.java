@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.sql.*;
 
 public class AddressData extends DataSource {
 
@@ -17,17 +18,15 @@ public class AddressData extends DataSource {
     };
 
     // db read/write
-    public static AddressData retrieve(int ident) {
-        //convert int to string
-        String add_id = ident_to_string(ident);
+    public static AddressData retrieve(int ident) throws SQLException {
         //selects all columns from member row that matches id
-        String sql = "SELECT * FROM address WHERE ident = ?";
+        String sql = "SELECT * FROM address WHERE AddressID = ?";
         //establishes connection
         Connection conn = connect();
         //creates obj
         PreparedStatement stmt = conn.prepareStatement(sql);
         //replaces ? in string with add_id, creating a valid SQL statement
-        stmt.setString(1, add_id);
+        stmt.setInt(1, ident);
         //queries appropriate table for statement
         ResultSet results = stmt.executeQuery();
         AddressData add = new AddressData();
@@ -42,23 +41,30 @@ public class AddressData extends DataSource {
 
     // public methods
     public boolean write() throws SQLException {
-        //ident = 2;
         if (ident == 0)
         {
-        String[] vals = new String[] {
-            ident_to_string(ident),
-            street,
-            state,
-            ZIP
+            ident = get_next_ident();
+            String[] vals = new String[] {
+              Integer.toString(ident),
+              street,
+              state,
+              ZIP
         };
-        
+        insert(table, columns, vals);
       }
-
-
-        return true;
+      return true;
     }
 
-//get_next_ident()????
+    private int get_next_ident() throws SQLException {
+        // finds the previous max ident string and increments by 1
+        String sql = "select max(AddressID) from address";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);)
+        {
+            return Integer.parseInt(results.getString(1)) + 1;
+        }
+    }
 
     public void display() {
 

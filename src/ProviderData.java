@@ -18,7 +18,7 @@ public class ProviderData extends PersonData {
 
     public static ProviderData retrieve(int ident) throws SQLException {
         //convert int to String
-        String pro_id = ident_to_string(ident);
+        String pro_id = ident_to_string(ident);  //note: this differs from AddressData because handled in PersonData
         //select all columns from provider row that match id
         String sql = "SELECT * FROM provider WHERE ProviderID = ?";
         //established Connection

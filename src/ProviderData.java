@@ -32,7 +32,7 @@ public class ProviderData extends PersonData {
         //creates ProviderData obj
         ProviderData pro = new ProviderData();
         //populate data members of new object
-        int address_id = results.getInt("ProviderID");
+        int address_id = results.getInt("AddressID");
         pro.address = AddressData.retrieve(address_id);
         pro.ident = Integer.parseInt(pro_id);
         //pro.is_active = results.getBoolean("IsActive");
@@ -59,6 +59,7 @@ public class ProviderData extends PersonData {
     }
 
     public void display() {
+        System.out.println(name);
     }
 
     public static PersonData.status validate(int ident) throws SQLException {
@@ -107,20 +108,10 @@ public class ProviderData extends PersonData {
     // test
     public static void main(String[] args) {
         try {
-            PersonData.status valid = ProviderData.validate(900099);
-            String status = "";
-            if (valid == PersonData.status.VALID) {
-                status += "valid";
-            } else if (valid == PersonData.status.INVALID) {
-                status += "invalid";
-            } else if (valid == PersonData.status.SUSPENDED) {
-                status += "suspended";
-            } else {
-                status += "whoopsie";
-            }
-            System.out.println(status);
+            ProviderData pro = ProviderData.retrieve(900006);
+            pro.display();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

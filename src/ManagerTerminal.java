@@ -213,7 +213,7 @@ public class ManagerTerminal extends ManagerTools{
 
     //Prompts for new staff's (Manager or Provider) name and address information
     //change return type to indicate success or failure
-    private void add_staff(String staff_title)
+    private int add_staff(String staff_title)
     {
         int repeat;
         PersonData new_staff;
@@ -249,6 +249,7 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e){
                 //Just a place holder for now.
                 System.out.println("Failed to write to database");
+                return -1;
             }
         }
         else {
@@ -259,11 +260,14 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e){
                 //Just a place holder for now.
                 System.out.println("Failed to write to database");
+                return -1;
             }
         }
+
+        return 0;
     }
 
-    private void remove_staff(String staff_title)
+    private int remove_staff(String staff_title)
     {
         int ident;
         PersonData staff;
@@ -276,6 +280,7 @@ public class ManagerTerminal extends ManagerTools{
         System.out.print("Enter Identification number of the " + staff_title + " to remove: ");
         ident = input.nextInt();
 
+        //Use down casting to retrieve ID
         if(staff instanceof ProviderData)
         {
             try{
@@ -284,6 +289,7 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e)
             {
                 System.out.println(ident + " is an invalid ID number.");
+                return -1;
             }
 
             ProviderData pData = (ProviderData) staff;
@@ -294,6 +300,7 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e){
                 System.out.println("Failed to remove" + staff_title +
                         "(ID:" + ident + ").");
+                return -1;
             }
         }
         else
@@ -304,6 +311,7 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e)
             {
                 System.out.println(ident + " is an invalid ID number.");
+                return -1;
             }
 
             MemberData pData = (MemberData) staff;
@@ -314,11 +322,14 @@ public class ManagerTerminal extends ManagerTools{
             catch (SQLException e){
                 System.out.println("Failed to remove" + staff_title +
                         "(ID:" + ident + ").");
+                return -1;
             }
         }
 
         System.out.println(staff_title + "ID: " + ident
                 + " was removed successfully.");
+
+        return 0;
     }
 
     /*

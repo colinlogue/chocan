@@ -14,7 +14,7 @@ public class ProviderData extends PersonData {
         "AddressID"
     };
 
-    //public boolean is_active;   //lift from MemberData?
+    public boolean is_active;
 
     public static ProviderData retrieve(int ident) throws SQLException {
         //convert int to String
@@ -43,13 +43,13 @@ public class ProviderData extends PersonData {
     public static void delete(int ident) throws SQLException {
         // drop row matching ident from provider table
         String pro_id = ident_to_string(ident);
-        String sql = "DELETE FROM provider WHERE ProviderID = " + pro_id;
+        String sql = "DELETE FROM provider WHERE ProviderID = ?";
 
         try (Connection conn = connect(); //check this **
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // set the corresponding param
-            pstmt.setInt(1, ident);
+            pstmt.setString(1, pro_id);
             // execute the delete statement
             pstmt.executeUpdate();
 
@@ -85,7 +85,7 @@ public class ProviderData extends PersonData {
           String[] vals = new String[]{
                   ident_to_string(ident),
                   name,
-                //  Boolean.toString(is_active),
+                  Boolean.toString(is_active),
                   Integer.toString(address.ident)
           };
           insert(table, columns, vals);

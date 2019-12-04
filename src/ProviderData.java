@@ -29,6 +29,7 @@ public class ProviderData extends PersonData {
         stmt.setString(1, pro_id);
         //queries appropriate table for Statement
         ResultSet results = stmt.executeQuery();
+        results.next();
         //creates ProviderData obj
         ProviderData pro = new ProviderData();
         //populate data members of new object

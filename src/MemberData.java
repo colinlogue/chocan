@@ -49,6 +49,7 @@ public class MemberData extends PersonData {
         stmt.setString(1, mem_id);
         //queries appropriate table for statement
         ResultSet results = stmt.executeQuery();
+        results.next();
         //creates MemberData obj
         MemberData mem = new MemberData();
         //populates data members

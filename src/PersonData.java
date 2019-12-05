@@ -55,8 +55,8 @@ public class PersonData extends DataSource {
     }
 
     public void display() {
-        // displays data to the console
-        // TODO
+        System.out.println(name);
+        address.display();
     }
 
 

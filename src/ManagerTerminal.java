@@ -169,6 +169,41 @@ public class ManagerTerminal{
         }while(option < 1 || option > 4);
     }
 
+    private void manage_reports(){
+        int option;
+
+        do {
+            try
+            {
+               display_report_menu();
+                System.out.print("Enter Option: ");
+                option = input.nextInt();
+            } catch (InputMismatchException e)
+            {
+                input.nextLine();
+                option = -1;
+            }
+
+            //Calls add, remove, or update based on valid user input
+            switch (option) {
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    main_menu();
+                default:
+                    //Error message printed to terminal if input is not valid
+                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
+                    break;
+            }
+            //Input must be a number from menu options to exit loop
+        }while(option < 1 || option > 4);
+    }
+
     //Displays main menu for manager terminal
     protected void display_main_menu()
     {
@@ -199,17 +234,10 @@ public class ManagerTerminal{
         System.out.println("\nReport Menu\n" +
                 "-----------\n" +
                 "PLEASE CHOOSE FROM THE OPTIONS BELOW");
-        System.out.println("1. Display Individual Report");
-        System.out.println("2. Display Weekly Report");
+        System.out.println("1. Display Member Report");
+        System.out.println("2. Display Provider Report");
         System.out.println("3. Display Account Payable");
         System.out.println("4. Return to Main Menu");
     }
 
-    //Sub-menu for report menu
-    protected void display_person_menu()
-    {
-        System.out.println("1. Member");
-        System.out.println("2. Provider");
-        System.out.println("3. Return to Main Menu");
-    }
 }

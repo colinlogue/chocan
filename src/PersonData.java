@@ -55,9 +55,15 @@ public class PersonData extends DataSource {
     }
 
     public void display() {
-        // displays data to the console
-        // TODO
+        System.out.println(name);
+        address.display();
     }
+
+    public void display_name_id() {
+        System.out.printf(name);
+        System.out.printf(" " + ident + "\n");
+    }
+
 
     protected static String ident_to_string(int num) {
         return DataSource.ident_to_string(num, ident_len);

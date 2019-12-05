@@ -7,6 +7,8 @@ import java.sql.Statement;
 */
 public class ProviderData extends PersonData {
 
+    // these data members describe the names of the table and
+    // columns in the database
     private static String table = "provider";
     private static String[] columns = {
         "ProviderID",
@@ -14,6 +16,7 @@ public class ProviderData extends PersonData {
         "AddressID"
     };
 
+    // all other data members are derived from PersonData
     public boolean is_active;
 
     public static ProviderData retrieve(int ident) throws SQLException {
@@ -29,12 +32,14 @@ public class ProviderData extends PersonData {
         stmt.setString(1, pro_id);
         //queries appropriate table for Statement
         ResultSet results = stmt.executeQuery();
+        results.next();
         //creates ProviderData obj
         ProviderData pro = new ProviderData();
         //populate data members of new object
         int address_id = results.getInt("AddressID");
         pro.address = AddressData.retrieve(address_id);
         pro.ident = Integer.parseInt(pro_id);
+        pro.name = results.getString("Name");
         //pro.is_active = results.getBoolean("IsActive");
         conn.close();
         return pro;
@@ -58,9 +63,9 @@ public class ProviderData extends PersonData {
         }
     }
 
-    public void display() {
+    /*public void display() {
         System.out.println(name);
-    }
+    }*/
 
     public static PersonData.status validate(int ident) throws SQLException {
         String sql = "select * from provider where ProviderID = " + ident_to_string(ident);
@@ -113,5 +118,10 @@ public class ProviderData extends PersonData {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void display_ids() {
+
     }
 }

@@ -1,43 +1,45 @@
 /*
-
-Database access class for services.
-
+ grab data from DB
  */
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ProviderDirectory extends DataSource {
 
-    public int fee;
-    public String label;
-
-    private String fee_String() {
-        String int_str = Integer.toString(ident);
-        String start = int_str.substring(int_str.length() - 2);
-        String end = int_str.substring(0, int_str.length() - 2);
-        return "$" + start + "." + end;
-    }
-
-    public static ProviderDirectory retrieve(int ident) throws SQLException {
-        //selects all columns from member row that matches id
-        String sql = "SELECT * FROM session WHERE SessionID = " + Integer.toString(ident);
+    // Looks up a
+    // Throws a SQLException if the service_code is not found
+    public static Service lookup(int service_code) throws SQLException {
+        String sql = "select * from service where ServiceCode = ?";
         try (Connection conn = connect();
-             Statement stmt = conn.createStatement();
-             ResultSet results = stmt.executeQuery(sql);) {
-
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, service_code);
+            try (ResultSet results = pstmt.executeQuery()) {
+                Service service = new Service();
+                service.fee = results.getInt("fee");
+                service.label = results.getString("label");
+                service.service_code = service_code;
+                return service;
+            }
+        } catch (SQLException e) {
+            throw e;
         }
-        catch (SQLException e) { throw e; }
-        return null;
     }
-    private String ident_to_string(int num) {
-        return DataSource.ident_to_string(num, 6);
-    }
+
     public void display() {
-        System.out.println("\nService " + Integer.toString(ident));
-        System.out.println("Service code:   " + Integer.toString(ident));
-        System.out.println("Label:          " + label);
-        System.out.println("Fee:            " + "fee"); // TODO
-        System.out.println();
+        System.out.print("Thank you. An provider directory has been sent to the email address associated with your Provider ID");
+
+    }
+
+    public static void main(String[] args) {
+        try {
+            Service s = ProviderDirectory.lookup(103050);
+            System.out.println(s.label);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

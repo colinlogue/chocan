@@ -34,6 +34,8 @@ public class MemberData extends PersonData {
         }
     }
 
+
+
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
         //convert int to string
@@ -49,6 +51,7 @@ public class MemberData extends PersonData {
         stmt.setString(1, mem_id);
         //queries appropriate table for statement
         ResultSet results = stmt.executeQuery();
+        results.next();
         //creates MemberData obj
         MemberData mem = new MemberData();
         //populates data members
@@ -114,6 +117,7 @@ public class MemberData extends PersonData {
     // test
     public static void main(String[] args) {
         try {
+
             PersonData.status valid = MemberData.validate(100002);
             String status = "";
             if (valid == PersonData.status.VALID) {

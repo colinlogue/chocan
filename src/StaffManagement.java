@@ -1,5 +1,4 @@
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 
 public class StaffManagement extends ManagerTools
 {  //Prompts for new staff's (Manager or Provider) name and address information
@@ -10,10 +9,12 @@ public class StaffManagement extends ManagerTools
     public static void main(String[] args)
     {
        StaffManagement temp = new StaffManagement();
-       temp.remove_staff(provider);
+       temp.update_staff(provider);
+       //temp.add_staff(provider);
+       //temp.remove_staff(provider);
     }
 
-    private int add_staff(String staff_title)
+    public int add_staff(String staff_title)
     {
         int repeat;
         PersonData new_staff;
@@ -33,7 +34,10 @@ public class StaffManagement extends ManagerTools
             new_staff.address.state = prompt_state();
             new_staff.address.ZIP = prompt_zip();
 
-            //Add display() and confirm if the information is correct with the user.
+            //display and confirm if the information is correct with the user.
+            System.out.println();
+            new_staff.display();
+            System.out.println();
             repeat = ask_to_repeat();
         }
         while(repeat == 1);
@@ -67,6 +71,8 @@ public class StaffManagement extends ManagerTools
         return 0;
     }
 
+    //Removed Member or Provider Data dependant on the String passed in (Member or Provider)
+    //returns -1 when retrieve or delete throws a SQL exception
     public int remove_staff(String staff_title)
     {
         int ident;
@@ -84,7 +90,7 @@ public class StaffManagement extends ManagerTools
             }
             catch (SQLException e)
             {
-                System.out.println(ident + " could not be found.");
+                System.out.println(staff_title + " " + ident + " could not be found.");
                 return -1;
             }
 
@@ -105,7 +111,7 @@ public class StaffManagement extends ManagerTools
             }
             catch (SQLException e)
             {
-                System.out.println(ident + " is an invalid ID number.");
+                System.out.println(staff_title + " " + ident + " could not be found.");
                 return -1;
             }
 
@@ -125,28 +131,93 @@ public class StaffManagement extends ManagerTools
         return 0;
     }
 
-    /*
-    private void update_staff(String staff_title)
+    private int update_staff(String staff_title)
     {
         int ident;
-        PersonData
+        int choice;
+        int repeat;
 
-        System.out.print("Enter Identification number of the " + staff_title);
-        ident = input.nextInt();
-
+        PersonData staff;
+        ident = prompt_id();
+        if(ident < 0)
+            return -1;
 
         if(staff_title.equals(provider)){
-           ProviderData pData = ProviderData.retrieve(ident);
-           try {
-               pdata.re
-           }
-           catch (SQLException e) {
-               System.out.println(staff_title + " with ID:" + ident + " could not be found.");
-           }
+            try{
+                staff = ProviderData.retrieve(ident);
+            }
+            catch (SQLException e)
+            {
+                System.out.println(staff_title + " " + ident + " could not be found.");
+                return -1;
+            }
         }
         else{
-
+            try{
+                staff = MemberData.retrieve(ident);
+            }
+            catch (SQLException e)
+            {
+                System.out.println(staff_title + " " + ident + " could not be found.");
+                return -1;
+            }
         }
+
+        System.out.println("\nID: " + ident);
+        System.out.println();
+        staff.display();
+
+        do
+        {
+            choice = prompt_person_datafields();
+            input.nextLine();
+
+            switch(choice)
+            {
+                case 1:
+                    staff.name = prompt_name(staff_title);
+                    break;
+                case 2:
+                    staff.name = prompt_street();
+                    break;
+                case 3:
+                    staff.name = prompt_city();
+                    break;
+                case 4:
+                    staff.name = prompt_state();
+                    break;
+                case 5:
+                    staff.name = prompt_zip();
+                    break;
+            }
+
+            System.out.println();
+            System.out.println("\nID: " + ident);
+            staff.display();
+
+            repeat = ask_to_repeat();
+
+        }while(repeat == 1);
+
+        try{
+            if(staff instanceof ProviderData)
+            {
+                ProviderData pData = (ProviderData) staff;
+                pData.write();
+            }
+            else
+            {
+                MemberData mData = (MemberData) staff;
+                mData.write();
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to write to database");
+            return -1;
+        }
+
+        return 0;
     }
-     */
 }
+

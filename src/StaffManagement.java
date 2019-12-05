@@ -7,6 +7,12 @@ public class StaffManagement extends ManagerTools
     public static String provider = "Provider";
     public static String manager = "Manager";
 
+    public static void main(String[] args)
+    {
+       StaffManagement temp = new StaffManagement();
+       temp.remove_staff(provider);
+    }
+
     private int add_staff(String staff_title)
     {
         int repeat;
@@ -66,32 +72,27 @@ public class StaffManagement extends ManagerTools
         int ident;
         PersonData staff;
 
-        if(staff_title.equals(provider))
-            staff = new ProviderData();
-        else
-            staff = new MemberData();
-
-        System.out.print("Enter Identification number of the " + staff_title + " to remove: ");
-        ident = input.nextInt();
+        ident = prompt_id();
+        if(ident < 0)
+            return -1;
 
         //Use down casting to retrieve ID
-        if(staff instanceof ProviderData)
+        if(staff_title.equals(provider))
         {
             try{
-                staff = ProviderData.retrieve(ident) ;
+                ProviderData.retrieve(ident) ;
             }
             catch (SQLException e)
             {
-                System.out.println(ident + " is an invalid ID number.");
+                System.out.println(ident + " could not be found.");
                 return -1;
             }
 
-            ProviderData pData = (ProviderData) staff;
-
-            try{
-                pData.delete(ident);
-            }
-            catch (SQLException e){
+            try
+            {
+                ProviderData.delete(ident);
+            } catch (SQLException e)
+            {
                 System.out.println("Failed to remove" + staff_title +
                         "(ID:" + ident + ").");
                 return -1;
@@ -100,7 +101,7 @@ public class StaffManagement extends ManagerTools
         else
         {
             try{
-                staff = MemberData.retrieve(ident) ;
+                MemberData.retrieve(ident) ;
             }
             catch (SQLException e)
             {
@@ -108,10 +109,8 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
 
-            MemberData pData = (MemberData) staff;
-
             try{
-                pData.delete(ident);
+                MemberData.delete(ident);
             }
             catch (SQLException e){
                 System.out.println("Failed to remove" + staff_title +

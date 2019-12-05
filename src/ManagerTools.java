@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManagerTools
@@ -118,6 +120,21 @@ public class ManagerTools
         while(!success);
 
         return zip;
+    }
+
+    protected int prompt_id()
+    {
+        int ident;
+
+        try{
+            System.out.print("Enter Identification number: ");
+            ident = input.nextInt();
+        }
+        catch (InputMismatchException e){
+            return -1;
+        }
+
+        return ident;
     }
 
     //Ask the user if they would like to re-enter the data they just entered.

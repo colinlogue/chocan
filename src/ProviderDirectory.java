@@ -1,6 +1,8 @@
 /*
-
-Database access class for services.
+kelsey: This should contain an alphabetically ordered list of service names
+ with corresponding service codes and fees.
+ The provider terminal will access this directory to ask for a service
+ and its info.
 
  */
 
@@ -13,6 +15,7 @@ public class ProviderDirectory extends DataSource {
     }
 
     public void display() {
+        System.out.print("Thank you. An provider directory has been sent to the email address associated with your Provider ID");
 
     }
 }

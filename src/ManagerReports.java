@@ -16,6 +16,7 @@ public class ManagerReports {
     }
 
     protected void member_report() {
+
         try {
             file_in = new Scanner(new FileReader("README.md"));
             StringBuilder sb = new StringBuilder();

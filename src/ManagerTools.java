@@ -122,6 +122,26 @@ public class ManagerTools
         return zip;
     }
 
+    //Prompt PersonData fields for a switch statement
+    protected int prompt_person_datafields()
+    {
+        int choice;
+
+        do{
+            System.out.println("\nWhich field would you like to update?");
+            System.out.println("1. Name");
+            System.out.println("2. Street");
+            System.out.println("3. City");
+            System.out.println("4. State");
+            System.out.println("5. Zip Code\n");
+
+            System.out.print("Enter your choice: ");
+            choice = input.nextInt();
+        }while (choice > 5 || choice < 1);
+
+        return choice;
+    }
+
     protected int prompt_id()
     {
         int ident;
@@ -143,7 +163,7 @@ public class ManagerTools
     {
         int answer;
 
-        System.out.println("Would you like to re-enter the data?");
+        System.out.println("\nWould you like to repeat this process?");
         System.out.println("\t1. Yes");
         System.out.println("\t2. No");
         answer = input.nextInt();

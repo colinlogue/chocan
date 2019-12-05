@@ -7,12 +7,7 @@ public class ManagerTools
     public static String provider = "Provider";
     public static String manager = "Manager";
 
-    static public Scanner input;
-
-    public ManagerTools()
-    {
-        input = new Scanner(System.in);
-    }
+    static public Scanner input = new Scanner(System.in);
 
     //Prompt user for person (Manager or Provider) name and return
     //their name as a string.
@@ -181,20 +176,20 @@ public class ManagerTools
     }
 
     //Checks if string contains only alphabets and whitespace
-    private static boolean isStringAlphabet(String str)
+    public static boolean isStringAlphabet(String str)
     {
        return ((!str.equals("")))
                && (str.matches("^[a-zA-Z.'\\s]*$"));
     }
 
     //Checks if strings contains only capital letters. No whitespace.
-    private static boolean isStringOnlyCaps(String str)
+    public static boolean isStringOnlyCaps(String str)
     {
         return ((!str.equals(""))) && (str.matches("^[A-Z]*$"));
     }
 
     //Checks if string contains alphanumeric letters and whitespace.
-    private static boolean isStringAlphanumeric(String str)
+    public static boolean isStringAlphanumeric(String str)
     {
         return ((!str.equals(""))) && (str.matches("^[a-zA-Z0-9.'\\s]*$"));
     }

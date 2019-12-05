@@ -9,49 +9,6 @@ public class ManagerTools
         input = new Scanner(System.in);
     }
 
-    //Displays main menu for manager terminal
-    protected void display_main_menu()
-    {
-        System.out.println("\nMain Menu\n" +
-                "----------\n" +
-                "Please Choose From The Options Below");
-        System.out.println("1. Manage Members");
-        System.out.println("2. Manage Providers");
-        System.out.println("3. Print Reports");
-        System.out.println("4. Logout");
-    }
-
-    //Used for both Manage Members and Manage Providers Option
-    //person should be the string "Member" or "Provider"
-    protected void display_manage_menu(String person)
-    {
-        System.out.println("\nManage " + person + " Menu\n" +
-                "---------------------\n" +
-                "PLEASE CHOOSE FROM THE OPTIONS BELOW");
-        System.out.println("1. Add " + person);
-        System.out.println("2. Remove " + person);
-        System.out.println("3. Update " + person);
-        System.out.println("4. Return to Main Menu");
-    }
-
-    protected void display_report_menu()
-    {
-        System.out.println("\nReport Menu\n" +
-                "-----------\n" +
-                "PLEASE CHOOSE FROM THE OPTIONS BELOW");
-        System.out.println("1. Display Individual Report");
-        System.out.println("2. Display Weekly Report");
-        System.out.println("3. Display Account Payable");
-        System.out.println("4. Return to Main Menu");
-    }
-
-    //Sub-menu for report menu
-    protected void display_person_menu()
-    {
-        System.out.println("1. Member");
-        System.out.println("2. Provider");
-        System.out.println("3. Return to Main Menu");
-    }
     //Prompt user for person (Manager or Provider) name and return
     //their name as a string.
     protected String prompt_name(String person)

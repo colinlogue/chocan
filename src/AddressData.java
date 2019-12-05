@@ -68,6 +68,6 @@ public class AddressData extends DataSource {
     }
 
     public void display() {
-
+        System.out.println(street + " " + city + ", " + state + " " + ZIP);
     }
 }

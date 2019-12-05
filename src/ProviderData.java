@@ -39,6 +39,7 @@ public class ProviderData extends PersonData {
         int address_id = results.getInt("AddressID");
         pro.address = AddressData.retrieve(address_id);
         pro.ident = Integer.parseInt(pro_id);
+        pro.name = results.getString("Name");
         //pro.is_active = results.getBoolean("IsActive");
         conn.close();
         return pro;
@@ -62,9 +63,9 @@ public class ProviderData extends PersonData {
         }
     }
 
-    public void display() {
+    /*public void display() {
         System.out.println(name);
-    }
+    }*/
 
     public static PersonData.status validate(int ident) throws SQLException {
         String sql = "select * from provider where ProviderID = " + ident_to_string(ident);

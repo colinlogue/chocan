@@ -7,4 +7,11 @@ public class ManagerReports {
         input = new Scanner(System.in);
     }
 
+    protected void member_report(){}
+
+    protected void provider_report(){}
+
+    protected void accounts_payable(){}
+
+
 }

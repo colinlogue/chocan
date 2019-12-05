@@ -15,6 +15,6 @@ public class ProviderDirectory extends DataSource {
     }
 
     public void display() {
-
+        System.out.print("Thank you. A directory has been sent to the email address associated with your Provider ID.");
     }
 }

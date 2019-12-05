@@ -1,48 +1,44 @@
 import java.sql.SQLException;
 
-public class StaffManagement extends ManagerTools
-{  //Prompts for new staff's (Manager or Provider) name and address information
-    //change return type to indicate success or failure
-    public static String provider = "Provider";
-    public static String manager = "Manager";
+//Class to add, remove, and update Member and Provider Data.
 
+public class StaffManagement extends ManagerTools
+{
+    //Take out later
     public static void main(String[] args)
     {
        StaffManagement temp = new StaffManagement();
        //temp.update_staff(provider);
-       temp.add_staff(provider);
+       //temp.add_staff(provider);
        //temp.remove_staff(provider);
     }
 
+    //Prompt user for PersonData fields then downcast to ProviderData or MemberData
+    //depending on the string passed in and write to database.
     public int add_staff(String staff_title)
     {
         int repeat;
         PersonData new_staff;
 
+        //Instantiate PersonData as sub-class object
         if(staff_title.equals(provider))
             new_staff = new ProviderData();
         else
             new_staff = new MemberData();
 
-        do
-        {
-            new_staff.name = prompt_name(staff_title);
+        //Prompt user for PersonData fields
+        new_staff.name = prompt_name(staff_title);
+        System.out.println("Enter new " + staff_title + "'s address.");
+        new_staff.address.street = prompt_street();
+        new_staff.address.city = prompt_city();
+        new_staff.address.state = prompt_state();
+        new_staff.address.ZIP = prompt_zip();
 
-            System.out.println("Enter new " + staff_title + "'s address.");
-            new_staff.address.street = prompt_street();
-            new_staff.address.city = prompt_city();
-            new_staff.address.state = prompt_state();
-            new_staff.address.ZIP = prompt_zip();
+        System.out.println();
+        new_staff.display();
 
-            //display and confirm if the information is correct with the user.
-            System.out.println();
-            new_staff.display();
-            repeat = ask_to_repeat();
-        }
-        while(repeat == 1);
-
-        //Include call to person.write() here after everything is done.
-            //Do exception handling and maybe change return type for this method.
+        //Downcast PersonData object and write to database
+        //Return error code if write() throws an exception.
         if(new_staff instanceof ProviderData)
         {
             try{
@@ -71,7 +67,7 @@ public class StaffManagement extends ManagerTools
     }
 
     //Removed Member or Provider Data dependant on the String passed in (Member or Provider)
-    //returns -1 when retrieve or delete throws a SQL exception
+    //returns -1 when retrieve or delete throws a SQL exception or when prompt_id fails;
     public int remove_staff(String staff_title)
     {
         int ident;
@@ -81,7 +77,8 @@ public class StaffManagement extends ManagerTools
         if(ident < 0)
             return -1;
 
-        //Use down casting to retrieve ID
+        //Use down casting to retrieve ID. Then delete the data corresponding to ID.
+
         if(staff_title.equals(provider))
         {
             try{
@@ -130,6 +127,8 @@ public class StaffManagement extends ManagerTools
         return 0;
     }
 
+    //Update ProviderData or MemberData according to the String passed in.
+    //returns -1 when retrieve or delete throws a SQL exception or when prompt_id fails;
     private int update_staff(String staff_title)
     {
         int ident;
@@ -141,6 +140,7 @@ public class StaffManagement extends ManagerTools
         if(ident < 0)
             return -1;
 
+        //Retrieve to PersonData object depending on the String argument passed in.
         if(staff_title.equals(provider)){
             try{
                 staff = ProviderData.retrieve(ident);
@@ -162,10 +162,12 @@ public class StaffManagement extends ManagerTools
             }
         }
 
+        //Print the data of retrieved object
         System.out.println("\nID: " + ident);
         System.out.println();
         staff.display();
 
+        //Prompt PersonData fields and have the user choose what field they want to change.
         do
         {
             choice = prompt_person_datafields();
@@ -188,6 +190,8 @@ public class StaffManagement extends ManagerTools
                 case 5:
                     staff.name = prompt_zip();
                     break;
+                default:
+                    return -1;
             }
 
             System.out.println();
@@ -198,6 +202,7 @@ public class StaffManagement extends ManagerTools
 
         }while(repeat == 1);
 
+        //Throw exception and return error if write fails
         try{
             if(staff instanceof ProviderData)
             {

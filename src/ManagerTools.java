@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class ManagerTools
 {
+    public static String provider = "Provider";
+    public static String manager = "Manager";
+
     static public Scanner input;
 
     public ManagerTools()
@@ -142,6 +145,9 @@ public class ManagerTools
         return choice;
     }
 
+    //Prompt user to enter ID number and read input
+    //Return -1 if inputMismatchException is caught
+    //Otherwise return id number entered by user
     protected int prompt_id()
     {
         int ident;

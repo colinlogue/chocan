@@ -11,6 +11,10 @@ public class ProviderDirectory extends DataSource {
 
     // Looks up a
     // Throws a SQLException if the service_code is not found
+    /*
+      Service DNE in this file. It is a locked provider.java and static, yet public.
+     */
+
     public static Service lookup(int service_code) throws SQLException {
         String sql = "select * from service where ServiceCode = ?";
         try (Connection conn = connect();

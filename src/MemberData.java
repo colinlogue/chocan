@@ -35,9 +35,7 @@ public class MemberData extends PersonData {
     }
 
 
-    public static void display_ids() {
 
-    }
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
         //convert int to string

@@ -2,19 +2,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManagerTerminal{
-
     static public Scanner input;
-
+    private ManagerReports reports = new ManagerReports();
 
     public ManagerTerminal(){
        input = new Scanner(System.in);
     }
 
-    private ManagerReports reports = new ManagerReports();
-
     public static void main(String[] args) {
         ManagerTerminal menu_tree = new ManagerTerminal();
-        //StaffManagement temp = new StaffManagement();
+        StaffManagement temp = new StaffManagement();
         //temp.remove_staff("Provider");
 
         //Menu tree for manager terminal

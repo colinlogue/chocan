@@ -1,4 +1,4 @@
-/*
+
 import org.junit.Test;
 
 //Comment line below then perss Alt-Enter on assertFalse in testing method below
@@ -37,4 +37,4 @@ public class DemoTest {
     }
 }
 
- */
+

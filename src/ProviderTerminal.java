@@ -13,46 +13,52 @@ of members current member status before progressing to main text page
 ALSO everything protected for the moment
 add some way of automating a weekly report for the manager?
  */
-
+import java.sql.SQLException;
 
 public class ProviderTerminal{
 
-    //insert switch statements with corresponding func calls. call text_menu from main
-    protected void text_menu(){
+   private boolean validate_provider(){
+
+        ProviderData provider = new ProviderData();
+        try{
+            provider.retrieve(provider.ident);
+            System.out.print("success, logging into session.");
+
+        }catch(SQLException e){
+
+            System.out.print("This provider DNE in the system.");
+            return false;
+        }
+        return true;
     }
-   //must pass validation in order to get to main menu
-   protected boolean validate_member() {
-        return false; //return a message that member reflects member status
-    }
-    protected boolean validate_provider() {
+    private boolean validate_member() {
         return false; //return a message that member reflects provider status
     }
-    protected boolean service_report(){
+    private boolean service_report(){
         return false; //the report could not be written to database
     }
-    protected String provider_dir_search(){
+    private String provider_dir_search(){
         return null; //the service code DNE
     }
     // the providers way of documenting how much theyve worked, and cost based on service codes
-    protected boolean service_billing(){
+    private boolean service_billing(){
         return false;
     }
     public static void main(String[] args){
 
-      int task_num = 4;
-      ProviderTerminal terminal = new ProviderTerminal();
 
+//MENU OUTPUT//
      System.out.print("Select from the following menu:\n" +
              " 1. Create member service report.\n" +
              " 2. Search for a service code and it's related info.\n"+
              " 3. Bill ChocAn for the current session.\n" +
              " 4. Quit current session. \n");
 
+     int task_num = 4;
+     ProviderTerminal terminal = new ProviderTerminal();
 
-      if(terminal.validate_provider())
-      {
-        if(terminal.validate_member()){
-
+     terminal.validate_provider();
+/*
          switch(task_num){  //grant access to main menu
            case 1:
              terminal.service_report();
@@ -70,8 +76,9 @@ public class ProviderTerminal{
              System.out.print(" Invalid input. Try again.\n");
              break;
          }
-       }
-      }
+ */
 
-    }
+
+
+   }
 }

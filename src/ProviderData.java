@@ -7,6 +7,8 @@ import java.sql.Statement;
 */
 public class ProviderData extends PersonData {
 
+    // these data members describe the names of the table and
+    // columns in the database
     private static String table = "provider";
     private static String[] columns = {
         "ProviderID",
@@ -14,6 +16,7 @@ public class ProviderData extends PersonData {
         "AddressID"
     };
 
+    // all other data members are derived from PersonData
     public boolean is_active;
 
     public static ProviderData retrieve(int ident) throws SQLException {
@@ -115,5 +118,10 @@ public class ProviderData extends PersonData {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void display_ids() {
+
     }
 }

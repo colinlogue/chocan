@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 public class ProviderTerminal{
 
+
    private boolean validate_provider(){
 
         ProviderData provider = new ProviderData();
@@ -32,7 +33,16 @@ public class ProviderTerminal{
         return true;
     }
     private boolean validate_member() {
-        return false; //return a message that member reflects provider status
+       MemberData member = new MemberData();
+       try {
+           member.retrieve(member.ident);
+           System.out.print("success, logging into session.");
+           //display member status
+       }catch(SQLException e){
+           System.out.print("This member is either invalid or DNE in the system.");
+           return false;
+       }
+        return true;
     }
     private boolean service_report(){
         return false; //the report could not be written to database
@@ -77,6 +87,7 @@ public class ProviderTerminal{
              break;
          }
  */
+
 
 
 

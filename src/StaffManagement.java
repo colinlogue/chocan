@@ -9,8 +9,8 @@ public class StaffManagement extends ManagerTools
     public static void main(String[] args)
     {
        StaffManagement temp = new StaffManagement();
-       temp.update_staff(provider);
-       //temp.add_staff(provider);
+       //temp.update_staff(provider);
+       temp.add_staff(provider);
        //temp.remove_staff(provider);
     }
 
@@ -37,7 +37,6 @@ public class StaffManagement extends ManagerTools
             //display and confirm if the information is correct with the user.
             System.out.println();
             new_staff.display();
-            System.out.println();
             repeat = ask_to_repeat();
         }
         while(repeat == 1);

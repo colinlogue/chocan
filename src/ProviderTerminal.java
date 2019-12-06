@@ -18,13 +18,15 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class ProviderTerminal{
-    static public Scanner input;
-    static public Scanner ID;
+    private static Scanner input;
+    private static Scanner ID;
+    private static Scanner session;
 
     //Takes input from provider
-    public ProviderTerminal(){
+    private ProviderTerminal(){
         input = new Scanner(System.in);
         ID = new Scanner(System.in);
+        session = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -80,12 +82,13 @@ public class ProviderTerminal{
     types in the ID and see that it exists, retrieve. Then validate */
     private boolean validate_provider(int ID){
 
-        ProviderData provider = new ProviderData();
+//        ProviderData provider = new ProviderData();
         ProviderData.status prov_status = null;
 
         try{
             //retrieve function takes in the ID and returns all the data associated w/provider.
-             provider = ProviderData.retrieve(ID);
+ //            provider = ProviderData.retrieve(ID);
+               ProviderData.retrieve(ID);
 
         }catch(SQLException e){
 
@@ -106,11 +109,12 @@ public class ProviderTerminal{
 
     private boolean validate_member(int ID) {
 
-       MemberData member = new MemberData();
+//       MemberData member = new MemberData();
        PersonData.status mem_stat = null;
 
        try{
-           member = MemberData.retrieve(ID);
+//           member = MemberData.retrieve(ID);
+           MemberData.retrieve(ID);
        }catch (SQLException e){
            System.out.print("Member status cannot be reached as member DNE\n");
            return false;
@@ -132,13 +136,32 @@ public class ProviderTerminal{
     }
 
     private boolean service_report(){
-        System.out.print("Please enter the Member ID");
+        System.out.print("Please enter the Member ID \n");
         return false; //the report could not be written to database
     }
-    private String provider_dir_search(){
-        System.out.print("Please enter the six-digit service code.\n");
-        return null; //the service code DNE
+
+
+    private void provider_dir_search(){
+
+        System.out.print(" Enter six digit service code to retrieve it's corresponding fees and information. \n");
+        int service_code = session.nextInt();
+        Service S = new Service();
+
+        try{
+           S = ProviderDirectory.lookup(service_code);
+        }catch (SQLException e){
+            System.out.print(" The service code does not exist. Please consult a manager. \n");
+        }
+
+        System.out.print("Service name: " + "Service fee: " + "Service code: \n");
+        System.out.println(S.label);
+        System.out.println(S.service_code);
+        System.out.println(S.fee);
+
     }
+
+
+
     // the providers way of documenting how much theyve worked, and cost based on service codes
     private boolean service_billing(){
         System.out.print("Please enter your nine-digit Provider number\n");

@@ -91,7 +91,7 @@ public class ProviderTerminal{
 //        ProviderData provider = new ProviderData();
         ProviderData.status prov_status = null;
 
-        try{
+/*        try{
             //retrieve function takes in the ID and returns all the data associated w/provider.
  //            provider = ProviderData.retrieve(ID);
                ProviderData.retrieve(ID);
@@ -101,6 +101,7 @@ public class ProviderTerminal{
             System.out.print("This provider DNE in the system.\n");
             return false;
         }
+ */
         try{
             prov_status = ProviderData.validate(ID);
         }catch (SQLException e){
@@ -108,22 +109,25 @@ public class ProviderTerminal{
 
         }
         //print the status of provider
-        System.out.print("success, logging into session.\n" + "The provider status is \n");
+        System.out.print("success, logging into session.\n" + "The provider status is ");
         System.out.println(prov_status);
+        System.out.print("\n");
         return true;
     }
 
     private boolean validate_member(int ID) {
 //       MemberData member = new MemberData();
        PersonData.status mem_stat = null;
-
+/*
        try{
-//           member = MemberData.retrieve(ID);
+           member = MemberData.retrieve(ID);
            MemberData.retrieve(ID);
        }catch (SQLException e){
            System.out.print("Member status cannot be reached as member DNE\n");
            return false;
        }
+*/
+
 //check if the value retrieved is valid. if its valid then we print their status
        try {
            mem_stat = MemberData.validate(ID);
@@ -131,7 +135,7 @@ public class ProviderTerminal{
           System.out.print(" The member's ID is invalid as it does not exist .\n");
        }
 
-       System.out.print("The members current status is");
+       System.out.print("The members current status is ");
        System.out.println(mem_stat);
         System.out.print("\n");
 
@@ -161,10 +165,15 @@ public class ProviderTerminal{
             System.out.print(" The service code does not exist. Please consult a manager. \n");
         }
 
-        System.out.print("Service name: " + "Service fee: " + "Service code: \n");
+        System.out.print("Service name: \n");
         System.out.println(S.label);
+        System.out.print("\n");
+        System.out.print("Service code: \n");
         System.out.println(S.service_code);
+        System.out.print("\n");
+        System.out.print("Service fee: \n");
         System.out.println(S.fee);
+        System.out.print("\n");
 
     }
 

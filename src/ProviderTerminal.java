@@ -138,15 +138,27 @@ public class ProviderTerminal{
 
     private boolean service_report(){
         try {
-            SessionData serv_report = SessionData.retrieve(thing_id);
+            SessionData session = new SessionData();
+
+            System.out.print("Member ID: \n");
+            session.member_id = input.nextInt();
+            System.out.print("Provider ID: \n");
+            session.provider_id = input.nextInt();
+            System.out.print("Service Code: \n");
+            session.service_code = input.nextInt();
+            System.out.print("Date (MM/DD/YYYY): \n");
+            session.date = new Date(System.currentTimeMillis());
+            session.comments = input.nextLine();
+
+            session.write();
         }
         catch (SQLException e) {
             // handle case where loading fails
         }
-        System.out.print("Member ID: \n");
-        System.out.print("Provider ID: \n");
-        System.out.print("Service Code: \n");
-        System.out.print("Date (MM/DD/YYYY): \n");
+
+
+
+
         System.out.print("Comments: \n");
       //  public int member_id;
       //  public int provider_id;

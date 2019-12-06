@@ -22,7 +22,8 @@ public class MemberData extends PersonData {
     public boolean is_active;
 
     public static status validate(int ident) throws SQLException {
-        String sql = "select * from member where MemberID = " + ident_to_string(ident);
+        int mem_id = ident;
+        String sql = "select * from member where MemberID = " + mem_id;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);) {
@@ -48,9 +49,9 @@ public class MemberData extends PersonData {
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
 
-        String mem_id = ident_to_string(ident);
-        //String mem_id = Integer.toString(ident);
-        String sql = "SELECT * FROM member WHERE MemberID = ?";
+        //String mem_id = ident_to_string(ident);
+        String mem_id = Integer.toString(ident);
+        String sql = "SELECT * FROM member WHERE MemberID = " + mem_id;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);) {
@@ -78,10 +79,8 @@ public class MemberData extends PersonData {
                 ident = get_next_ident();
                 pstmt.setInt(1,ident);
                 pstmt.setString(2, name);
-                String act  = Boolean.toString(is_active);
-                pstmt.setString(3,act);
-                String add_id =  Integer.toString(address.ident);
-                pstmt.setString(4, add_id);
+                pstmt.setBoolean(3,is_active);
+                pstmt.setInt(4, address.ident);
                 pstmt.execute();
             }
             catch (SQLException e) {
@@ -95,12 +94,10 @@ public class MemberData extends PersonData {
             address.write();
             try (Connection conn = connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql);) {
-                pstmt.setString(1, name);
-                String act  = Boolean.toString(is_active);
-                pstmt.setString(2,act);
-                String add_id =  Integer.toString(address.ident);
-                pstmt.setString(3, add_id);
                 pstmt.setInt(4,ident);
+                pstmt.setString(1, name);
+                pstmt.setBoolean(2,is_active);
+                pstmt.setInt(3, address.ident);
                 pstmt.execute();
             }
             catch (SQLException e) {
@@ -112,14 +109,14 @@ public class MemberData extends PersonData {
 
     public static void delete(int ident) throws SQLException {
         // drop row matching ident from member table
-        String mem_id = ident_to_string(ident);
+        int mem_id = ident;
         String sql = "DELETE FROM member WHERE MemberID = " + mem_id;
 
         try (Connection conn = connect(); //check this **
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // set the corresponding param
-            pstmt.setInt(1, ident);
+            pstmt.setInt(1, mem_id);
             // execute the delete statement
             pstmt.executeUpdate();
 
@@ -136,7 +133,7 @@ public class MemberData extends PersonData {
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);)
         {
-            return Integer.parseInt(results.getString(1)) + 1;
+            return results.getInt(1) + 1;
         }
     }
 

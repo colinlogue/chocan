@@ -104,7 +104,7 @@ public class AddressData extends DataSource {
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);)
         {
-            return Integer.parseInt(results.getString(1)) + 1;
+            return results.getInt(1) + 1;
         }
     }
 

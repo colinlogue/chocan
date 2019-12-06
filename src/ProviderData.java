@@ -24,7 +24,7 @@ public class ProviderData extends PersonData {
 
     public static ProviderData retrieve(int ident) throws SQLException {
         //new
-        String pro_id = ident_to_string(ident);
+        int pro_id = ident;
         String sql = "SELECT * FROM provider WHERE ProviderID = " + pro_id;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
@@ -32,7 +32,7 @@ public class ProviderData extends PersonData {
             ProviderData pro = new ProviderData();
             int address_id = results.getInt("AddressID");
             pro.address = AddressData.retrieve(address_id);
-            pro.ident = Integer.parseInt(pro_id);
+            pro.ident = results.getInt(ident);
             pro.name = results.getString("Name");
             return pro;
         }
@@ -63,7 +63,7 @@ public class ProviderData extends PersonData {
     }*/
 
     public static PersonData.status validate(int ident) throws SQLException {
-        String sql = "select * from provider where ProviderID = " + ident_to_string(ident);
+        String sql = "select * from provider where ProviderID = " + ident;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql)) {
@@ -90,8 +90,9 @@ public class ProviderData extends PersonData {
                  PreparedStatement pstmt = conn.prepareStatement(sql);) {
                 pstmt.setInt(1,ident);
                 pstmt.setString(2, name);
-                String add_id =  Integer.toString(address.ident);
-                pstmt.setString(3, add_id);
+                //String add_id =  Integer.toString(address.ident);
+                //pstmt.setString(3, add_id);
+                pstmt.setInt(3,address.ident);
                 //String act  = Boolean.toString(is_active);
                 //pstmt.setString(4,act);
                 pstmt.execute();
@@ -130,7 +131,7 @@ public class ProviderData extends PersonData {
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql))
         {
-            return Integer.parseInt(results.getString(1)) + 1;
+            return results.getInt(1) + 1;
         }
     }
 

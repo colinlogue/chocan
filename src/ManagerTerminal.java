@@ -140,18 +140,25 @@ public class ManagerTerminal{
             switch (option) {   //Add, remove, or update based on valid user input
                 case 1:     //Display member report
                     reports.member_report();
+                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 2:     //Display provider report
                     reports.provider_report();
+                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 3:     //Display accounts payable totals
                     reports.accounts_payable();
+                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 4:     //Return to main menu
                     main_menu();
                     break;
-                default:    //Error message printed to terminal if input is not valid
-                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
+                default:    //Return to reports menua
+                    if(option == -2) {  //return without error message
+                        System.out.println("\nRETURNING TO REPORTS MENU");
+                    }
+                    else    //return with error message for invalid input
+                        System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
                     break;
             }
             //Input must be a number from menu options to exit loop

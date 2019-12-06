@@ -35,44 +35,43 @@ public class ProviderTerminal{
         //make a loop w/try catch inside so they can enter prov ID again
         System.out.print("Type a Provider ID to proceed to Provider tools. \n");
         int Prov_ID =  ID.nextInt();
-        terminal.validate_provider(Prov_ID);
-
-        //MENU OUTPUT//
-        do{
-        try
+        if(terminal.validate_provider(Prov_ID))  //should only go into menu if provider is validated
         {
-            System.out.print("Type a number to select from the following menu:\n" +
-                    " 1. Create member service report.\n" +
-                    " 2. Search for a service code and it's related info.\n" +
-                    " 3. Bill ChocAn for the current session.\n" +
-                    " 4. Quit current session. \n");
+            //MENU OUTPUT//
+            do {
+                try {
+                    System.out.print("Type a number to select from the following menu:\n" +
+                            " 1. Create member service report.\n" +
+                            " 2. Search for a service code and it's related info.\n" +
+                            " 3. Bill ChocAn for the current session.\n" +
+                            " 4. Quit current session. \n");
 
-            task_num = input.nextInt();
-        }catch (InputMismatchException e) {
-            input.nextLine();
-            task_num = -1;
+                    task_num = input.nextInt();
+                } catch (InputMismatchException e) {
+                    input.nextLine();
+                    task_num = -1;
+                }
+
+                switch (task_num) {  //grant access to main menu
+                    case 1:
+                        terminal.service_report();
+                        break;
+                    case 2:
+                        terminal.provider_dir_search();
+                        break;
+                    case 3:
+                        terminal.service_billing();
+                        break;
+                    case 4:
+                        System.out.print(" The provider has terminated the session.\n");
+                        break;
+                    default:
+                        System.out.print(" Invalid input. Try again.\n");
+                        break;
+                }
+
+            } while (task_num >= 1 && task_num < 4); //fixed this loop
         }
-
-        switch (task_num) {  //grant access to main menu
-            case 1:
-                terminal.service_report();
-                break;
-            case 2:
-                terminal.provider_dir_search();
-                break;
-            case 3:
-                terminal.service_billing();
-                break;
-            case 4:
-                System.out.print(" The provider has terminated the session.\n");
-                break;
-            default:
-                System.out.print(" Invalid input. Try again.\n");
-                break;
-        }
-
-    } while (task_num >= 1 && task_num <= 4  ); //fixed this loop
-
 
    }
    //END OF MAIN

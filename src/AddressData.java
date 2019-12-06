@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 import java.sql.*;
+//test test -deh
 
 public class AddressData extends DataSource {
 
@@ -29,7 +30,6 @@ public class AddressData extends DataSource {
         stmt.setInt(1, ident);
         //queries appropriate table for statement
         ResultSet results = stmt.executeQuery();
-        results.next();
         AddressData add = new AddressData();
         //populate data members
         add.street = results.getString("street");
@@ -46,14 +46,36 @@ public class AddressData extends DataSource {
         {
             ident = get_next_ident();
             String[] vals = new String[] {
-              Integer.toString(ident),
-              street,
-              state,
-              ZIP
-        };
-        insert(table, columns, vals);
-      }
-      return true;
+                    Integer.toString(ident),
+                    street,
+                    state,
+                    ZIP
+            };
+            insert(table, columns, vals);
+        }
+        else {
+            String sql = "UPDATE address SET street = ? ,"
+                    + "city = ? ,"
+                    + "state = ? ,"
+                    + "ZIP = ? "
+                    + "WHERE AddressID = ?";
+
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, street);
+                pstmt.setString(2, city);
+                pstmt.setString(3, state);
+                pstmt.setString(4, ZIP);
+                pstmt.setInt(5, ident);
+                // UPDATE
+                pstmt.executeUpdate();
+            }
+            catch (SQLException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
     }
 
     private int get_next_ident() throws SQLException {

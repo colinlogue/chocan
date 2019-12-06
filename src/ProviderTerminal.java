@@ -159,7 +159,7 @@ public class ProviderTerminal{
             System.out.print("Service Code: \n");
             session.service_code = input.nextInt();
             session.date = new Date(System.currentTimeMillis());
-            System.out.print("Date (MM/DD/YYYY):"+ session.date+"\n");
+            System.out.print("Date:"+ session.date+"\n");
             System.out.print("Additional Comments: \n");
             session.comments = input.nextLine();
 

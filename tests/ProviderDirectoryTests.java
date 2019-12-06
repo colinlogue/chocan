@@ -2,9 +2,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.sql.SQLException;
 
-public class ServiceTests {
+public class ProviderDirectoryTests {
+
 
     @Before
     public void setup() {
@@ -17,11 +18,8 @@ public class ServiceTests {
     }
 
     @Test
-    public void fees_print_correctly() {
-        Service s = new Service();
-        s.fee = 1325;
-        assertEquals(s.format_fee(), "$13.25");
+    public void lookup_test() throws SQLException {
+        ProviderDirectory.lookup(102010);
     }
-
 
 }

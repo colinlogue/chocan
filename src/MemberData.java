@@ -50,7 +50,7 @@ public class MemberData extends PersonData {
     public static MemberData retrieve(int ident) throws SQLException {
 
         //String mem_id = ident_to_string(ident);
-        String mem_id = Integer.toString(ident);
+        int mem_id = ident;
         String sql = "SELECT * FROM member WHERE MemberID = " + mem_id;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();

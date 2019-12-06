@@ -32,7 +32,7 @@ public class ProviderData extends PersonData {
             ProviderData pro = new ProviderData();
             int address_id = results.getInt("AddressID");
             pro.address = AddressData.retrieve(address_id);
-            pro.ident = results.getInt(ident);
+            pro.ident = results.getInt("ProviderID");
             pro.name = results.getString("Name");
             conn.close();
             return pro;

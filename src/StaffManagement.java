@@ -187,16 +187,16 @@ public class StaffManagement extends ManagerTools
                     staff.name = prompt_name(staff_title);
                     break;
                 case 2:
-                    staff.name = prompt_street();
+                    staff.address.street = prompt_street();
                     break;
                 case 3:
-                    staff.name = prompt_city();
+                    staff.address.city = prompt_city();
                     break;
                 case 4:
-                    staff.name = prompt_state();
+                    staff.address.state = prompt_state();
                     break;
                 case 5:
-                    staff.name = prompt_zip();
+                    staff.address.ZIP = prompt_zip();
                     break;
                 default:
                     return -1;

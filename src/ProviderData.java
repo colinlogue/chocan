@@ -71,7 +71,7 @@ public class ProviderData extends PersonData {
         String sql = "select * from provider where ProviderID = " + ident_to_string(ident);
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
-             ResultSet results = stmt.executeQuery(sql);) {
+             ResultSet results = stmt.executeQuery(sql)) {
             if (results.next()) {
                 return status.VALID;
             }
@@ -83,18 +83,35 @@ public class ProviderData extends PersonData {
     }
 
     public boolean write() throws SQLException {
-        //write address first
-        address.write();
         //if no id, insert new rows
+
         if (ident == 0){
-          ident = get_next_ident();
-          String[] vals = new String[]{
-                  ident_to_string(ident),
-                  name,
-                  Boolean.toString(is_active),
-                  Integer.toString(address.ident)
-          };
-          insert(table, columns, vals);
+            //write address first
+            address.write();
+            ident = get_next_ident();
+            String[] vals = new String[]{
+                    ident_to_string(ident),
+                    name,
+                    Boolean.toString(is_active),
+                    Integer.toString(address.ident)
+            };
+            insert(table, columns, vals);
+        }
+        else
+        {
+            String sql = "UPDATE provider SET name = ? "
+                    + "WHERE ProviderID = ?";
+            address.write();
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, name);
+                pstmt.setInt(2, ident);
+                //UPDATE
+                pstmt.executeUpdate();
+            }
+            catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
         }
         return true;
     }
@@ -104,7 +121,7 @@ public class ProviderData extends PersonData {
         String sql = "select max(ProviderID) from provider";
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
-             ResultSet results = stmt.executeQuery(sql);)
+             ResultSet results = stmt.executeQuery(sql))
         {
             return Integer.parseInt(results.getString(1)) + 1;
         }

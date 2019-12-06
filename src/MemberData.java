@@ -47,50 +47,67 @@ public class MemberData extends PersonData {
 
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
-        //convert int to string
+
         String mem_id = ident_to_string(ident);
-        //selects all columns from member row that matches id
+        //String mem_id = Integer.toString(ident);
         String sql = "SELECT * FROM member WHERE MemberID = ?";
-        //establishes connection
-        //consider turning this into try/catch
-        Connection conn = connect();
-        //creates obj
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        //replaces ? in string with mem_id, creating a valid SQL statement
-        stmt.setString(1, mem_id);
-        //queries appropriate table for statement
-        ResultSet results = stmt.executeQuery();
-        results.next();
-        //creates MemberData obj
-        MemberData mem = new MemberData();
-        //populates data members
-        int address_id = results.getInt("AddressID");
-        mem.address = AddressData.retrieve(address_id);
-        mem.ident = Integer.parseInt(mem_id);
-        mem.name = results.getString("Name");
-        mem.is_active = results.getBoolean("IsActive");
-        conn.close();
-        return mem;
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            MemberData mem = new MemberData();
+            mem.ident = results.getInt("MemberID");
+            int address_id = results.getInt("AddressID");
+            mem.address = AddressData.retrieve(address_id);
+            mem.name = results.getString("Name");
+            mem.is_active = results.getBoolean("IsActive");
+            return mem;
+        }
+        catch (SQLException e) { throw e; }
+
     }
 
     public boolean write() throws SQLException {
-        // write address first
-        address.write();
-        // if no id, insert new row
-        if (ident == 0) {
-            ident = get_next_ident();
-            String[] vals = new String[] {
-                    ident_to_string(ident),
-                    name,
-                    Boolean.toString(is_active),
-                    Integer.toString(address.ident)
-            };
-            insert(table, columns, vals);
+        // if no id, new row
+        if (ident == 0){
+            String sql = "INSERT INTO member" +
+                        "(MemberID,Name,IsActive,AddressID) " +
+                        "values (?,?,?,?)";
+            address.write();
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                ident = get_next_ident();
+                pstmt.setInt(1,ident);
+                pstmt.setString(2, name);
+                String act  = Boolean.toString(is_active);
+                pstmt.setString(3,act);
+                String add_id =  Integer.toString(address.ident);
+                pstmt.setString(4, add_id);
+                pstmt.execute();
+            }
+            catch (SQLException e) {
+                throw e;
+            }
+            return true;
+        } else {
+            String sql = "UPDATE member SET " +
+                        "(Name,IsActive,AddressID) " +
+                        "= (?,?,?) WHERE MemberID = ?";
+            address.write();
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                pstmt.setString(1, name);
+                String act  = Boolean.toString(is_active);
+                pstmt.setString(2,act);
+                String add_id =  Integer.toString(address.ident);
+                pstmt.setString(3, add_id);
+                pstmt.setInt(4,ident);
+                pstmt.execute();
+            }
+            catch (SQLException e) {
+                throw e;
+            }
         }
-        //else if
-        //update existing row code goes here
         return true;
-        //add return false for failure
     }
 
     public static void delete(int ident) throws SQLException {

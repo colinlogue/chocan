@@ -1,6 +1,3 @@
-/*
- grab data from DB
- */
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +8,6 @@ public class ProviderDirectory extends DataSource {
 
     // Looks up a
     // Throws a SQLException if the service_code is not found
-    /*
-      Service DNE in this file. It is a locked provider.java and static, yet public.
-     */
 
     public static Service lookup(int service_code) throws SQLException {
         String sql = "select * from service where ServiceCode = ?";
@@ -31,11 +25,11 @@ public class ProviderDirectory extends DataSource {
             throw e;
         }
     }
-
     public void display() {
         System.out.print("Thank you. A provider directory has been sent to the email address associated with your Provider ID.");
 
     }
+
 
     public static void main(String[] args) {
         try {

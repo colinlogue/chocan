@@ -56,6 +56,7 @@ public class AddressData extends DataSource {
                 pstmt.setString(4, ZIP);
                 pstmt.setInt(5, ident);
                 pstmt.execute();
+                conn.close();
             }
             catch (SQLException e) {
                 throw e;
@@ -76,6 +77,7 @@ public class AddressData extends DataSource {
                 pstmt.setInt(5, ident);
                 // UPDATE
                 pstmt.execute();
+                conn.close();
             }
             catch (SQLException e)
             {
@@ -92,7 +94,7 @@ public class AddressData extends DataSource {
              Statement stmt = conn.createStatement();
              ResultSet results = stmt.executeQuery(sql);)
         {
-            return Integer.parseInt(results.getString(1)) + 1;
+            return results.getInt(1) + 1;
         }
     }
 

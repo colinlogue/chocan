@@ -29,7 +29,6 @@ public class AddressData extends DataSource {
         stmt.setInt(1, ident);
         //queries appropriate table for statement
         ResultSet results = stmt.executeQuery();
-        results.next();
         AddressData add = new AddressData();
         //populate data members
         add.street = results.getString("street");

@@ -13,6 +13,7 @@ of members current member status before progressing to main text page
 ALSO everything protected for the moment
 add some way of automating a weekly report for the manager?
  */
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -132,7 +133,17 @@ public class ProviderTerminal{
     }
 
     private boolean service_report(){
-        System.out.print("Please enter the Member ID");
+        System.out.print("Please enter the Member ID:\n");
+        System.out.print("Please enter the Provider ID\n:");
+        System.out.print("Please enter the Service Code:\n");
+        System.out.print("Please enter the Member ID:\n");
+        System.out.print("Please enter the Date: (MM/DD/YYYY)");
+        System.out.print("Please enter any comments about the session:\n");
+        //int member_id;
+        //int provider_id;
+        //int service_code;
+        //Date date;
+        //String comments;
         return false; //the report could not be written to database
     }
     private String provider_dir_search(){

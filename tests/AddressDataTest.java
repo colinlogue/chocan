@@ -17,12 +17,10 @@ public class AddressDataTest
     {
         AddressData providerData = new AddressData("221B Baker St.", "London", "WA", "98301");
         AddressData memberData = new AddressData("123 Fake St.", "Portland", "OR", "97214");
-
-        AddressData addressData = new AddressData();
         try
         {
-            assertEquals(null, AddressData.retrieve(invalid_id));
-            assertEquals((AddressData) memberData, AddressData.retrieve(valid_member_id));
+            assertNull(AddressData.retrieve(invalid_id));
+            assertEquals(memberData, AddressData.retrieve(valid_member_id));
             assertEquals(providerData, AddressData.retrieve(valid_provider_id));
         }catch (SQLException e)
         {

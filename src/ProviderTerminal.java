@@ -158,8 +158,9 @@ public class ProviderTerminal{
             session.provider_id = input.nextInt();
             System.out.print("Service Code: \n");
             session.service_code = input.nextInt();
-            System.out.print("Date (MM/DD/YYYY): \n");
             session.date = new Date(System.currentTimeMillis());
+            System.out.print("Date (MM/DD/YYYY):"+ session.date+"\n");
+            System.out.print("Additional Comments: \n");
             session.comments = input.nextLine();
 
             session.write();
@@ -168,10 +169,6 @@ public class ProviderTerminal{
             // handle case where loading fails
         }
 
-
-
-
-        System.out.print("Comments: \n");
       //  public int member_id;
       //  public int provider_id;
       //  public int service_code;

@@ -60,7 +60,7 @@ public class PersonData extends DataSource {
     // public methods
     public boolean write() throws SQLException {
         // writes data to the db
-        // TODO
+        //implemented in subclasses
         return true;
     }
 

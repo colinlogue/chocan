@@ -1,10 +1,5 @@
 import java.sql.*;
-/*
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-*/
+
 public class ProviderData extends PersonData {
 
     public ProviderData(){
@@ -25,33 +20,24 @@ public class ProviderData extends PersonData {
         "AddressID"
     };
 
-    // all other data members are derived from PersonData
     public boolean is_active;
 
     public static ProviderData retrieve(int ident) throws SQLException {
-        //convert int to String
-        String pro_id = ident_to_string(ident);  //note: this differs from AddressData because handled in PersonData
-        //select all columns from provider row that match id
-        String sql = "SELECT * FROM provider WHERE ProviderID = ?";
-        //established Connection
-        Connection conn = connect();
-        //creates obj
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        //replaces ? in string with pro_id, creating valid sql Statement
-        stmt.setString(1, pro_id);
-        //queries appropriate table for Statement
-        ResultSet results = stmt.executeQuery();
-        results.next();
-        //creates ProviderData obj
-        ProviderData pro = new ProviderData();
-        //populate data members of new object
-        int address_id = results.getInt("AddressID");
-        pro.address = AddressData.retrieve(address_id);
-        pro.ident = Integer.parseInt(pro_id);
-        pro.name = results.getString("Name");
-        //pro.is_active = results.getBoolean("IsActive");
-        conn.close();
-        return pro;
+        //new
+        String pro_id = ident_to_string(ident);
+        String sql = "SELECT * FROM provider WHERE ProviderID = " + pro_id;
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            ProviderData pro = new ProviderData();
+            int address_id = results.getInt("AddressID");
+            pro.address = AddressData.retrieve(address_id);
+            pro.ident = Integer.parseInt(pro_id);
+            pro.name = results.getString("Name");
+            return pro;
+        }
+        catch (SQLException e) { throw e; }
+
     }
 
     public static void delete(int ident) throws SQLException {
@@ -93,33 +79,45 @@ public class ProviderData extends PersonData {
 
     public boolean write() throws SQLException {
         //if no id, insert new rows
-
         if (ident == 0){
+            ident = get_next_ident();
             //write address first
             address.write();
-            ident = get_next_ident();
-            String[] vals = new String[]{
-                    ident_to_string(ident),
-                    name,
-                    Boolean.toString(is_active),
-                    Integer.toString(address.ident)
-            };
-            insert(table, columns, vals);
+            String sql = "INSERT INTO provider" +
+                    "(ProviderID,Name,AddressID) " +
+                    "values (?,?,?)";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                pstmt.setInt(1,ident);
+                pstmt.setString(2, name);
+                String add_id =  Integer.toString(address.ident);
+                pstmt.setString(3, add_id);
+                //String act  = Boolean.toString(is_active);
+                //pstmt.setString(4,act);
+                pstmt.execute();
+            }
+            catch (SQLException e) {
+                throw e;
+            }
+            return true;
         }
-        else
-        {
-            String sql = "UPDATE provider SET name = ? "
-                    + "WHERE ProviderID = ?";
+        else {
+            String sql = "UPDATE provider SET " +
+                    "(Name,AddressID) " +
+                    "= (?,?) WHERE ProviderID = ?";
             address.write();
             try (Connection conn = connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setString(1, name);
-                pstmt.setInt(2, ident);
-                //UPDATE
-                pstmt.executeUpdate();
+                String add_id =  Integer.toString(address.ident);
+                pstmt.setString(2, add_id);
+                //String act  = Boolean.toString(is_active);
+                //pstmt.setString(3,act);
+                pstmt.setInt(3,ident);
+                pstmt.execute();
             }
-            catch (SQLException e){
-                System.out.println(e.getMessage());
+            catch (SQLException e) {
+                throw e;
             }
         }
         return true;

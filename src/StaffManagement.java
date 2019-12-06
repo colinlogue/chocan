@@ -14,7 +14,7 @@ public class StaffManagement extends ManagerTools
        StaffManagement temp = new StaffManagement();
        //temp.update_staff(provider);
        temp.add_staff(provider);
-       //temp.remove_staff(provider);
+       temp.remove_staff(provider);
     }
 
     //Prompt user for PersonData fields then downcast to ProviderData or MemberData

@@ -75,8 +75,10 @@ public class StaffManagementTest {
 
     @Test(expected = SQLException.class)
     public void test_retrieve_staff(){
-        ProviderData providerData = new ProviderData("Scooby Doo", "221B Baker St.", "London", "WA", "98301");
-        MemberData memberData = new MemberData("Aaron A. Aaronson", "123 Fake St.", "Portland", "OR", "97214");
+        ProviderData providerData = new ProviderData("Scooby Doo", "221B Baker St.",
+                "London", "WA", "98301", valid_provider_id);
+        MemberData memberData = new MemberData("Aaron A. Aaronson", "123 Fake St.",
+                "Portland", "OR", "97214", valid_member_id);
 
         StaffManagement staffManagement = new StaffManagement();
 

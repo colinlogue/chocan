@@ -79,9 +79,13 @@ public class ProviderTerminal{
     /* I can give user fake ids to test that have already been made.
     types in the ID and see that it exists, retrieve. Then validate */
     private boolean validate_provider(int ID){
+
         ProviderData provider = new ProviderData();
+        ProviderData.status prov_status = null;
+
         try{
-            provider.retrieve(ID);
+            //retrieve function takes in the ID and returns all the data associated w/provider.
+             provider = ProviderData.retrieve(ID);
 
         }catch(SQLException e){
 
@@ -89,34 +93,44 @@ public class ProviderTerminal{
             return false;
         }
         try{
-          PersonData.status prov_stat = provider.validate(ID);
+            prov_status = ProviderData.validate(ID);
         }catch (SQLException e){
             System.out.print("Couldn't validate/find provider status\n");
 
         }
         //print the status of provider
-        System.out.print("success, logging into session.\n");
+        System.out.print("success, logging into session.\n" + "The provider status is \n");
+        System.out.println(prov_status);
         return true;
     }
 
     private boolean validate_member(int ID) {
+
        MemberData member = new MemberData();
+       PersonData.status mem_stat = null;
+
        try{
-           member.retrieve(ID);
+           member = MemberData.retrieve(ID);
        }catch (SQLException e){
-           System.out.print("Member status cannot be reached. Member DNE");
+           System.out.print("Member status cannot be reached as member DNE\n");
            return false;
        }
         //check if the value retrieved is valid. if its valid then we print their status
-        try {
-            PersonData.status mem_stat = member.validate(ID);
-        } catch (SQLException e) {
-           System.out.print(" The member's ID is invalid as it does not exist .\n");
-        }
-        //print status of member
-        System.out.print("The members current status is");
-        return true;
+       try {
+           mem_stat = MemberData.validate(ID);
+       } catch (SQLException e) {
+          System.out.print(" The member's ID is invalid as it does not exist .\n");
+       }
+
+       System.out.print("The members current status is");
+       System.out.println(mem_stat);
+
+       if(mem_stat != PersonData.status.INVALID){
+           return true;
+       }
+       return false;
     }
+
     private boolean service_report(){
         System.out.print("Please enter the Member ID");
         return false; //the report could not be written to database

@@ -35,8 +35,8 @@ public class ProviderTerminal{
         //make a loop w/try catch inside so they can enter prov ID again
         System.out.print("Type a Provider ID to proceed to Provider tools. \n");
         int Prov_ID =  ID.nextInt();
-        if(terminal.validate_provider(Prov_ID)) {
-
+        if(terminal.validate_provider(Prov_ID))  //should only go into menu if provider is validated
+        {
             //MENU OUTPUT//
             do {
                 try {

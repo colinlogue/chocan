@@ -72,7 +72,7 @@ public class ProviderTerminal{
                         break;
                 }
 
-            } while (task_num >= 1 && task_num < 4); //fixed this loop
+            } while (task_num <1 || task_num > 4); //fixed this loop
         }
 
    }

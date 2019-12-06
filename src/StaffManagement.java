@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 
 //Class to add, remove, and update Member and Provider Data.
 
@@ -20,7 +21,7 @@ public class StaffManagement extends ManagerTools
     //depending on the string passed in and write to database.
     public int add_staff(String staff_title)
     {
-        int repeat;
+        int rc;
         PersonData new_staff;
 
         //Instantiate PersonData as sub-class object
@@ -42,33 +43,35 @@ public class StaffManagement extends ManagerTools
         System.out.println();
         new_staff.display();
 
-        //Downcast PersonData object and write to database
-        //Return error code if write() throws an exception.
-        if(new_staff instanceof ProviderData)
-        {
-            try{
+        rc = add_staff(new_staff);
+        if(rc < 0) {
+            System.out.println("Failed to write to database");
+            return -1;
+        }
+
+        return 0;
+    }
+
+    //Downcast PersonData object and write to database
+    //Return -1 if write() throws an exception.
+    //Otherwise return 0 on success.
+    public int add_staff(PersonData new_staff)
+    {
+        try{
+            if(new_staff instanceof ProviderData)
+            {
                 ProviderData providerData = (ProviderData) new_staff;
                 providerData.write();
             }
-            catch (SQLException e){
-                //Just a place holder for now.
-                System.out.println("Failed to write to database");
-                return -1;
-            }
-        }
-        else if(new_staff instanceof MemberData){
-            try {
+            else if(new_staff instanceof MemberData){
                 MemberData memberData = (MemberData) new_staff;
                 memberData.write();
             }
-            catch (SQLException e){
-                //Just a place holder for now.
-                System.out.println("Failed to write to database");
+            else
                 return -1;
-            }
+        } catch (SQLException e){
+                return -1;
         }
-        else
-            return -1;
 
         return 0;
     }
@@ -78,62 +81,72 @@ public class StaffManagement extends ManagerTools
     public int remove_staff(String staff_title)
     {
         int ident;
-        PersonData staff;
+        int rc;
 
         ident = prompt_id();
         if(ident < 0)
             return -1;
 
-        //Use down casting to retrieve ID. Then delete the data corresponding to ID.
+        rc = remove_staff(staff_title, ident);
+        if(rc < 0)
+            System.out.println(staff_title + " " + ident + " could not be found and/or deleted.");
 
-        if(staff_title.equals(provider))
-        {
-            try{
-                ProviderData.retrieve(ident) ;
-            }
-            catch (SQLException e)
-            {
-                System.out.println(staff_title + " " + ident + " could not be found.");
-                return -1;
-            }
-
-            try
-            {
-                ProviderData.delete(ident);
-            } catch (SQLException e)
-            {
-                System.out.println("Failed to remove" + staff_title +
-                        "(ID:" + ident + ").");
-                return -1;
-            }
-        }
-        else if(staff_title.equals(member))
-        {
-            try{
-                MemberData.retrieve(ident) ;
-            }
-            catch (SQLException e)
-            {
-                System.out.println(staff_title + " " + ident + " could not be found.");
-                return -1;
-            }
-
-            try{
-                MemberData.delete(ident);
-            }
-            catch (SQLException e){
-                System.out.println("Failed to remove" + staff_title +
-                        "(ID:" + ident + ").");
-                return -1;
-            }
-        }
-        else
-            return -1;
 
         System.out.println(staff_title + "ID: " + ident
                 + " was removed successfully.");
 
         return 0;
+    }
+
+    //Checks staff_title and removed appropriate staff from ProviderData or MemberData
+    //depending on their id number (ident).
+    //Returns -1 if retrieve or delete throws exception or staff_title is not
+    //"Provider" or "Member"
+    //Returns 0 on success
+    public int remove_staff(String staff_title, int ident){
+
+        //Use down casting to retrieve ID. Then delete the data corresponding to ID.
+        try{
+            if(staff_title.equals(provider)) {
+                ProviderData.retrieve(ident);
+                ProviderData.delete(ident);
+            }
+            else if(staff_title.equals(member)) {
+                MemberData.retrieve(ident);
+                MemberData.delete(ident);
+            }
+            else
+                return -1;
+        }
+        catch (SQLException e)
+        {
+                return -1;
+        }
+
+        return 0;
+    }
+
+    //Retrieve MemberData or Provider onto a local PersonData object
+    // denping on the strin passed-in and return the local PersonData object.
+    public PersonData retrieve_staff(String staff_title, int ident) throws SQLException
+    {
+        PersonData staff;
+
+        try{
+            if(staff_title.equals(provider))
+                staff = ProviderData.retrieve(ident);
+            else if(staff_title.equals(member))
+                staff = MemberData.retrieve(ident);
+            else
+                return null;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(staff_title + " " + ident + " could not be found.");
+            throw e;
+        }
+
+        return staff;
     }
 
     //Update ProviderData or MemberData according to the String passed in.
@@ -149,29 +162,13 @@ public class StaffManagement extends ManagerTools
         if(ident < 0)
             return -1;
 
-        //Retrieve to PersonData object depending on the String argument passed in.
-        if(staff_title.equals(provider)){
-            try{
-                staff = ProviderData.retrieve(ident);
-            }
-            catch (SQLException e)
-            {
-                System.out.println(staff_title + " " + ident + " could not be found.");
-                return -1;
-            }
+        try {
+            staff = retrieve_staff(staff_title, ident);
         }
-        else if(staff_title.equals(member)){
-            try{
-                staff = MemberData.retrieve(ident);
-            }
-            catch (SQLException e)
-            {
-                System.out.println(staff_title + " " + ident + " could not be found.");
-                return -1;
-            }
-        }
-        else
+        catch (SQLException e){
+            System.out.println(staff_title + " with ID:" + ident + " could not be found.");
             return -1;
+        }
 
         //Print the data of retrieved object
         System.out.println("\nID: " + ident);
@@ -213,21 +210,8 @@ public class StaffManagement extends ManagerTools
 
         }while(repeat == 1);
 
-        //Throw exception and return error if write fails
-        try{
-            if(staff instanceof ProviderData)
-            {
-                ProviderData pData = (ProviderData) staff;
-                pData.write();
-            }
-            else
-            {
-                MemberData mData = (MemberData) staff;
-                mData.write();
-            }
-        }
-        catch (SQLException e)
-        {
+        int rc = add_staff(staff);
+        if(rc < 0) {
             System.out.println("Failed to write to database");
             return -1;
         }

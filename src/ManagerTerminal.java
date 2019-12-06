@@ -2,8 +2,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManagerTerminal{
+
+
     static public Scanner input;
     private ManagerReports reports = new ManagerReports();
+    private StaffManagement staff_manager = new StaffManagement();
 
     public ManagerTerminal(){
        input = new Scanner(System.in);
@@ -32,14 +35,13 @@ public class ManagerTerminal{
             //Prompts user for int, sets to -1 if not int
             option = enter_an_int();
 
-
             switch (option) //Calls appropriate sub-menu based on valid input
             {
                 case 1: //manage member
-                    manage_member();
+                    manage_staff(StaffManagement.member);
                     break;
                 case 2: //manage provider menu
-                    manage_provider();
+                    manage_staff(StaffManagement.provider);
                     break;
                 case 3: //display reports
                     manage_reports();
@@ -57,29 +59,29 @@ public class ManagerTerminal{
 
     //Manage Member Menu
     //Provides options to add, remove, or update members
-    private void manage_member ()
+    private void manage_staff(String staff_title)
     {
         int option;
 
         do {    //Continues to display manager member menu until valid user input reveived
 
-            display_manage_menu("Member");
+            display_manage_menu(staff_title);
 
             //Prompts user for int, sets to -1 if not int
             option = enter_an_int();
 
             switch (option) {   //Add, remove, or update member based on valid user input
                 case 1:     //add member
-                    System.out.print("\nADD MEMBER\n" +
-                                     "-----------\n");
+                    System.out.print("\nADD MEMBER\n" + "-----------\n");
+                    staff_manager.add_staff(staff_title);
                     break;
                 case 2:     //remove member
-                    System.out.print("\nREMOVE MEMBER\n" +
-                                     "--------------\n");
+                    System.out.print("\nREMOVE MEMBER\n" + "--------------\n");
+                    staff_manager.remove_staff(staff_title);
                     break;
                 case 3:     //update member
-                    System.out.print("\nUPDATE MEMBER\n" +
-                                     "-------------\n");
+                    System.out.print("\nUPDATE MEMBER\n" + "-------------\n");
+                    staff_manager.update_staff(staff_title);
                     break;
                 case 4:     //Return to Main Menu
                     main_menu();
@@ -89,42 +91,6 @@ public class ManagerTerminal{
                     break;
             }
             //Input must be a number from menu to exit loop
-        }while(option < 1 || option > 4);
-    }
-
-    //Manage Provider Menu
-    //Provides options to add, remove, or update members
-    private void manage_provider ()
-    {
-        int option;
-
-        //Continues to display menu until valid input is received from user
-        do {
-            display_manage_menu("Provider");
-
-            //Prompts user for int, sets to -1 if not int
-            option = enter_an_int();
-
-            switch (option) {   //Add, remove, or update based on valid user input
-                case 1:     //add provider
-                    System.out.print("ADD PROVIDER" + "-------------\n");
-                    break;
-                case 2:     //remove provider
-                    System.out.print("REMOVE PROVIDER" +
-                                     "----------------\n");
-                    break;
-                case 3:     //update provider
-                    System.out.print("UPDATE PROVIDER" +
-                                     "----------------\n");
-                    break;
-                case 4:     //Return user to Main Menu
-                    main_menu();
-                    break;
-                default:        //Error message printed to terminal if input is not valid
-                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
-                    break;
-            }
-            //Input must be a number from menu options to exit loop
         }while(option < 1 || option > 4);
     }
 

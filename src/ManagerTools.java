@@ -4,9 +4,6 @@ import java.util.Scanner;
 
 public class ManagerTools
 {
-    public static String provider = "Provider";
-    public static String manager = "Manager";
-
     static public Scanner input = new Scanner(System.in);
 
     //Prompt user for person (Manager or Provider) name and return
@@ -20,7 +17,7 @@ public class ManagerTools
         {
             System.out.print("Enter new " + person + "'s name: ");
             name = input.nextLine();
-            if(isStringAlphabet(name))
+            if(is_string_name(name))
                 success = true;
             else
                 System.out.println("Invalid name.");
@@ -41,7 +38,7 @@ public class ManagerTools
         {
             System.out.print("Street: ");
             street = input.nextLine();
-            if(isStringAlphanumeric(street))
+            if(is_string_alphanumeric(street))
                 success = true;
             else
                 System.out.println("Invalid street name. Use only alphabet, numbers , (.), or (').");
@@ -62,7 +59,7 @@ public class ManagerTools
         {
             System.out.print("City: ");
             city = input.nextLine();
-            if(isStringAlphabet(city))
+            if(is_string_name(city))
                 success = true;
             else
                 System.out.println("Invalid city name. Use only alphabets.");
@@ -82,11 +79,11 @@ public class ManagerTools
         do
         {
             System.out.print("State: ");
-            state = input.nextLine();
-            if(isStringOnlyCaps(state))
+            state = input.nextLine().toUpperCase();
+            if(is_string_alphabet(state))
                 success = true;
             else
-                System.out.println("Invalid state name. Use only capital letters.");
+                System.out.println("Invalid state name. Use only alphabets.");
         }
         while(!success);
 
@@ -126,15 +123,22 @@ public class ManagerTools
         int choice;
 
         do{
-            System.out.println("\nWhich field would you like to update?");
-            System.out.println("1. Name");
-            System.out.println("2. Street");
-            System.out.println("3. City");
-            System.out.println("4. State");
-            System.out.println("5. Zip Code\n");
+            try{
+                System.out.println("\nWhich field would you like to update?");
+                System.out.println("1. Name");
+                System.out.println("2. Street");
+                System.out.println("3. City");
+                System.out.println("4. State");
+                System.out.println("5. Zip Code\n");
 
-            System.out.print("Enter your choice: ");
-            choice = input.nextInt();
+                System.out.print("Enter your choice 1 - 5: ");
+                choice = input.nextInt();
+            }
+            catch(InputMismatchException e)
+            {
+                System.out.println("Invalid Input");
+                choice = 0;
+            }
         }while (choice > 5 || choice < 1);
 
         return choice;
@@ -176,20 +180,21 @@ public class ManagerTools
     }
 
     //Checks if string contains only alphabets and whitespace
-    public static boolean isStringAlphabet(String str)
+    public static boolean is_string_name(String str)
     {
        return ((!str.equals("")))
                && (str.matches("^[a-zA-Z.'\\s]*$"));
     }
 
-    //Checks if strings contains only capital letters. No whitespace.
-    public static boolean isStringOnlyCaps(String str)
+    //Checks if string contains only alphabets
+    public static boolean is_string_alphabet(String str)
     {
-        return ((!str.equals(""))) && (str.matches("^[A-Z]*$"));
+        return ((!str.equals("")))
+                && (str.matches("^[a-zA-Z]*$"));
     }
 
     //Checks if string contains alphanumeric letters and whitespace.
-    public static boolean isStringAlphanumeric(String str)
+    public static boolean is_string_alphanumeric(String str)
     {
         return ((!str.equals(""))) && (str.matches("^[a-zA-Z0-9.'\\s]*$"));
     }

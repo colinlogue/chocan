@@ -2,6 +2,15 @@ import java.sql.*;
 
 public class MemberData extends PersonData {
 
+    public MemberData(){
+       super();
+    }
+
+    //Constructor used for testing. Please don't remove
+    public MemberData(String new_name, String new_street, String new_city, String new_state, String new_zip) {
+        super(new_name, new_street, new_city, new_state, new_zip);
+    }
+
     private static String table = "member";
     private static String[] columns = {
             "MemberID",

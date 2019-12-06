@@ -7,6 +7,15 @@ import java.sql.Statement;
 */
 public class ProviderData extends PersonData {
 
+    public ProviderData(){
+        super();
+    }
+
+    //Constructor used for testing. Please don't remove
+    public ProviderData(String new_name, String new_street, String new_city, String new_state, String new_zip) {
+        super(new_name, new_street, new_city, new_state, new_zip);
+    }
+
     // these data members describe the names of the table and
     // columns in the database
     private static String table = "provider";

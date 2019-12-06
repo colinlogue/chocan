@@ -1,8 +1,18 @@
 import java.sql.SQLException;
 import java.sql.*;
 
-
 public class AddressData extends DataSource {
+
+    public AddressData(){
+        super();
+    }
+
+    public AddressData(String new_street, String new_city, String new_state, String new_ZIP){
+        street = new_street;
+        city = new_city;
+        state = new_state;
+        ZIP = new_ZIP;
+    }
 
     // public data
     public String street;

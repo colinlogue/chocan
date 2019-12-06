@@ -12,9 +12,10 @@ public class StaffManagement extends ManagerTools
     public static void main(String[] args)
     {
        StaffManagement temp = new StaffManagement();
-       //temp.update_staff(provider);
-       temp.add_staff(provider);
-       temp.remove_staff(provider);
+       temp.update_staff(provider);
+       //temp.add_staff(provider);
+       //temp.add_staff(provider);
+       //temp.remove_staff(provider);
     }
 
     //Prompt user for PersonData fields then downcast to ProviderData or MemberData

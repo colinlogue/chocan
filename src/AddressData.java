@@ -56,6 +56,7 @@ public class AddressData extends DataSource {
                 pstmt.setString(4, ZIP);
                 pstmt.setInt(5, ident);
                 pstmt.execute();
+                conn.close();
             }
             catch (SQLException e) {
                 throw e;
@@ -76,6 +77,7 @@ public class AddressData extends DataSource {
                 pstmt.setInt(5, ident);
                 // UPDATE
                 pstmt.execute();
+                conn.close();
             }
             catch (SQLException e)
             {

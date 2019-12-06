@@ -31,23 +31,25 @@ public class AddressData extends DataSource {
     // db read/write
     public static AddressData retrieve(int ident) throws SQLException {
         //selects all columns from member row that matches id
-        String sql = "SELECT * FROM address WHERE AddressID = ?";
-        //establishes connection
-        Connection conn = connect();
-        //creates obj
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        //replaces ? in string with add_id, creating a valid SQL statement
-        stmt.setInt(1, ident);
-        //queries appropriate table for statement
-        ResultSet results = stmt.executeQuery();
-        AddressData add = new AddressData();
-        //populate data members
-        add.street = results.getString("street");
-        add.city = results.getString("city");
-        add.ZIP = results.getString("ZIP");
-        add.state = results.getString("state");
-        conn.close();
-        return add;
+        String sql = "SELECT * FROM address WHERE AddressID = " + ident;
+        try (Connection conn = connect();
+            Statement stmt = conn.createStatement();
+            ResultSet results = stmt.executeQuery(sql);) {
+            AddressData add = new AddressData();
+
+            //PreparedStatement stmt = conn.prepareStatement(sql);
+            //replaces ? in string with add_id, creating a valid SQL statement
+
+
+            //populate data members
+            add.street = results.getString("street");
+            add.city = results.getString("city");
+            add.ZIP = results.getString("ZIP");
+            add.state = results.getString("state");
+            conn.close();
+            return add;
+        }
+        catch (SQLException e) { throw e; }
     }
 
     // public methods

@@ -13,6 +13,7 @@ of members current member status before progressing to main text page
 ALSO everything protected for the moment
 add some way of automating a weekly report for the manager?
  */
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -21,23 +22,29 @@ public class ProviderTerminal{
     private static Scanner input;
     private static Scanner ID;
     private static Scanner session;
+    private static Scanner M_ID;
 
     //Takes input from provider
     private ProviderTerminal(){
         input = new Scanner(System.in);
         ID = new Scanner(System.in);
         session = new Scanner(System.in);
+        M_ID = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
-//test
         ProviderTerminal terminal = new ProviderTerminal();
         int task_num;
 
         //make a loop w/try catch inside so they can enter prov ID again
         System.out.print("Type a Provider ID to proceed to Provider tools. \n");
         int Prov_ID =  ID.nextInt();
-        if(terminal.validate_provider(Prov_ID))  //should only go into menu if provider is validated
+
+        System.out.print("Type a member ID. \n");
+        int Mem_ID =  M_ID.nextInt();
+
+         //should only go into menu if provider and member validated
+        if(terminal.validate_provider(Prov_ID) && terminal.validate_member(Mem_ID))
         {
             //MENU OUTPUT//
             do {
@@ -72,7 +79,7 @@ public class ProviderTerminal{
                         break;
                 }
 
-            } while (task_num >= 1 && task_num < 4); //fixed this loop
+            } while (task_num <1 || task_num > 4); //fixed this loop
         }
 
    }
@@ -85,7 +92,7 @@ public class ProviderTerminal{
 //        ProviderData provider = new ProviderData();
         ProviderData.status prov_status = null;
 
-        try{
+/*        try{
             //retrieve function takes in the ID and returns all the data associated w/provider.
  //            provider = ProviderData.retrieve(ID);
                ProviderData.retrieve(ID);
@@ -95,6 +102,7 @@ public class ProviderTerminal{
             System.out.print("This provider DNE in the system.\n");
             return false;
         }
+ */
         try{
             prov_status = ProviderData.validate(ID);
         }catch (SQLException e){
@@ -102,41 +110,73 @@ public class ProviderTerminal{
 
         }
         //print the status of provider
-        System.out.print("success, logging into session.\n" + "The provider status is \n");
+        System.out.print("success, logging into session.\n" + "The provider status is ");
         System.out.println(prov_status);
+        System.out.print("\n");
         return true;
     }
 
     private boolean validate_member(int ID) {
-
 //       MemberData member = new MemberData();
        PersonData.status mem_stat = null;
-
+/*
        try{
-//           member = MemberData.retrieve(ID);
+           member = MemberData.retrieve(ID);
            MemberData.retrieve(ID);
        }catch (SQLException e){
            System.out.print("Member status cannot be reached as member DNE\n");
            return false;
        }
-        //check if the value retrieved is valid. if its valid then we print their status
+*/
+
+//check if the value retrieved is valid. if its valid then we print their status
        try {
            mem_stat = MemberData.validate(ID);
        } catch (SQLException e) {
           System.out.print(" The member's ID is invalid as it does not exist .\n");
        }
 
-       System.out.print("The members current status is");
+       System.out.print("The members current status is ");
        System.out.println(mem_stat);
+        System.out.print("\n");
 
-       if(mem_stat != PersonData.status.INVALID){
+       if(mem_stat != PersonData.status.INVALID) {
            return true;
+       }else{
+         System.out.print(" This member has an invalid membership.Please contact the management. \n");
+         return false;
        }
-       return false;
     }
 
     private boolean service_report(){
-        System.out.print("Please enter the Member ID \n");
+        try {
+            SessionData session = new SessionData();
+
+            System.out.print("Member ID: \n");
+            session.member_id = input.nextInt();
+            System.out.print("Provider ID: \n");
+            session.provider_id = input.nextInt();
+            System.out.print("Service Code: \n");
+            session.service_code = input.nextInt();
+            System.out.print("Date (MM/DD/YYYY): \n");
+            session.date = new Date(System.currentTimeMillis());
+            session.comments = input.nextLine();
+
+            session.write();
+        }
+        catch (SQLException e) {
+            // handle case where loading fails
+        }
+
+
+
+
+        System.out.print("Comments: \n");
+      //  public int member_id;
+      //  public int provider_id;
+      //  public int service_code;
+      //  public Date date;
+      //  public String comments;
         return false; //the report could not be written to database
     }
 
@@ -153,18 +193,21 @@ public class ProviderTerminal{
             System.out.print(" The service code does not exist. Please consult a manager. \n");
         }
 
-        System.out.print("Service name: " + "Service fee: " + "Service code: \n");
+        System.out.print("Service name: \n");
         System.out.println(S.label);
+        System.out.print("\n");
+        System.out.print("Service code: \n");
         System.out.println(S.service_code);
+        System.out.print("\n");
+        System.out.print("Service fee: \n");
         System.out.println(S.fee);
+        System.out.print("\n");
 
     }
 
 
-
-    // the providers way of documenting how much theyve worked, and cost based on service codes
+//have the service report send the cost here. then the prov can retrieve it if they want.
     private boolean service_billing(){
-        System.out.print("Please enter your nine-digit Provider number\n");
         return false;
     }
 

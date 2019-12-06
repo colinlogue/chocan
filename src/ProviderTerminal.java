@@ -21,12 +21,14 @@ public class ProviderTerminal{
     private static Scanner input;
     private static Scanner ID;
     private static Scanner session;
+    private static Scanner M_ID;
 
     //Takes input from provider
     private ProviderTerminal(){
         input = new Scanner(System.in);
         ID = new Scanner(System.in);
         session = new Scanner(System.in);
+        M_ID = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -37,7 +39,12 @@ public class ProviderTerminal{
         //make a loop w/try catch inside so they can enter prov ID again
         System.out.print("Type a Provider ID to proceed to Provider tools. \n");
         int Prov_ID =  ID.nextInt();
-        if(terminal.validate_provider(Prov_ID))  //should only go into menu if provider is validated
+
+        System.out.print("Type a member ID. \n");
+        int Mem_ID =  M_ID.nextInt();
+
+         //should only go into menu if provider and member validated
+        if(terminal.validate_provider(Prov_ID) && terminal.validate_member(Mem_ID))
         {
             //MENU OUTPUT//
             do {
@@ -108,7 +115,6 @@ public class ProviderTerminal{
     }
 
     private boolean validate_member(int ID) {
-
 //       MemberData member = new MemberData();
        PersonData.status mem_stat = null;
 
@@ -119,7 +125,7 @@ public class ProviderTerminal{
            System.out.print("Member status cannot be reached as member DNE\n");
            return false;
        }
-        //check if the value retrieved is valid. if its valid then we print their status
+//check if the value retrieved is valid. if its valid then we print their status
        try {
            mem_stat = MemberData.validate(ID);
        } catch (SQLException e) {
@@ -128,11 +134,14 @@ public class ProviderTerminal{
 
        System.out.print("The members current status is");
        System.out.println(mem_stat);
+        System.out.print("\n");
 
-       if(mem_stat != PersonData.status.INVALID){
+       if(mem_stat != PersonData.status.INVALID) {
            return true;
+       }else{
+         System.out.print(" This member has an invalid membership.Please contact the management. \n");
+         return false;
        }
-       return false;
     }
 
     private boolean service_report(){
@@ -161,10 +170,8 @@ public class ProviderTerminal{
     }
 
 
-
-    // the providers way of documenting how much theyve worked, and cost based on service codes
+//have the service report send the cost here. then the prov can retrieve it if they want.
     private boolean service_billing(){
-        System.out.print("Please enter your nine-digit Provider number\n");
         return false;
     }
 

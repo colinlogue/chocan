@@ -166,12 +166,23 @@ public class ManagerTools
     //Return 1 if yes, -1 on No or any invalid input
     protected int ask_to_repeat()
     {
-        int answer;
+        int answer = 0;
+        int repeat;
 
         System.out.println("\nWould you like to repeat this process?");
         System.out.println("\t1. Yes");
         System.out.println("\t2. No");
-        answer = input.nextInt();
+        do
+        {
+            try{
+                System.out.print("Enter 1 or 2: ");
+                answer = input.nextInt();
+                repeat = 0;
+            }catch (InputMismatchException e) {
+               repeat = 1;
+            }
+        }
+        while(repeat == 1);
 
         if(answer == 1)
             return answer;

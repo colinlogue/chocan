@@ -30,7 +30,7 @@ public class ProviderTerminal{
     }
 
     public static void main(String[] args) {
-
+//test
         ProviderTerminal terminal = new ProviderTerminal();
         int task_num;
 
@@ -72,7 +72,7 @@ public class ProviderTerminal{
                         break;
                 }
 
-            } while (task_num <1 || task_num > 4); //fixed this loop
+            } while (task_num >= 1 && task_num < 4); //fixed this loop
         }
 
    }
@@ -137,16 +137,6 @@ public class ProviderTerminal{
 
     private boolean service_report(){
         System.out.print("Please enter the Member ID \n");
-        System.out.print("Please enter the Provider ID\n:");
-        System.out.print("Please enter the Service Code:\n");
-        System.out.print("Please enter the Member ID:\n");
-        System.out.print("Please enter the Date: (MM/DD/YYYY)\n");
-        System.out.print("Please enter any comments about the session:\n");
-        //int member_id;
-        //int provider_id;
-        //int service_code;
-        //Date date;
-        //String comments;
         return false; //the report could not be written to database
     }
 

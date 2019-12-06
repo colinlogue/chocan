@@ -34,6 +34,7 @@ public class ProviderData extends PersonData {
             pro.address = AddressData.retrieve(address_id);
             pro.ident = results.getInt(ident);
             pro.name = results.getString("Name");
+            conn.close();
             return pro;
         }
         catch (SQLException e) { throw e; }

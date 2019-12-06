@@ -32,7 +32,6 @@ public class ProviderTerminal{
     }
 
     public static void main(String[] args) {
-//test
         ProviderTerminal terminal = new ProviderTerminal();
         int task_num;
 

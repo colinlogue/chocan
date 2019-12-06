@@ -11,8 +11,16 @@ public class StaffManagement extends ManagerTools
     //Take out later
     public static void main(String[] args)
     {
+
        StaffManagement temp = new StaffManagement();
-       temp.update_staff(provider);
+       try{
+           temp.retrieve_staff(provider, 900013);
+       }
+       catch(SQLException e)
+       {
+            System.out.println("Error");
+       }
+       //temp.update_staff(provider);
        //temp.add_staff(provider);
        //temp.add_staff(provider);
        //temp.remove_staff(provider);

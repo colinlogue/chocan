@@ -4,12 +4,15 @@ import java.sql.SQLException;
 
 public class StaffManagement extends ManagerTools
 {
+    public static String provider = "Provider";
+    public static String member = "Member";
+
     //Take out later
     public static void main(String[] args)
     {
        StaffManagement temp = new StaffManagement();
        //temp.update_staff(provider);
-       //temp.add_staff(provider);
+       temp.add_staff(provider);
        //temp.remove_staff(provider);
     }
 
@@ -23,8 +26,10 @@ public class StaffManagement extends ManagerTools
         //Instantiate PersonData as sub-class object
         if(staff_title.equals(provider))
             new_staff = new ProviderData();
-        else
+        else if(staff_title.equals(member))
             new_staff = new MemberData();
+        else
+            return -1;
 
         //Prompt user for PersonData fields
         new_staff.name = prompt_name(staff_title);
@@ -51,7 +56,7 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
-        else {
+        else if(new_staff instanceof MemberData){
             try {
                 MemberData memberData = (MemberData) new_staff;
                 memberData.write();
@@ -62,6 +67,8 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
+        else
+            return -1;
 
         return 0;
     }
@@ -100,7 +107,7 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
-        else
+        else if(staff_title.equals(member))
         {
             try{
                 MemberData.retrieve(ident) ;
@@ -120,6 +127,8 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
+        else
+            return -1;
 
         System.out.println(staff_title + "ID: " + ident
                 + " was removed successfully.");
@@ -129,7 +138,7 @@ public class StaffManagement extends ManagerTools
 
     //Update ProviderData or MemberData according to the String passed in.
     //returns -1 when retrieve or delete throws a SQL exception or when prompt_id fails;
-    private int update_staff(String staff_title)
+    public int update_staff(String staff_title)
     {
         int ident;
         int choice;
@@ -151,7 +160,7 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
-        else{
+        else if(staff_title.equals(member)){
             try{
                 staff = MemberData.retrieve(ident);
             }
@@ -161,6 +170,8 @@ public class StaffManagement extends ManagerTools
                 return -1;
             }
         }
+        else
+            return -1;
 
         //Print the data of retrieved object
         System.out.println("\nID: " + ident);

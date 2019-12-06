@@ -34,9 +34,11 @@ public class ProviderTerminal{
         int task_num;
 
         //make a loop w/try catch inside so they can enter prov ID again
+        System.out.println("Welcome to the ChocAn System \n");
         System.out.print("Type a Provider ID to proceed to Provider tools. \n");
         int Prov_ID =  ID.nextInt();
         if(terminal.validate_provider(Prov_ID))  //should only go into menu if provider is validated
+       // terminal.validate_provider(Prov_ID);
         {
             //MENU OUTPUT//
             do {
@@ -137,7 +139,7 @@ public class ProviderTerminal{
         System.out.print("Please enter the Provider ID\n:");
         System.out.print("Please enter the Service Code:\n");
         System.out.print("Please enter the Member ID:\n");
-        System.out.print("Please enter the Date: (MM/DD/YYYY)");
+        System.out.print("Please enter the Date: (MM/DD/YYYY)\n");
         System.out.print("Please enter any comments about the session:\n");
         //int member_id;
         //int provider_id;

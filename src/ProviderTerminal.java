@@ -19,20 +19,29 @@ import java.util.InputMismatchException;
 
 public class ProviderTerminal{
     static public Scanner input;
+    static public Scanner ID;
 
+    //Takes input from provider
     public ProviderTerminal(){
         input = new Scanner(System.in);
+        ID = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
+
         ProviderTerminal terminal = new ProviderTerminal();
         int task_num;
 
-//MENU OUTPUT//
+        //make a loop w/try catch inside so they can enter prov ID again
+        System.out.print("Type a Provider ID to proceed to Provider tools. \n");
+        int Prov_ID =  ID.nextInt();
+        terminal.validate_provider(Prov_ID);
+
+        //MENU OUTPUT//
         do{
         try
         {
-            System.out.print("Select from the following menu:\n" +
+            System.out.print("Type a number to select from the following menu:\n" +
                     " 1. Create member service report.\n" +
                     " 2. Search for a service code and it's related info.\n" +
                     " 3. Bill ChocAn for the current session.\n" +
@@ -43,7 +52,6 @@ public class ProviderTerminal{
             input.nextLine();
             task_num = -1;
         }
-        terminal.validate_provider();
 
         switch (task_num) {  //grant access to main menu
             case 1:
@@ -63,27 +71,52 @@ public class ProviderTerminal{
                 break;
         }
 
-    } while (task_num >= 1 && task_num <= 4);
+    } while (task_num >= 1 && task_num <= 4  ); //fixed this loop
 
 
    }
+   //END OF MAIN
 
-    private boolean validate_provider(){
-
+    /* I can give user fake ids to test that have already been made.
+    types in the ID and see that it exists, retrieve. Then validate */
+    private boolean validate_provider(int ID){
         ProviderData provider = new ProviderData();
         try{
-            provider.retrieve(provider.ident);
-            System.out.print("success, logging into session.");
+            provider.retrieve(ID);
 
         }catch(SQLException e){
 
-            System.out.print("This provider DNE in the system.");
+            System.out.print("This provider DNE in the system.\n");
             return false;
         }
+        try{
+          PersonData.status prov_stat = provider.validate(ID);
+        }catch (SQLException e){
+            System.out.print("Couldn't validate/find provider status\n");
+
+        }
+        //print the status of provider
+        System.out.print("success, logging into session.\n");
         return true;
     }
-    private boolean validate_member() {
-        return false; //return a message that member reflects provider status
+
+    private boolean validate_member(int ID) {
+       MemberData member = new MemberData();
+       try{
+           member.retrieve(ID);
+       }catch (SQLException e){
+           System.out.print("Member status cannot be reached. Member DNE");
+           return false;
+       }
+        //check if the value retrieved is valid. if its valid then we print their status
+        try {
+            PersonData.status mem_stat = member.validate(ID);
+        } catch (SQLException e) {
+           System.out.print(" The member's ID is invalid as it does not exist .\n");
+        }
+        //print status of member
+        System.out.print("The members current status is");
+        return true;
     }
     private boolean service_report(){
         System.out.print("Please enter the Member ID");

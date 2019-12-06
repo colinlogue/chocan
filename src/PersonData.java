@@ -12,6 +12,7 @@ public class PersonData extends DataSource {
         SUSPENDED,      // if member hasn't paid dues
     }
 
+
     // public data
     public String name;
     public AddressData address;
@@ -19,6 +20,15 @@ public class PersonData extends DataSource {
     public PersonData(){
         name = null;
         address = new AddressData();
+    }
+
+    //Constructor used for testing. Please don't remove
+    public PersonData(String new_name, String new_street, String new_city, String new_state, String new_zip){
+        name = new_name;
+        address.street = new_street;
+        address.city = new_city;
+        address.state = new_state;
+        address.ZIP = new_zip;
     }
 
     // private data
@@ -50,7 +60,7 @@ public class PersonData extends DataSource {
     // public methods
     public boolean write() throws SQLException {
         // writes data to the db
-        // TODO
+        //implemented in subclasses
         return true;
     }
 

@@ -1,6 +1,6 @@
 import java.sql.SQLException;
 import java.sql.*;
-//test test -deh
+
 
 public class AddressData extends DataSource {
 
@@ -44,21 +44,29 @@ public class AddressData extends DataSource {
     public boolean write() throws SQLException {
         if (ident == 0)
         {
-            ident = get_next_ident();
-            String[] vals = new String[] {
-                    Integer.toString(ident),
-                    street,
-                    state,
-                    ZIP
-            };
-            insert(table, columns, vals);
+            String sql = "INSERT INTO address" +
+                        "(street,city,state,ZIP,AddressID) " +
+                        "values (?,?,?,?,?)";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                ident = get_next_ident();
+                pstmt.setString(1,street);
+                pstmt.setString(2, city);
+                pstmt.setString(3, state);
+                pstmt.setString(4, ZIP);
+                pstmt.setInt(5, ident);
+                pstmt.execute();
+                conn.close();
+            }
+            catch (SQLException e) {
+                throw e;
+            }
+            return true;
         }
         else {
-            String sql = "UPDATE address SET street = ? ,"
-                    + "city = ? ,"
-                    + "state = ? ,"
-                    + "ZIP = ? "
-                    + "WHERE AddressID = ?";
+            String sql = "UPDATE address SET" +
+                    "(street,city,state,ZIP) " +
+                    "= (?,?,?,?) WHERE AddressID = ?";
 
             try (Connection conn = connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -68,11 +76,12 @@ public class AddressData extends DataSource {
                 pstmt.setString(4, ZIP);
                 pstmt.setInt(5, ident);
                 // UPDATE
-                pstmt.executeUpdate();
+                pstmt.execute();
+                conn.close();
             }
             catch (SQLException e)
             {
-                System.out.println(e.getMessage());
+                throw e;
             }
         }
         return true;

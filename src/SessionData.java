@@ -31,21 +31,59 @@ public class SessionData extends DataSource {
     // db
     public static SessionData retrieve(int ident) throws SQLException {
         //selects all columns from member row that matches id
-        String sql = "SELECT * FROM session WHERE SessionID = " + Integer.toString(ident);
+        return get("SessionID", Integer.toString(ident));
+    }
+    public static Vector<SessionData> retrieve_all(MemberData member) throws SQLException {
+        String mem_id = ident_to_string(member.ident, 9);
+        return get_all("MemberID", mem_id);
+    }
+    public static Vector<SessionData> retrieve_all(ProviderData provider) throws SQLException {
+        String prov_id = ident_to_string(provider.ident, 9);
+        return get_all("ProviderID", prov_id);
+    }
+
+    private static SessionData get(String column, String value) throws SQLException {
+        String sql = "select * from session where " + column + " = ?";
         try (Connection conn = connect();
-             Statement stmt = conn.createStatement();
-             ResultSet results = stmt.executeQuery(sql);) {
-           SessionData sess = new SessionData();
-           sess.ident = results.getInt("SessionID");
-           sess.member_id = results.getInt("MemberID");
-           sess.provider_id = results.getInt("ProviderID");
-           sess.service_code = results.getInt("ServiceCode");
-           sess.date = results.getDate("ServiceDate");
-           sess.comments = results.getString("Comments");
-           return sess;
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, value);
+            try (ResultSet results = stmt.executeQuery();) {
+                SessionData sess = new SessionData();
+                sess.ident = results.getInt("SessionID");
+                sess.member_id = results.getInt("MemberID");
+                sess.provider_id = results.getInt("ProviderID");
+                sess.service_code = results.getInt("ServiceCode");
+                sess.date = results.getDate("ServiceDate");
+                sess.comments = results.getString("Comments");
+                return sess;
+            }
         }
         catch (SQLException e) { throw e; }
     }
+
+    private static Vector<SessionData> get_all(String column, String value) throws SQLException {
+        String sql = "select * from session where " + column + " = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, value);
+            try (ResultSet results = stmt.executeQuery();) {
+                Vector<SessionData> vec = new Vector<SessionData>();
+                while (results.next()) {
+                    SessionData sess = new SessionData();
+                    sess.ident = results.getInt("SessionID");
+                    sess.member_id = results.getInt("MemberID");
+                    sess.provider_id = results.getInt("ProviderID");
+                    sess.service_code = results.getInt("ServiceCode");
+                    sess.date = results.getDate("ServiceDate");
+                    sess.comments = results.getString("Comments");
+                    vec.add(sess);
+                }
+                return vec;
+            }
+        }
+        catch (SQLException e) { throw e; }
+    }
+
 
     public static Vector<SessionData> retrieve_all() throws SQLException {
         //selects all columns from member row that matches id
@@ -161,7 +199,11 @@ public class SessionData extends DataSource {
 
     public static void main(String[] args) {
         try {
-            SessionData.head();
+            MemberData mem = MemberData.retrieve(100002);
+            Vector<SessionData> vec = SessionData.retrieve_all(mem);
+            for (SessionData sess : vec) {
+                sess.display();
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

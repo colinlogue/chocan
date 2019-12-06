@@ -28,10 +28,10 @@ public class DemoTest {
         //str1 and str2 should return true so I assert true.
         //If they do not work as intended the tests should fail.
         //There are other assert Methods such as assertEquals, assertNull, etc.
-        assertTrue(ManagerTools.isStringAlphabet(str1));
-        assertTrue(ManagerTools.isStringAlphabet(str2));
-        assertFalse(ManagerTools.isStringAlphabet(str3));
-        assertFalse(ManagerTools.isStringAlphabet(str4));
+        assertTrue(ManagerTools.is_string_alphabet(str1));
+        assertTrue(ManagerTools.is_string_alphabet(str2));
+        assertFalse(ManagerTools.is_string_alphabet(str3));
+        assertFalse(ManagerTools.is_string_alphabet(str4));
 
         //If you type "assert" in an IDE inside this method other assert methods should show up
     }

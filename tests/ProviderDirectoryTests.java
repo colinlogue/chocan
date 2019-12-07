@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 
+import static org.junit.Assert.assertEquals;
+
 public class ProviderDirectoryTests {
 
 
@@ -19,7 +21,15 @@ public class ProviderDirectoryTests {
 
     @Test
     public void lookup_test() throws SQLException {
-        ProviderDirectory.lookup(102010);
+        Service s = ProviderDirectory.lookup(102010);
+        assertEquals(s.label, "Chocolate Detox");
+        assertEquals(s.fee, 1425);
+        assertEquals(s.service_code, 102010);
+    }
+
+    @Test(expected = SQLException.class)
+    public void lookup_invalid() throws SQLException {
+        ProviderDirectory.lookup(9000);
     }
 
 }

@@ -150,7 +150,7 @@ public class ManagerTerminal{
         System.out.println("1. Manage Members");
         System.out.println("2. Manage Providers");
         System.out.println("3. Print Reports");
-        System.out.println("4. Logout");
+        System.out.println("4. Return to Main Menu");
     }
 
     //Used for both Manage Members and Manage Providers Option

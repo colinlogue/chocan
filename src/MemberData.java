@@ -24,7 +24,7 @@ public class MemberData extends PersonData {
             "AddressID"
     };
 
-    public boolean is_active;
+    public boolean is_active = true;
 
     public static status validate(int ident) throws SQLException {
         int mem_id = ident;

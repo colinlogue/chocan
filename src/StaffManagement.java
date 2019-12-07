@@ -58,6 +58,8 @@ public class StaffManagement extends ManagerTools
             return -1;
         }
 
+        System.out.println(new_staff.name + " was added successfully!");
+
         return 0;
     }
 

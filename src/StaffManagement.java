@@ -9,10 +9,10 @@ public class StaffManagement extends ManagerTools
     public static String member = "Member";
 
     //Take out later
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException
     {
+
        StaffManagement temp = new StaffManagement();
-       /*
        try{
            temp.retrieve_staff(provider, 900001);
        }
@@ -20,11 +20,10 @@ public class StaffManagement extends ManagerTools
        {
             System.out.println("Error");
        }
-       */
        //temp.update_staff(provider);
        //temp.add_staff(provider);
        //temp.add_staff(provider);
-       temp.remove_staff(member);
+        //temp.remove_staff(provider);
     }
 
     //Prompt user for PersonData fields then downcast to ProviderData or MemberData
@@ -95,19 +94,6 @@ public class StaffManagement extends ManagerTools
         int ident;
         int rc;
 
-        System.out.println("****************" + staff_title + " List *****************");
-        try{
-            if(staff_title.equals(provider))
-                ProviderData.retrieve_all();
-            else if(staff_title.equals(member))
-                MemberData.retrieve_all();
-            else
-                return -1;
-        }catch (SQLException e){
-            return -1;
-        }
-
-        System.out.println();
         ident = prompt_id();
         if(ident < 0)
             return -1;

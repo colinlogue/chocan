@@ -26,7 +26,7 @@ public class AddressDataTest
     AddressData memberData = new AddressData("304 Avenue Q", "Portland", "OR", "90809");
 
     @Test(expected = SQLException.class)
-    public void test_retrieve_failure() throws SQLException
+    public void test_retrieve() throws SQLException
     {
         assertEquals(providerData, AddressData.retrieve(valid_provider_add_id));
         assertEquals(memberData, AddressData.retrieve(valid_member_add_id));

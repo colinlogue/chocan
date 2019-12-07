@@ -16,13 +16,13 @@ Then you can run the program from the `chocan` directory with the following comm
 ```
 
 ## Running the tests
+To run the test suite, use the `make test` command from the `chocan` directory, or
+use the following command to compile the tests:
 ```bash
 > javac -cp ./out/production/chocan:./lib/sqlite-jdbc-3.27.2.1.jar
 :./lib/hamcrest-core-1.3.jar:./lib/junit-4.13-rc-2.jar:./out/test/chocan org.junit.runner.JUnitCore tests/*.java -d out/test/chocan
 ```
-To run the test suite, use the `make test` command from the `chocan` directory, or
-use the following command:
-
+And then this command to run them:
 ```bash
 > java -cp ./out/production/chocan:./lib/sqlite-jdbc-3.27.2.1.jar
 :./lib/hamcrest-core-1.3.jar:./lib/junit-4.13-rc-2.jar:./out/test/chocan org.junit.runner.JUnitCore AllTests

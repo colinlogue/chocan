@@ -25,10 +25,7 @@ public class PersonData extends DataSource {
     //Constructor used for testing. Please don't remove
     public PersonData(String new_name, String new_street, String new_city, String new_state, String new_zip){
         name = new_name;
-        address.street = new_street;
-        address.city = new_city;
-        address.state = new_state;
-        address.ZIP = new_zip;
+        address = new AddressData(new_street, new_city, new_state, new_zip);
     }
 
     // private data

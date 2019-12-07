@@ -10,6 +10,10 @@ public class ProviderData extends PersonData {
     public ProviderData(String new_name, String new_street, String new_city, String new_state, String new_zip) {
         super(new_name, new_street, new_city, new_state, new_zip);
     }
+    public ProviderData(String new_name, String new_street, String new_city, String new_state, String new_zip, int new_id) {
+        super(new_name, new_street, new_city, new_state, new_zip);
+        ident = new_id;
+    }
 
     // these data members describe the names of the table and
     // columns in the database

@@ -7,8 +7,13 @@ public class MemberData extends PersonData {
     }
 
     //Constructor used for testing. Please don't remove
+
     public MemberData(String new_name, String new_street, String new_city, String new_state, String new_zip) {
         super(new_name, new_street, new_city, new_state, new_zip);
+    }
+    public MemberData(String new_name, String new_street, String new_city, String new_state, String new_zip, int new_id) {
+        super(new_name, new_street, new_city, new_state, new_zip);
+        ident = new_id;
     }
 
     private static String table = "member";

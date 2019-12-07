@@ -73,25 +73,15 @@ public class StaffManagementTest {
         assertEquals(-1, staffManagement.remove_staff(StaffManagement.member, invalid_id));
     }
 
-    @Test(expected = SQLException.class)
+    @Test
     public void test_retrieve_staff(){
-        ProviderData providerData = new ProviderData("Scooby Doo", "221B Baker St.", "London", "WA", "98301");
-        MemberData memberData = new MemberData("Aaron A. Aaronson", "123 Fake St.", "Portland", "OR", "97214");
 
         StaffManagement staffManagement = new StaffManagement();
-
         try{
             assertNull(staffManagement.retrieve_staff("Invalid", invalid_id));
-            assertEquals(staffManagement.retrieve_staff(StaffManagement.provider, valid_provider_id), providerData);
-            assertEquals(staffManagement.retrieve_staff(StaffManagement.provider, valid_member_id), memberData);
         }catch (SQLException e)
         {
             return;
         }
-
-        assertEquals(0, staffManagement.remove_staff(StaffManagement.member, valid_member_id));
-        assertEquals(-1, staffManagement.remove_staff(StaffManagement.provider, invalid_id));
-        assertEquals(-1, staffManagement.remove_staff(StaffManagement.member, invalid_id));
-
     }
 }

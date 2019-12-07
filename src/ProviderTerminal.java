@@ -149,8 +149,10 @@ public class ProviderTerminal{
     }
 
     private boolean service_report(){
+
         try {
             SessionData session = new SessionData();
+            //session.comments = new String();
 
             System.out.print("Member ID: \n");
             session.member_id = input.nextInt();
@@ -159,8 +161,9 @@ public class ProviderTerminal{
             System.out.print("Service Code: \n");
             session.service_code = input.nextInt();
             session.date = new Date(System.currentTimeMillis());
-            System.out.print("Date (MM/DD/YYYY):"+ session.date+"\n");
+            System.out.print("Date:"+ session.date+"\n");
             System.out.print("Additional Comments: \n");
+            input.nextLine();
             session.comments = input.nextLine();
 
             session.write();

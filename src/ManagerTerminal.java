@@ -1,10 +1,22 @@
+/*============================================================
+* This class provides the menu tree for the manager terminal
+* of the ChocAn Simulation system.
+* This class contains:
+*       main_menu()
+*       manage_staff()
+*       manage reports()
+*       display_main_menu()
+*       display manager menu()
+*       display_report_menu()
+*       enter_an_int()
+* ============================================================*/
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManagerTerminal{
 
-
     static public Scanner input;
+
     private ManagerReports reports = new ManagerReports();
     private StaffManagement staff_manager = new StaffManagement();
 
@@ -169,7 +181,7 @@ public class ManagerTerminal{
     }
 
     //Prompts user for int, returns -1 if not int
-    private int enter_an_int(){
+    public int enter_an_int(){
         int option;
         try
         {

@@ -45,23 +45,6 @@ public class ProviderData extends PersonData {
 
     }
 
-    public static void delete(int ident) throws SQLException {
-        // drop row matching ident from provider table
-        String pro_id = ident_to_string(ident);
-        String sql = "DELETE FROM provider WHERE ProviderID = ?";
-
-        try (Connection conn = connect(); //check this **
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            // set the corresponding param
-            pstmt.setString(1, pro_id);
-            // execute the delete statement
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     /*public void display() {
         System.out.println(name);
@@ -147,6 +130,27 @@ public class ProviderData extends PersonData {
             pro.display();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean delete(int ID) throws SQLException {
+        if (ProviderData.validate(ID) == status.INVALID) {
+            return false;
+        }
+        else {
+
+            String sql = "UPDATE provider SET " +
+                    "(IsHidden) " +
+                    "= ? WHERE ProviderID = ?";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setBoolean(1, true);
+                pstmt.setInt(2, ID);
+                pstmt.execute();
+                return true;
+            } catch (SQLException e) {
+                throw e;
+            }
         }
     }
 

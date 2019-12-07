@@ -5,7 +5,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
         AddressData.class,
-        ManagerReportsTest.class,
         ProviderDataTest.class,
         ProviderDirectoryTests.class,
         ServiceTests.class,

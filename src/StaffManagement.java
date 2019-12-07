@@ -9,7 +9,7 @@ public class StaffManagement extends ManagerTools
     public static String member = "Member";
 
     //Take out later
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException
     {
 
        StaffManagement temp = new StaffManagement();
@@ -23,7 +23,7 @@ public class StaffManagement extends ManagerTools
        //temp.update_staff(provider);
        //temp.add_staff(provider);
        //temp.add_staff(provider);
-       //temp.remove_staff(provider);
+        //temp.remove_staff(provider);
     }
 
     //Prompt user for PersonData fields then downcast to ProviderData or MemberData
@@ -120,7 +120,7 @@ public class StaffManagement extends ManagerTools
         //Use down casting to retrieve ID. Then delete the data corresponding to ID.
         try{
             if(staff_title.equals(provider)) {
-                //deleted = ProviderData.delete(ident);
+                deleted = ProviderData.delete(ident);
             }
             else if(staff_title.equals(member)) {
                 deleted = MemberData.delete(ident);

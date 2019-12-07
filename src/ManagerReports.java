@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ManagerReports {
     static public Scanner input;
-    static public Scanner file_in;
 
     private Vector<SessionData> member_reports;
     private Vector<SessionData> provider_reports;
@@ -26,11 +25,13 @@ public class ManagerReports {
 
     public static void main(String[] args) {
         ManagerReports test = new ManagerReports();
-        test.provider_report();
+        test.accounts_payable();
     }
 
+    //Creates a report based on member ID input
+    //Displays report and prints to <memberID>weekly.txt
     protected void member_report() {
-        int member_id;
+        int member_id;  //holds user input for search
 
         System.out.println("Please enter the Member ID: ");
         member_id = input.nextInt();
@@ -49,25 +50,26 @@ public class ManagerReports {
                 e.printStackTrace();
             }
 
-            System.out.println(member_id);
-            member.display();
+            System.out.println(member_id);  //display member ID
+            member.display();       //display member info
             if (member_reports.isEmpty())
                 System.out.println("NO VISITS THIS WEEK");
             else {
-                //System.out.println(member_reports);
                 try {
                     create_member_report(member, member_reports);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(member_id + "weekly.txt FAILED TO WRITE");
                 }
             }
         }
-
+        System.out.println("\nCOPY OF THIS DOCUMENT ALSO SENT TO EMAIL");
     }
 
+    //Creates a provider report based on provider id input
+    //Displays report and writes to <providerID>weekly.txt
     protected void provider_report() {
-        int fee_total;
         int provider_id;
+
         System.out.println("Please enter the provider number: ");
         provider_id = input.nextInt();
 
@@ -96,20 +98,73 @@ public class ManagerReports {
 
             }
         }
+        System.out.println("\nCOPY OF THIS DOCUMENT ALSO SENT TO EMAIL");
     }
 
+    //Creates a report of all Providers visited
+    //Displays report to screen and saves to accounts_payable.txt
     protected void accounts_payable() {
+        int total_visits = 0;
+        int all_fees = 0;
+        int providers = 0;
+        ProviderData provider = null;
+        MemberData member = null;
+        try {
+            BufferedWriter write = new BufferedWriter(new FileWriter("accounts_payable.txt"));
+            for (int i = 900001; i < 900006; ++i) {
+                try {
+                    provider = retrieve_provider(i);
+                } catch (SQLException e) {
+                }
+                try {
+                    provider_reports = SessionData.retrieve_all(provider);
+                } catch (SQLException e) {
+                }
+                if (!provider_reports.isEmpty()) {
+                    ++providers;
+                    int total_fee;
+                    write.write("Provider ID: " + i + "\n");
+                    System.out.println("Provider ID: " + i);
+                    total_visits += provider_reports.size();
+                    write.write("Visits: " + provider_reports.size() + "\n");
+                    System.out.println("Visits: " + provider_reports.size());
+                    total_fee = provider_reports.stream().mapToInt(this::calculate_fees).sum();
+                    all_fees += total_fee;
+                    write.write("Provider Fees: " + total_fee + "\n");
+                    System.out.println("Provider Fees: " + total_fee);
+                }
+            }
+            write.write("Total Providers: " + providers + "\n");
+            System.out.println("\nTotal Providers: " + providers);
+            write.write("Total Visits: " + total_visits + "\n");
+            System.out.println("Total Visits: " + total_visits);
+            write.write("Total Fees: " + all_fees + "\n");
+            System.out.println("Total Fees: " + all_fees);
+            write.close();
+        }catch(IOException e){
+            System.out.println("accounts_payable.txt WRITE FAILED");
+        }
 
+
+        System.out.println("\nCOPY OF THIS DOCUMENT ALSO SENT TO EMAIL");
+    }
+
+    private int calculate_fees(SessionData session){
+        Service service = new Service();
+        try {
+            service = ProviderDirectory.lookup(session.service_code);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return service.fee;
     }
 
     private MemberData retrieve_member(int ident) throws SQLException {
-        MemberData person = MemberData.retrieve(ident);
-        return person;
+        return MemberData.retrieve(ident);
     }
 
     private ProviderData retrieve_provider(int ident) throws SQLException {
-        ProviderData person = ProviderData.retrieve(ident);
-        return person;
+        return ProviderData.retrieve(ident);
     }
 
     private void create_member_report(MemberData person, Vector<SessionData> reports) throws IOException {
@@ -132,6 +187,8 @@ public class ManagerReports {
         write.close();
     }
 
+    //Writes and displays provider report
+    //creates eft file for provider <providerid>eft.txt
     private void create_provider_report(ProviderData person, Vector<SessionData> reports) throws IOException {
         AtomicInteger fee_total = new AtomicInteger();
         BufferedWriter write = new BufferedWriter(new FileWriter(person.ident + "weekly.txt"));
@@ -152,6 +209,7 @@ public class ManagerReports {
         System.out.println("Fee Total: " + fee_total);
         write.close();
 
+        //Creates EFT file
         BufferedWriter write_again = new BufferedWriter(new FileWriter(person.ident + "eft.txt"));
         write_again.write(String.valueOf(fee_total));
         write_again.close();
@@ -159,7 +217,7 @@ public class ManagerReports {
 
     private void write_member_report(BufferedWriter write, SessionData session) throws IOException, SQLException {
         ProviderData provider;
-        write.append("Date of Service: " + session.date);
+        write.append("Date of Service: ").append(String.valueOf(session.date));
         System.out.println("Data of Service: " + session.date);
         write.append("Provider ID: " + session.provider_id + "\n");
         System.out.println("Provider ID: " + session.provider_id);

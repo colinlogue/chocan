@@ -79,7 +79,7 @@ public class ProviderTerminal{
                         break;
                 }
 
-            } while (task_num > 0 && task_num < 4); //Loop should continue until user selects quit.
+            } while (task_num != 4); //Loop should continue until user selects quit.
         }
 
    }

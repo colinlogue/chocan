@@ -23,6 +23,7 @@ public class ProviderTerminal{
     private static Scanner ID;
     private static Scanner session;
     private static Scanner M_ID;
+    private static Scanner sess_charge;
 
     //Takes input from provider
     private ProviderTerminal(){
@@ -30,6 +31,7 @@ public class ProviderTerminal{
         ID = new Scanner(System.in);
         session = new Scanner(System.in);
         M_ID = new Scanner(System.in);
+        sess_charge = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -205,8 +207,30 @@ public class ProviderTerminal{
 
 //have the service report send the cost here. then the prov can retrieve it if they want.
     private boolean service_billing(){
-        return false;
+        char answ = 'y';
+        int total = 0;
+
+        while(answ == 'y'){
+
+            System.out.print("What services were provided to member today? Type a service code. \n");;
+            int session_charge = sess_charge.nextInt();
+            Service S = new Service();
+            try{
+                S = ProviderDirectory.lookup(session_charge);
+
+            }catch(SQLException e){
+                System.out.print("The service code does not exist. Please consult a manager. \n");
+                return false;
+            }
+            System.out.print("Today's session currently cost ");
+            System.out.print(total = total + S.fee);
+            System.out.print("\n");
+            System.out.print("Do you wish to add more charges today? Type y or n. \n");
+            answ = sess_charge.next().charAt(0);
+        }
+        System.out.print("Your service's have been billed and added to your payment plan. \n");
+        return true;
     }
 
 
-}
+ }

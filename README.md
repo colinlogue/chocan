@@ -1,5 +1,7 @@
 # ChocAn
 
+Github: https://github.com/colinlogue/chocan
+
 ## Running the simulation
 To access the ChocAn simulation, run `make run` from the `chocan` directory.
 

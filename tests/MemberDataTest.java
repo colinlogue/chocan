@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import static junit.framework.TestCase.*;
 
-public class ProviderDataTest
+public class MemberDataTest
 {
     @Before
     public void setup() {
@@ -23,9 +23,8 @@ public class ProviderDataTest
     int invalid_member_id = 999;
     int i_m_id = 333;
 
-    MemberData m_data = new MemberData("Marge Simpson", "345 Evergreen Terrace", "Springfield", "IL");
+    MemberData m_data = new MemberData("Marge Simpson", "345 Evergreen Terrace", "Springfield", "IL", "30068");
 
- 
 
     @Test
     public void test_retrieve_failure() throws SQLException

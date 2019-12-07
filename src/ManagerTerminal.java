@@ -103,7 +103,7 @@ public class ManagerTerminal{
                     break;
             }
             //Input must be a number from menu to exit loop
-        }while(option < 1 || option > 4);
+        }while(option >= 1 && option <= 4);
     }
 
     private void manage_reports(){
@@ -140,7 +140,7 @@ public class ManagerTerminal{
                     break;
             }
             //Input must be a number from menu options to exit loop
-        }while(option < 1 || option > 4);
+        }while(option >= 1 && option <= 4);
     }
 
     //Displays main menu for manager terminal

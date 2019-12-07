@@ -11,8 +11,8 @@ public class StaffManagement extends ManagerTools
     //Take out later
     public static void main(String[] args)
     {
-
        StaffManagement temp = new StaffManagement();
+       /*
        try{
            temp.retrieve_staff(provider, 900001);
        }
@@ -20,10 +20,11 @@ public class StaffManagement extends ManagerTools
        {
             System.out.println("Error");
        }
+       */
        //temp.update_staff(provider);
        //temp.add_staff(provider);
        //temp.add_staff(provider);
-       //temp.remove_staff(provider);
+       temp.remove_staff(member);
     }
 
     //Prompt user for PersonData fields then downcast to ProviderData or MemberData
@@ -94,6 +95,19 @@ public class StaffManagement extends ManagerTools
         int ident;
         int rc;
 
+        System.out.println("****************" + staff_title + " List *****************");
+        try{
+            if(staff_title.equals(provider))
+                ProviderData.retrieve_all();
+            else if(staff_title.equals(member))
+                MemberData.retrieve_all();
+            else
+                return -1;
+        }catch (SQLException e){
+            return -1;
+        }
+
+        System.out.println();
         ident = prompt_id();
         if(ident < 0)
             return -1;
@@ -120,7 +134,7 @@ public class StaffManagement extends ManagerTools
         //Use down casting to retrieve ID. Then delete the data corresponding to ID.
         try{
             if(staff_title.equals(provider)) {
-                //deleted = ProviderData.delete(ident);
+                deleted = ProviderData.delete(ident);
             }
             else if(staff_title.equals(member)) {
                 deleted = MemberData.delete(ident);

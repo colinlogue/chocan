@@ -79,7 +79,7 @@ public class ProviderTerminal{
                         break;
                 }
 
-            } while (task_num > 0 && task_num < 4); //fixed this loop
+            } while (task_num > 0 && task_num < 4); //Loop should continue until user selects quit.
         }
 
    }
@@ -167,7 +167,7 @@ public class ProviderTerminal{
             session.comments = input.nextLine();
 
             session.write();                        //calls the session write fcn to write data to session.csv
-            System.out.print("Session successfully written to disk\n");
+            System.out.print("Session successfully written to disk\n\n");
             return true;
         }
         catch (SQLException e) {

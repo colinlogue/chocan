@@ -36,7 +36,7 @@ public class ManagerTerminal{
     //Main Menu
     //Provides options to manage members, manage providers, or
     //display reports.
-    private void main_menu()
+    public void main_menu()
     {
         int option;
         do //Continue to display main menu until valid choice is made by user

@@ -1,31 +1,40 @@
 import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 
 import java.sql.SQLException;
 
 import static junit.framework.TestCase.*;
 public class AddressDataTest
 {
-    int valid_provider_id = 900002;
-    int valid_member_id = 100001;
+    @Before
+    public void setup() {
+        TestConfig.copy_db();
+    }
+
+    @After
+    public void cleanup() {
+        TestConfig.reset_db();
+    }
+
+    int valid_provider_add_id = 5;
+    int valid_member_id = 4;
     int invalid_id = -1;
 
 
-    @Test(expected = SQLException.class)
-    public void test_retrieve() throws SQLException
-    {
-        AddressData providerData = new AddressData("221B Baker St.", "London", "WA", "98301");
-        AddressData memberData = new AddressData("123 Fake St.", "Portland", "OR", "97214");
-            assertNull(AddressData.retrieve(invalid_id));
+    AddressData providerData = new AddressData("221B Baker St.", "London", "WA", "98301");
+    AddressData memberData = new AddressData("123 Fake St.", "Portland", "OR", "97214");
 
-            try
-            {
-                assertEquals(memberData, AddressData.retrieve(valid_member_id));
-                assertEquals(providerData, AddressData.retrieve(valid_provider_id));
-                AddressData.retrieve(invalid_id);
-            } catch (SQLException e)
-            {
-                throw e;
-            }
+    @Test(expected = SQLException.class)
+    public void test_retrieve_failure() throws SQLException
+    {
+        AddressData.retrieve(invalid_id);
+    }
+
+    @Test(expected = SQLException.class)
+    public void test_retrieve_success() throws SQLException
+    {
+        AddressData.retrieve(invalid_id);
     }
 
     @Test

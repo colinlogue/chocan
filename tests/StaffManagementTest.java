@@ -1,4 +1,6 @@
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 import java.sql.SQLException;
 
@@ -6,6 +8,15 @@ import static junit.framework.TestCase.*;
 
 //Test both StaffManagement and ManagerTools public methods here.
 public class StaffManagementTest {
+    @Before
+    public void setup() {
+        TestConfig.copy_db();
+    }
+
+    @After
+    public void cleanup() {
+        TestConfig.reset_db();
+    }
 
     //ManagerTools class parameters and tests *************************************************************************
     private String str1 = "AbcdE";

@@ -122,7 +122,7 @@ public class StaffManagement extends ManagerTools
             }
             else if(staff_title.equals(member)) {
                 MemberData.retrieve(ident);
-                MemberData.delete(ident);
+               // MemberData.delete(ident);
             }
             else
                 return -1;

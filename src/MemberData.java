@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Vector;
 
 public class MemberData extends PersonData {
 
@@ -164,5 +165,24 @@ public class MemberData extends PersonData {
                 throw e;
             }
         }
+    }
+    public static void retrieve_all() throws SQLException {
+        String sql = "SELECT *  FROM member";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            //Vector<MemberData> vec = new Vector<MemberData>();
+            while (results.next()) {
+                MemberData mem = new MemberData();
+                mem.ident = results.getInt("MemberID");
+                mem.name = results.getString("Name");
+                mem.is_active = results.getBoolean("IsActive");
+                boolean hidden = results.getBoolean("IsHidden");
+                if(mem.is_active == true && hidden == false){
+                    mem.display_name_id();
+                }
+            }
+        }
+        catch (SQLException e) { throw e; }
     }
 }

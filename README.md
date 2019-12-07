@@ -16,6 +16,7 @@ java -cp ./out/production:./lib/sqlite-jdbc-3.27.2.1.jar Simulation
 ```
 
 ## Test data
+The database has the following rows already populated for the demonstration.
 
 ### Address
 AddressID | Street          | City           | State | ZIP

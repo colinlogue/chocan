@@ -37,7 +37,7 @@ public class ProviderDataTest
     }
 
     @Test
-    void test_retrieve_success() throws SQLException
+    public void test_retrieve_success() throws SQLException
     {
         ProviderData providerData = new ProviderData();
         try{
@@ -48,7 +48,7 @@ public class ProviderDataTest
     }
 
     @Test
-    void test_write() throws SQLException
+    public void test_write() throws SQLException
     {
         assertTrue(p_data.write());
     }

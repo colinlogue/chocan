@@ -91,56 +91,43 @@ public class ProviderTerminal{
     types in the ID and see that it exists, retrieve. Then validate */
     private boolean validate_provider(int ID){
 
-//        ProviderData provider = new ProviderData();
         ProviderData.status prov_status = null;
 
-/*        try{
-            //retrieve function takes in the ID and returns all the data associated w/provider.
- //            provider = ProviderData.retrieve(ID);
-               ProviderData.retrieve(ID);
-
-        }catch(SQLException e){
-
-            System.out.print("This provider DNE in the system.\n");
-            return false;
-        }
- */
         try{
             prov_status = ProviderData.validate(ID);
         }catch (SQLException e){
             System.out.print("Couldn't validate/find provider status\n");
+            return false;
 
         }
         //print the status of provider
-        System.out.print("success, logging into session.\n" + "The provider status is ");
-        System.out.println(prov_status);
-        System.out.print("\n");
-        return true;
+        if(prov_status != PersonData.status.INVALID ){
+
+            System.out.print("success, logging into session.\n" + "The provider status is ");
+            System.out.println(prov_status);
+            System.out.print("\n");
+            return true;
+        }else{
+            System.out.print("Cannot allow access to terminal as provider is invalid. \n");
+            return false;
+        }
     }
 
     private boolean validate_member(int ID) {
-//       MemberData member = new MemberData();
+
        PersonData.status mem_stat = null;
-/*
-       try{
-           member = MemberData.retrieve(ID);
-           MemberData.retrieve(ID);
-       }catch (SQLException e){
-           System.out.print("Member status cannot be reached as member DNE\n");
-           return false;
-       }
-*/
 
 //check if the value retrieved is valid. if its valid then we print their status
        try {
            mem_stat = MemberData.validate(ID);
        } catch (SQLException e) {
           System.out.print(" The member's ID is invalid as it does not exist .\n");
+          return false;
        }
 
        System.out.print("The members current status is ");
        System.out.println(mem_stat);
-        System.out.print("\n");
+       System.out.print("\n");
 
        if(mem_stat != PersonData.status.INVALID) {
            return true;

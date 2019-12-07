@@ -18,22 +18,18 @@ public class AddressDataTest
     }
 
     int valid_provider_add_id = 5;
-    int valid_member_id = 4;
+    int valid_member_add_id = 12;
     int invalid_id = -1;
 
 
-    AddressData providerData = new AddressData("221B Baker St.", "London", "WA", "98301");
-    AddressData memberData = new AddressData("123 Fake St.", "Portland", "OR", "97214");
+    AddressData providerData = new AddressData("Orange Ave.", "Portland", "OR", "91234");
+    AddressData memberData = new AddressData("304 Avenue Q", "Portland", "OR", "90809");
 
     @Test(expected = SQLException.class)
     public void test_retrieve_failure() throws SQLException
     {
-        AddressData.retrieve(invalid_id);
-    }
-
-    @Test(expected = SQLException.class)
-    public void test_retrieve_success() throws SQLException
-    {
+        assertEquals(providerData, AddressData.retrieve(valid_provider_add_id));
+        assertEquals(memberData, AddressData.retrieve(valid_member_add_id));
         AddressData.retrieve(invalid_id);
     }
 

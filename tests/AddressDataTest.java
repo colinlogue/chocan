@@ -29,13 +29,23 @@ public class AddressDataTest
         int valid_member_add_id = 12;
         AddressData providerData = new AddressData("Orange Ave.", "Portland", "OR", "91234");
         AddressData memberData = new AddressData("304 Avenue Q", "Portland", "OR", "90809");
+        AddressData other_provider;
+        AddressData other_member;
 
         try{
-            assertEquals(providerData, AddressData.retrieve(valid_provider_add_id));
-            assertEquals(memberData, AddressData.retrieve(valid_member_add_id));
+            other_provider= AddressData.retrieve(valid_provider_add_id);
+            other_member = AddressData.retrieve(valid_member_add_id);
         } catch(SQLException e){
             return;
         }
+        assertEquals(other_provider.street, providerData.street);
+        assertEquals(other_provider.city, providerData.city);
+        assertEquals(other_provider.state, providerData.state);
+        assertEquals(other_provider.ZIP, providerData.ZIP);
+        assertEquals(other_member.street, memberData.street);
+        assertEquals(other_member.city, memberData.city);
+        assertEquals(other_member.state, memberData.state);
+        assertEquals(other_member.ZIP, memberData.ZIP);
     }
 
     @Test

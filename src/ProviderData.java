@@ -158,4 +158,23 @@ public class ProviderData extends PersonData {
     public static void display_ids() {
 
     }
+
+    public static void retrieve_all() throws SQLException {
+        String sql = "SELECT *  FROM provider";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet results = stmt.executeQuery(sql);) {
+            while (results.next()) {
+                ProviderData pro = new ProviderData();
+                pro.ident = results.getInt("ProviderID");
+                pro.name = results.getString("Name");
+              //  mem.is_active = results.getBoolean("IsActive");
+                boolean hidden = results.getBoolean("IsHidden");
+                if(hidden == false){
+                    pro.display_name_id();
+                }
+            }
+        }
+        catch (SQLException e) { throw e; }
+    }
 }

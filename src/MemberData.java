@@ -145,19 +145,21 @@ public class MemberData extends PersonData {
         }
     }
 
-    public boolean delete(int ID){
+    public static boolean delete(int ID) throws SQLException {
+        if (MemberData.validate(ID) == status.INVALID ){
+            return false;
+        }
         String sql = "UPDATE member SET " +
                 "(IsHidden) " +
-                "= (?) WHERE ProviderID = " + ID;
-        try (Connection conn = this.connect();
+                "= (?) WHERE MemberID = " + ID;
+        try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setBoolean(1, true);
-            pstmt.executeUpdate();
+            pstmt.execute();
             return true;
         }
         catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw e;
         }
-        return false;
     }
 }

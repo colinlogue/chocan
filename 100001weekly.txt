@@ -1,0 +1,18 @@
+Name: Ada Lovelace
+ID: 100001
+Address: 123 Fake St. Springfield, OR 97243
+Date of Service: 2019-12-06Provider ID: 900001
+Provider Name: Choco No More
+Service Code: 102010
+Date of Service: 2019-12-06Provider ID: 900001
+Provider Name: Choco No More
+Service Code: 102010
+Date of Service: 2019-12-06Provider ID: 900001
+Provider Name: Choco No More
+Service Code: 102010
+Date of Service: 2019-12-06Provider ID: 900001
+Provider Name: Choco No More
+Service Code: 102050
+Date of Service: 2019-12-06Provider ID: 900002
+Provider Name: Charles Barkley
+Service Code: 102010

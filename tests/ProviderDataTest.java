@@ -25,6 +25,7 @@ public class ProviderDataTest
     int i_id_2 = 444;
     ProviderData p_data = new ProviderData("Dr Bill", "333 Evergreen Terrace", "Springfield", "IL", "91234");
 
+
     @Test
     public void test_retrieve_failure() throws SQLException
     {
@@ -53,7 +54,13 @@ public class ProviderDataTest
         assertTrue(p_data.write());
     }
 
-
-
+    @Test
+    public void test_delete() throws SQLException
+    {
+        assertTrue(ProviderData.delete(valid_provider_id));
+        assertTrue(ProviderData.delete(v_id_1));
+        assertFalse(ProviderData.delete(invalid_provider_id));
+        assertFalse(ProviderData.delete(i_id_1));
+    }
 
 }

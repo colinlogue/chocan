@@ -183,7 +183,7 @@ public class ManagerTerminal{
         int option;
         try
         {
-            System.out.print("Enter Option: ");
+            System.out.print("\nEnter Option: ");
             option = input.nextInt();
         } catch (InputMismatchException e) {
             input.nextLine();

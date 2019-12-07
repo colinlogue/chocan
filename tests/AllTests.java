@@ -9,6 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
         ProviderDirectoryTests.class,
         ServiceTests.class,
         StaffManagementTest.class,
+        ManagerReportTest.class
 })
 
 public class AllTests

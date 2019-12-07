@@ -148,7 +148,7 @@ public class ProviderTerminal{
        }
     }
 
-    private boolean service_report(){
+    private boolean service_report(){           //gets info from the provider to write a session to the database
 
         try {
             SessionData session = new SessionData();
@@ -166,18 +166,15 @@ public class ProviderTerminal{
             input.nextLine();
             session.comments = input.nextLine();
 
-            session.write();
+            session.write();                        //calls the session write fcn to write data to session.csv
+            System.out.print("Session successfully written to disk\n");
+            return true;
         }
         catch (SQLException e) {
             // handle case where loading fails
+            System.out.print("Failed to write session.\n");
+            return false;     //the report could not be written to database
         }
-
-      //  public int member_id;
-      //  public int provider_id;
-      //  public int service_code;
-      //  public Date date;
-      //  public String comments;
-        return false; //the report could not be written to database
     }
 
 

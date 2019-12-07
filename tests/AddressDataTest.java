@@ -34,15 +34,9 @@ public class AddressDataTest
     }
 
     @Test
-    public void test_write ()
+    public void test_write() throws SQLException
     {
         AddressData addressData = new AddressData("Test St.", "Test Town", "WA", "11111");
-        try
-        {
-            assertTrue(addressData.write());
-        } catch (SQLException e)
-        {
-            return;
-        }
+        assertTrue(addressData.write());
     }
 }

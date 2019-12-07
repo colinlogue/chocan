@@ -114,25 +114,21 @@ public class StaffManagement extends ManagerTools
     //Returns 0 on success
     public int remove_staff(String staff_title, int ident){
 
+        boolean deleted;
         //Use down casting to retrieve ID. Then delete the data corresponding to ID.
-        try{
-            if(staff_title.equals(provider)) {
-                ProviderData.retrieve(ident);
-                ProviderData.delete(ident);
-            }
-            else if(staff_title.equals(member)) {
-                MemberData.retrieve(ident);
-               // MemberData.delete(ident);
-            }
-            else
-                return -1;
+        if(staff_title.equals(provider)) {
+            deleted = ProviderData.delete(ident);
         }
-        catch (SQLException e)
-        {
-                return -1;
+        else if(staff_title.equals(member)) {
+            deleted = MemberData.delete(ident);
         }
+        else
+            return -1;
 
-        return 0;
+        if(deleted)
+            return 0;
+        else
+            return -1;
     }
 
     //Retrieve MemberData or Provider onto a local PersonData object

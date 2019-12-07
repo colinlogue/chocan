@@ -49,8 +49,6 @@ public class MemberData extends PersonData {
         }
     }
 
-
-
     // db access
     public static MemberData retrieve(int ident) throws SQLException {
 
@@ -112,23 +110,6 @@ public class MemberData extends PersonData {
         return true;
     }
 
-    public static void delete(int ident) throws SQLException {
-        // drop row matching ident from member table
-        int mem_id = ident;
-        String sql = "DELETE FROM member WHERE MemberID = " + mem_id;
-
-        try (Connection conn = connect(); //check this **
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            // set the corresponding param
-            pstmt.setInt(1, mem_id);
-            // execute the delete statement
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     //possibly add to base class PersonData **
     private int get_next_ident() throws SQLException {
@@ -162,5 +143,21 @@ public class MemberData extends PersonData {
         catch (SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean delete(int ID){
+        String sql = "UPDATE member SET " +
+                "(IsHidden) " +
+                "= (?) WHERE ProviderID = " + ID;
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBoolean(1, true);
+            pstmt.executeUpdate();
+            return true;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

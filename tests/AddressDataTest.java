@@ -28,7 +28,7 @@ public class AddressDataTest
         int valid_provider_add_id = 5;
         int valid_member_add_id = 12;
         AddressData providerData = new AddressData("Orange Ave.", "Portland", "OR", "91234");
-        AddressData memberData = new AddressData("304 Avenue Q", "Portland", "OR", "90809");
+        AddressData memberData = new AddressData("304 Avenue Q", "Portland", "TX", "90809");
         AddressData other_provider;
         AddressData other_member;
 

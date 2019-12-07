@@ -1,0 +1,29 @@
+Name: Choco No More
+ID: 900001
+Address: 123 Fake St. Springfield, OR 97243
+Date of Service: 2019-12-06
+Provider ID: 900001
+Member ID: 100001
+Member Name: Ada Lovelace
+Service Code: 102010
+Service Fee: 1425
+Date of Service: 2019-12-06
+Provider ID: 900001
+Member ID: 100001
+Member Name: Ada Lovelace
+Service Code: 102010
+Service Fee: 1425
+Date of Service: 2019-12-06
+Provider ID: 900001
+Member ID: 100001
+Member Name: Ada Lovelace
+Service Code: 102010
+Service Fee: 1425
+Date of Service: 2019-12-06
+Provider ID: 900001
+Member ID: 100001
+Member Name: Ada Lovelace
+Service Code: 102050
+Service Fee: 3250
+Total Visits: 4
+Fee Total: 7525

@@ -1,0 +1,9 @@
+Provider ID: 900001
+Visits: 4
+Provider Fees: 7525
+Provider ID: 900002
+Visits: 1
+Provider Fees: 1425
+Total Providers: 2
+Total Visits: 5
+Total Fees: 8950

@@ -59,14 +59,15 @@ public class ManagerTerminal{
                     manage_reports();
                     break;
                 case 4: //Log the manager out of manager terminal
-                    System.out.println("\n LOGGED OUT\n");
+                    System.out.println("RETURNING TO MAIN MENU");
                     break;
                 default: //If valid input is not received, message will display
+                    option = 0;
                     System.out.print("\nINPUT ERROR: PLEASE ENTER A NUMBER FROM THE MENU\n");
                     break;
             }
             //Input must be number from menu options to exit loop
-        } while (option < 1 || option > 4);
+        } while (option < 4);
     }
 
     //Manage Member Menu
@@ -95,15 +96,17 @@ public class ManagerTerminal{
                     System.out.print("\nUPDATE MEMBER\n" + "-------------\n");
                     staff_manager.update_staff(staff_title);
                     break;
-                case 4:     //Return to Main Menu
+                case 4:     //Return to main menu
+                    System.out.println("\nRETURNING TO MANAGER TERMINAL MENU");
                     main_menu();
                     break;
-                default:    //Prints error message to screen if input is invalid
+                default:    //Return to reports menu
+                    option = 0;
                     System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
                     break;
             }
             //Input must be a number from menu to exit loop
-        }while(option >= 1 && option <= 4);
+        }while(option < 4);
     }
 
     private void manage_reports(){
@@ -118,29 +121,24 @@ public class ManagerTerminal{
             switch (option) {   //Add, remove, or update based on valid user input
                 case 1:     //Display member report
                     reports.member_report();
-                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 2:     //Display provider report
                     reports.provider_report();
-                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 3:     //Display accounts payable totals
                     reports.accounts_payable();
-                    option = -2;    //flag to return to menu w/o error message
                     break;
                 case 4:     //Return to main menu
+                    System.out.println("\nRETURNING TO MANAGER TERMINAL MENU");
                     main_menu();
                     break;
-                default:    //Return to reports menua
-                    if(option == -2) {  //return without error message
-                        System.out.println("\nRETURNING TO REPORTS MENU");
-                    }
-                    else    //return with error message for invalid input
-                        System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
+                default:    //Return to reports menu
+                    option = 0;
+                    System.out.println("\nINPUT ERROR: PLEASE CHOOSE A NUMBER FROM THE MENU");
                     break;
             }
             //Input must be a number from menu options to exit loop
-        }while(option >= 1 && option <= 4);
+        }while(option < 4);
     }
 
     //Displays main menu for manager terminal
@@ -165,7 +163,7 @@ public class ManagerTerminal{
         System.out.println("1. Add " + person);
         System.out.println("2. Remove " + person);
         System.out.println("3. Update " + person);
-        System.out.println("4. Return to Main Menu");
+        System.out.println("4. Return to Manager Terminal Main Menu");
     }
 
     //Displays report menu
@@ -177,7 +175,7 @@ public class ManagerTerminal{
         System.out.println("1. Display Member Report");
         System.out.println("2. Display Provider Report");
         System.out.println("3. Display Account Payable");
-        System.out.println("4. Return to Main Menu");
+        System.out.println("4. Return to Manager Terminal Main Menu");
     }
 
     //Prompts user for int, returns -1 if not int
